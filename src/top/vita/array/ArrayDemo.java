@@ -898,6 +898,140 @@ public class ArrayDemo {
         return res;
     }
 
+    /*
+     * 1624. 两个相同字符之间的最长子字符串
+     */
+    public int maxLengthBetweenEqualCharacters(String s) {
+        int n = s.length();
+        int[] dp = new int[n];
+        dp[0] = 0;
+        boolean flag = false;
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if(s.charAt(i) == s.charAt(j)){
+                    dp[i] = Math.max(dp[i - 1], i - j - 1);
+                    flag = true;
+                    break;
+                } else{
+                    dp[i] = dp[i - 1];
+                }
+            }
+        }
+        if (!flag){
+            return -1;
+        }
+        return dp[n - 1];
+    }
+
+    /*
+     * 322. 零钱兑换
+     */
+    public int coinChange(int[] coins, int amount) {
+        int[] dp = new int[amount + 1];
+        Arrays.fill(dp, amount + 1);
+        dp[0] = 0;
+        for (int i = 1; i <= amount; i++) {
+            for (int j = 0; j < coins.length; j++) {
+                if (coins[j] <= i){
+                    dp[i] = Math.min(dp[i], dp[i - coins[j]] + 1);
+                }
+            }
+        }
+        return dp[amount] > amount ? -1 : dp[amount];
+    }
+
+    /*
+     * 1143. 最长公共子序列
+     */
+    public int longestCommonSubsequence(String text1, String text2) {
+        int n = text1.length();
+        int m = text2.length();
+        // dp[i][j]代表text1,text2在[i][j]处有几个公共子序列
+        int[][] dp = new int[n + 1][m + 1];
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                if (text1.charAt(i - 1) == text2.charAt(j - 1)){
+                    // text1[0..i-1] 和 text2[0..j-1] 处的公共子序列数加一 左上角格
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else{
+                    // text1[0..i-1] 和 text2[0..j] 处的公共子序列数 上一格
+                    // text1[0..i] 和 text2[0..j-1] 处的公共子序列数 左一格
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+        return dp[n][m];
+    }
+
+    /*
+     * 115. 不同的子序列
+     */
+    public int numDistinct(String s, String t) {
+        int n = s.length();
+        int m = t.length();
+        // 这样dp可以表示s/t为空串
+        int[][] dp = new int[n + 1][m + 1];
+        for (int i = 0; i < n; i++) {
+            dp[i][0] = 1;
+        }
+        // [0][0]为特殊位置，对应表格中的空字符串
+        for (int j = 1; j < m; j++) {
+            dp[0][j] = 0;
+        }
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                if (s.charAt(i - 1) == t.charAt(j - 1)){
+                    // 用现在这个相同字符(j - 1) + 不用现在这个(j - 1),而是用后面的(j)
+                    dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j];
+                }else {
+                    // 现在这个字符(i)不相同就用前一个(i - 1)字符做计算结果
+                    dp[i][j] = dp[i - 1][j];
+                }
+            }
+        }
+        return dp[n][m];
+    }
+
+    /*
+     * 583. 两个字符串的删除操作
+     */
+    public int minDistance(String word1, String word2) {
+        int n = word1.length();
+        int m = word2.length();
+        // dp[i-1, j-1] 想要得到相等所需要删除的最少次数，这样dp[0][0]可以表示为空串
+        int[][] dp = new int[n + 1][m + 1];
+        // 作为空字符串时，另一边最少要删除 i 个
+        for (int i = 0; i <= n; i++) {
+            dp[i][0] = i;
+        }
+        // 作为空字符串时，另一边最少要删除 j 个
+        for (int j = 0; j <= m; j++) {
+            dp[0][j] = j;
+        }
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                if (word1.charAt(i - 1) == word2.charAt(j - 1)){
+                    dp[i][j] = dp[i - 1][j - 1];
+                }else {
+                    // 情况1：两边都删，次数+2
+                    // 情况2：删word1，次数+1
+                    // 情况3：删word2，次数+1
+                    dp[i][j] = Math.min(dp[i - 1][j - 1] + 2, Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1));
+                }
+            }
+        }
+        return dp[n][m];
+    }
+
+
+
+
+
+
+
+
+
 
 
 }
