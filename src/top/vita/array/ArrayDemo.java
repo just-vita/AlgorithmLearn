@@ -996,7 +996,7 @@ public class ArrayDemo {
     /*
      * 583. 两个字符串的删除操作
      */
-    public int minDistance(String word1, String word2) {
+    public int minDistance2(String word1, String word2) {
         int n = word1.length();
         int m = word2.length();
         // dp[i-1, j-1] 想要得到相等所需要删除的最少次数，这样dp[0][0]可以表示为空串
@@ -1024,13 +1024,52 @@ public class ArrayDemo {
         return dp[n][m];
     }
 
+    /*
+     * 72. 编辑距离
+     */
+    public int minDistance3(String word1, String word2) {
+        int n = word1.length();
+        int m = word2.length();
+        // dp[i-1, j-1] 想要得到相等所需要编辑的最少次数
+        int[][] dp = new int[n + 1][m + 1];
+        // word1为空字符串时，word2要删除i次才能相等
+        for (int i = 0; i <= n; i++) {
+            dp[i][0] = i;
+        }
+        // word2为空字符串时，word1要删除j次才能相等
+        for (int j = 0; j <= m; j++) {
+            dp[0][j] = j;
+        }
 
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                if (word1.charAt(i - 1) == word2.charAt(j - 1)){
+                    // 相等则不做编辑
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else{
+                    // 情况1：替换[i-1]或[j-1]
+                    // 情况2：word1删除
+                    // 情况3：word2删除
+                    dp[i][j] = Math.min(dp[i - 1][j - 1], Math.min(dp[i - 1][j], dp[i][j - 1])) + 1;
+                }
+            }
+        }
+        return dp[n][m];
+    }
 
-
-
-
-
-
+    /*
+     * 343. 整数拆分
+     */
+    public int integerBreak(int n) {
+        int[] dp = new int[n + 1];
+        dp[1] = 1;
+        for (int i = 2; i <= n; i++) {
+            for (int j = i - 1; j > 0; j--) {
+                dp[i] = Math.max(dp[i], Math.max(dp[j] * (i - j), j * (i - j)));
+            }
+        }
+        return dp[n];
+    }
 
 
 
