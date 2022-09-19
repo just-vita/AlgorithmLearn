@@ -1071,6 +1071,118 @@ public class ArrayDemo {
         return dp[n];
     }
 
+    /*
+     * 1636. 按照频率将数组升序排序
+     */
+    public int[] frequencySort(int[] nums) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int i = 0; i < nums.length; i++) {
+            map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
+            list.add(nums[i]);
+        }
+
+        list.sort((a, b) -> {
+            Integer aVal = map.get(a);
+            Integer bVal = map.get(b);
+            if (aVal == bVal){
+                return b - a;
+            }
+            return aVal - bVal;
+        });
+
+
+        return list.stream().mapToInt(Integer::intValue).toArray();
+    }
+
+    /*
+     * 1636. 按照频率将数组升序排序
+     */
+    public int[] frequencySort1(int[] nums) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int i = 0; i < nums.length; i++) {
+            map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
+            list.add(nums[i]);
+        }
+
+        list.sort((a, b) -> {
+            Integer aVal = map.get(a);
+            Integer bVal = map.get(b);
+            if (aVal == bVal){
+                return b - a;
+            }
+            return aVal - bVal;
+        });
+
+
+        return list.stream().mapToInt(Integer::intValue).toArray();
+    }
+
+    /*
+     * 63. 不同路径 II
+     */
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        int n = obstacleGrid.length;
+        int m = obstacleGrid[0].length;
+        int[][] dp = new int[n][m];
+        for (int i = 0; i < n; i++) {
+            if (dp[i][0] == 1) break; // 一旦遇到障碍，后续都到不了
+            dp[i][0] = 1;
+        }
+        for (int j = 0; j < m; j++) {
+            if (dp[0][j] == 1) break; // 一旦遇到障碍，后续都到不了
+            dp[0][j] = 1;
+        }
+        for (int i = 1; i < n; i++) {
+            for (int j = 1; j < m; j++) {
+                if (obstacleGrid[i][j] == 0) {
+                    dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+                }
+            }
+        }
+
+        return dp[n - 1][m - 1];
+    }
+
+    /*
+     * 343. 整数拆分 换个思路
+     */
+    public int integerBreak1(int n) {
+        int[] dp = new int[n + 1];
+        dp[2] = 1;
+        for (int i = 3; i <= n; i++) {
+            // 这里的 j 其实最大值为 i-j,再大只不过是重复而已
+            for (int j = 1; j <= i - j; j++) {
+                // 两个情况：拆分成两个数、拆分成两个及以上个数(dp[i - j])
+                // j * (i - j) 是单纯的把整数 i 拆分为两个数 也就是 j,i-j,再相乘
+                // 而j * dp[i - j]是将 i 拆分成两个以及两个以上的个数(从dp表格中找它的计算结果),再相乘。
+                dp[i] = Math.max(dp[i], Math.max(j * (i - j), j * dp[i - j]));
+            }
+        }
+        return dp[n];
+    }
+
+    /*
+     * 96. 不同的二叉搜索树
+     */
+    public int numTrees(int n) {
+        int[] dp = new int[n + 1];
+        dp[0] = 1;
+        dp[1] = 1;
+        for (int i = 2; i <= n; i++) {
+            for (int j = 1; j <= i; j++) {
+                // j-1 为j为头结点左子树节点数量，i-j 为以j为头结点右子树节点数量
+                dp[i] += dp[j - 1] * dp[i - j];
+            }
+        }
+        return dp[n];
+    }
+
+
+
+
+
 
 
 }
