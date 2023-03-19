@@ -1715,6 +1715,145 @@ public class ArrayDemo {
         return true;
     }
 
+    /*
+     * 面试题 01.08. 零矩阵
+     */
+    public void setZeroes(int[][] matrix) {
+        int n = matrix.length;
+        int m = matrix[0].length;
+        boolean[] col = new boolean[n];
+        boolean[] row = new boolean[m];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (matrix[i][j] == 0){
+                    col[i] = true;
+                    row[j] = true;
+                }
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (col[i] || row[j]){
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+    }
+
+    /*
+     * 1760. 袋子里最少数目的球
+     */
+    public int minimumSize(int[] nums, int maxOperations) {
+        int left = 1;
+        int right = 0;
+        for (int num : nums) {
+            right = Math.max(right, num);
+        }
+        int pos = right;
+        while (left <= right){
+            int mid = left + (right - left) / 2;
+            int operations = 0;
+            for (int num : nums) {
+                operations += num / mid;
+                // 能够整除的话结果为1，例如4/4=1，但是不需要分，要减1
+                if (num % mid == 0){
+                    operations--;
+                }
+            }
+            // 分的次数大于所给的:表示mid值太小，分的次数过多，需要减少分的次数
+            if (operations > maxOperations){
+                left = mid + 1;
+            }else {
+                right = mid - 1;
+                pos = mid;
+            }
+        }
+        return pos;
+    }
+
+    /*
+     * 1694. 重新格式化电话号码
+     */
+    public String reformatNumber(String number) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < number.length(); i++) {
+            char ch = number.charAt(i);
+            if (Character.isDigit(ch)){
+                sb.append(ch);
+            }
+        }
+        int n = sb.length();
+        StringBuilder res = new StringBuilder();
+        while (n > 4){
+            res.append(sb.substring(0, 3)).append('-');
+            sb.delete(0, 3);
+            n -= 3;
+        }
+        if (n <= 3){
+            res.append(sb);
+        }else{
+            res.append(sb.substring(0, 2)).append('-').append(sb.substring(2,4));
+        }
+        return res.toString();
+    }
+
+    /*
+     * 777. 在LR字符串中交换相邻字符
+     */
+    public boolean canTransform(String start, String end) {
+        int n = start.length();
+        int i = 0, j = 0;
+        while (i < n && j < n) {
+            while (i < n && start.charAt(i) == 'X') {
+                i++;
+            }
+            while (j < n && end.charAt(j) == 'X') {
+                j++;
+            }
+            if (i < n && j < n) {
+                if (start.charAt(i) != end.charAt(j)) {
+                    return false;
+                }
+                char c = start.charAt(i);
+                if ((c == 'L' && i < j) || (c == 'R' && i > j)) {
+                    return false;
+                }
+                i++;
+                j++;
+            }
+        }
+        while (i < n) {
+            if (start.charAt(i) != 'X') {
+                return false;
+            }
+            i++;
+        }
+        while (j < n) {
+            if (end.charAt(j) != 'X') {
+                return false;
+            }
+            j++;
+        }
+        return true;
+    }
+
+    /*
+     * 2169. 得到 0 的操作数
+     */
+    public int countOperations(int num1, int num2) {
+        int count = 0;
+        while (num1 != 0 && num2 != 0){
+            if (num1 > num2){
+                num1 -= num2;
+            }else{
+                num2 -= num1;
+            }
+            count++;
+        }
+        return count;
+    }
+
+
 
 
 }

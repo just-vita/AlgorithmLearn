@@ -554,11 +554,33 @@ public class LinkedQuestion {
     	return sb.toString();
     }
 	
+	/*
+	 * 24. 两两交换链表中的节点
+	 */
+	public ListNode swapPairs1(ListNode head) {
+		ListNode next = head.next;
+		head.next = swapPairs1(next.next);
+		next.next = head;
+		return head;
+	}
 	
-	
-	
-	
-	
+	/*
+	 * 19. 删除链表的倒数第 N 个结点
+	 */
+	int cur = 0;
+	public ListNode removeNthFromEnd1(ListNode head, int n) {
+		if (head == null){
+			return null;
+		}
+		// 递归到发现null才会开始出栈，所以此时开始就是从后往前了
+		head.next = removeNthFromEnd1(head.next, n);
+		cur++;
+		// 当到达这个数时返回next
+		if (cur == n){
+			return head.next;
+		}
+		return head;
+	}
 	
 	
 	
