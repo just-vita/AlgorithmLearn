@@ -116,8 +116,61 @@ public class DPQuestion {
 		}
     	return min;
     }
-    
 
+	/**
+	 * 121. 买卖股票的最佳时机
+	 */
+	public int maxProfit1(int[] prices) {
+		int min = prices[0];
+		int max = 0;
+		for (int i = 1; i < prices.length; i++) {
+			// 每次循环计算最小值，用上一次循环的最小值计算差
+			max = Math.max(max, prices[i] - min);
+			min = Math.min(min, prices[i]);
+		}
+		return max;
+	}
+
+	public int maxProfit2(int[] prices) {
+		if (prices.length <= 1){
+			return 0;
+		}
+		// dp[i][0] 表示第i天持有(已购买)股票所得最多现金
+		// dp[i][1] 表示第i天不持有(卖出)股票所得最多现金
+		int[][] dp = new int[prices.length][2];
+		// 买入时0元,所得最多为-prices[0]
+		dp[0][0] = -prices[0];
+		// 没有能卖的股票
+		dp[0][1] = 0;
+		for (int i = 1; i < prices.length; i++){
+			// 购买股票后剩下的现金,越多越好
+			dp[i][0] = Math.max(dp[i - 1][0], -prices[i]);
+			// 卖出股票后剩下的现金,越多越好
+			dp[i][1] = Math.max(dp[i - 1][1], prices[i] + dp[i - 1][0]);
+		}
+		return dp[prices.length - 1][1];
+	}
+
+	public int maxProfit3(int[] prices) {
+		if (prices.length <= 1){
+			return 0;
+		}
+		// dp[0] 表示第i天持有(已购买)股票所得最多现金
+		// dp[1] 表示第i天不持有(卖出)股票所得最多现金
+		int[] dp = new int[2];
+		// 买入时0元,所得最多为-prices[0]
+		dp[0] = -prices[0];
+		// 当天没有能卖的股票
+		dp[1] = 0;
+		// 计算需要用到前一天,范围[1, prices.length]
+		for (int i = 1; i <= prices.length; i++){
+			// 前一天持有,或当天买入
+			dp[0] = Math.max(dp[0], -prices[i - 1]);
+			// 前一天卖出,或当天卖出, 当天要卖出,得前一天持有才行
+			dp[1] = Math.max(dp[1], prices[i - 1] + dp[0]);
+		}
+		return dp[1];
+	}
     
     
     
