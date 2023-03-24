@@ -171,28 +171,58 @@ public class DPQuestion {
 		}
 		return dp[1];
 	}
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+	/**
+	 * 122. 买卖股票的最佳时机 II
+	 */
+	public int maxProfit4(int[] prices) {
+		if (prices.length <= 1){
+			return 0;
+		}
+		int[][] dp = new int[prices.length][2];
+		dp[0][0] = -prices[0];
+		dp[0][1] = 0;
+		for (int i = 1; i < prices.length; i++){
+			dp[i - 1][0] = Math.max(dp[i - 1][0], dp[i - 1][1] - prices[i - 1]);
+			dp[i - 1][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + prices[i - 1]);
+		}
+		return dp[prices.length - 1][1];
+	}
+
+	public int maxProfit5(int[] prices) {
+		if (prices.length <= 1){
+			return 0;
+		}
+		int[] dp = new int[2];
+		dp[0] = -prices[0];
+		dp[1] = 0;
+		for (int i = 1; i <= prices.length; i++){
+			dp[0] = Math.max(dp[0], dp[1] - prices[i - 1]);
+			dp[1] = Math.max(dp[1], dp[0] + prices[i - 1]);
+		}
+		return dp[1];
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
