@@ -1,5 +1,6 @@
 package top.vita.dp;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class DPQuestion {
@@ -261,10 +262,28 @@ public class DPQuestion {
 		return dp[4];
 	}
 
-
-
-
-
+	/**
+	 * 188. 买卖股票的最佳时机 IV
+	 */
+	public int maxProfit8(int k, int[] prices) {
+		if (prices.length <= 1){
+			return 0;
+		}
+		int n = prices.length;
+		// 每次交易都有买入、卖出两个状态，所以要乘2
+		int[][] dp = new int[n][2 * k + 1];
+		// 奇数为购入 偶数为卖出
+		for (int j = 1; j < 2 * k; j += 2){
+			dp[0][j] = -prices[0];
+		}
+		for (int i = 1; i < n; i++){
+			for (int j = 0; j < 2 * k - 1; j += 2){
+				dp[i][j + 1] = Math.max(dp[i - 1][j + 1], dp[i - 1][j] - prices[i]);
+				dp[i][j + 2] = Math.max(dp[i - 1][j + 2], dp[i - 1][j + 1] + prices[i]);
+			}
+		}
+		return dp[n - 1][2 * k];
+	}
 
 
 
