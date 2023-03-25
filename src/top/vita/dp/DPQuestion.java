@@ -203,8 +203,63 @@ public class DPQuestion {
 		return dp[1];
 	}
 
+	/**
+	 * 123. 买卖股票的最佳时机 III
+	 */
+	public int maxProfit6(int[] prices) {
+		if (prices.length <= 1){
+			return 0;
+		}
+		// 0 没有操作
+		// 1 第一次持有股票
+		// 2 第一次不持有股票
+		// 3 第二次持有股票
+		// 4 第二次不持有股票
+		int[][] dp = new int[prices.length][5];
+		// 买入
+		dp[0][1] = -prices[0];
+		// 买入、卖出后，再买入
+		dp[0][3] = -prices[0];
 
+		for (int i = 1; i < prices.length; i++){
+			// 第一次买或不买
+			dp[i][1] = Math.max(dp[i - 1][1], dp[i][0] - prices[i]);
+			// 第一次卖或不卖
+			dp[i][2] = Math.max(dp[i - 1][2], dp[i][1] + prices[i]);
+			// 第二次买或不买
+			dp[i][3] = Math.max(dp[i - 1][3], dp[i][2] - prices[i]);
+			// 第二次卖或不卖
+			dp[i][4] = Math.max(dp[i - 1][4], dp[i][3] + prices[i]);
+		}
+		return dp[prices.length - 1][4];
+	}
 
+	public int maxProfit7(int[] prices) {
+		if (prices.length <= 1){
+			return 0;
+		}
+		// 1 第一次持有股票
+		// 2 第一次不持有股票
+		// 3 第二次持有股票
+		// 4 第二次不持有股票
+		int[] dp = new int[5];
+		// 买入
+		dp[1] = -prices[0];
+		// 买入、卖出后，再买入
+		dp[3] = -prices[0];
+
+		for (int i = 1; i < prices.length; i++){
+			// 第一次买或不买
+			dp[1] = Math.max(dp[1], -prices[i]);
+			// 第一次卖或不卖
+			dp[2] = Math.max(dp[2], dp[1] + prices[i]);
+			// 第二次买或不买
+			dp[3] = Math.max(dp[3], dp[2] - prices[i]);
+			// 第二次卖或不卖
+			dp[4] = Math.max(dp[4], dp[3] + prices[i]);
+		}
+		return dp[4];
+	}
 
 
 
