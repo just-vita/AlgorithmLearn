@@ -285,11 +285,31 @@ public class DPQuestion {
 		return dp[n - 1][2 * k];
 	}
 
-
-
-
-
-
+	/**
+	 * 300. 最长递增子序列
+	 */
+	public int lengthOfLIS(int[] nums) {
+		int n = nums.length;
+		if (n <= 1){
+			return n;
+		}
+		int[] dp = new int[n];
+		Arrays.fill(dp, 1);
+		int res = 0;
+		for (int i = 1; i < n; i++) {
+			for (int j = 0; j < i; j++) {
+				// 多次比较dp[j]
+				if (nums[j] < nums[i]) {
+					dp[i] = Math.max(dp[i], dp[j] + 1);
+				}
+			}
+			// 记录最大值，防止dp[n - 1]不是最大值
+			if (res < dp[i]){
+				res = dp[i];
+			}
+		}
+		return res;
+	}
 
 
 
