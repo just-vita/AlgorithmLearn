@@ -311,9 +311,49 @@ public class DPQuestion {
 		return res;
 	}
 
+	/**
+	 * 674. 最长连续递增序列
+	 */
+	public int findLengthOfLCIS(int[] nums) {
+		int n = nums.length;
+		if (n <= 1){
+			return n;
+		}
+		int[] dp  = new int[n];
+		Arrays.fill(dp, 1);
+		// 连续子序列最少是一个
+		int res = 1;
+		for (int i = 1; i < n; i++) {
+			if (nums[i] > nums[i - 1]){
+				dp[i] = dp[i - 1] + 1;
+			}
+			if (dp[i] > res){
+				res = dp[i];
+			}
+		}
+		return res;
+	}
 
-
-
+	public int findLengthOfLCIS2(int[] nums) {
+		int n = nums.length;
+		if (n <= 1){
+			return n;
+		}
+		// 连续子序列最少是一个
+		int res = 1;
+		int count = 1;
+		for (int i = 1; i < n; i++) {
+			if (nums[i] > nums[i - 1]){
+				count++;
+			}else{
+				count = 1;
+			}
+			if (count > res){
+				res = count;
+			}
+		}
+		return res;
+	}
 
 
 
