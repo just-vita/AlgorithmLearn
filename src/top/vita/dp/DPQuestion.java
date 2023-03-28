@@ -355,6 +355,103 @@ public class DPQuestion {
 		return res;
 	}
 
+	/**
+	 * 718. 最长重复子数组
+	 */
+	public int findLength(int[] nums1, int[] nums2) {
+		int res = 0;
+		for (int i = 0; i < nums1.length; i++){
+			for (int j = 0; j < nums2.length; j++){
+				int k = 0;
+				while (i + k < nums1.length && j + k < nums2.length && nums1[i + k] == nums2[j + k]){
+					k++;
+				}
+				if (res < k){
+					res = k;
+				}
+			}
+		}
+		return res;
+	}
+
+	/**
+	 * 巧妙写法
+	 */
+	public int findLength2(int[] nums1, int[] nums2) {
+		int n1 = nums1.length;
+		int n2 = nums2.length;
+		// 以下标i-1为结尾的A，和以下标j-1为结尾的B，最长重复子数组长度为dp[i][j]
+		int[][] dp = new int[n1 + 1][n2 + 1];
+		int res = 0;
+		for (int i = 1; i <= n1; i++) {
+			for (int j = 1; j <= n2; j++) {
+				if (nums1[i - 1] == nums2[j - 1]){
+					dp[i][j] = dp[i - 1][j - 1] + 1;
+				}
+				if (res < dp[i][j]){
+					res = dp[i][j];
+				}
+			}
+		}
+		return res;
+	}
+
+	/**
+	 * 正常写法
+	 */
+	public int findLength4(int[] nums1, int[] nums2) {
+		int n1 = nums1.length;
+		int n2 = nums2.length;
+		// 以下标i为结尾的A，和以下标j为结尾的B，最长重复子数组长度为dp[i - 1][j - 1]
+		int[][] dp = new int[n1][n2];
+		// 给行列上已经相同的数初始化
+		for (int i = 0; i < n1; i++) {
+			if (nums1[i] == nums2[0]){
+				dp[i][0] = 1;
+			}
+		}
+		for (int j = 0; j < n1; j++) {
+			if (nums1[0] == nums2[j]){
+				dp[0][j] = 1;
+			}
+		}
+		int res = 0;
+		for (int i = 0; i < n1; i++) {
+			for (int j = 0; j < n2; j++) {
+				if (nums1[i] == nums2[j] && i > 0 && j > 0){
+					dp[i][j] = dp[i - 1][j - 1] + 1;
+				}
+				if (res < dp[i][j]){
+					res = dp[i][j];
+				}
+			}
+		}
+		return res;
+	}
+
+	public int findLength3(int[] nums1, int[] nums2) {
+		int n1 = nums1.length;
+		int n2 = nums2.length;
+		int[] dp = new int[n1 + 1];
+		int res = 0;
+		for (int i = 1; i <= n1; i++) {
+			for (int j = n2; j >= 1; j--) {
+				if (nums1[i - 1] == nums2[j - 1]){
+					dp[j] = dp[j - 1] + 1;
+				}else {
+					// 不相同
+					dp[j] = 0;
+				}
+				if (res < dp[j]){
+					res = dp[j];
+				}
+			}
+		}
+		return res;
+	}
+
+
+
 
 
 
