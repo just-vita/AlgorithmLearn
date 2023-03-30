@@ -507,8 +507,30 @@ public class DPQuestion {
 		return res;
 	}
 
-
-
+    /**
+     * 392. 判断子序列
+     */
+    public boolean isSubsequence(String s, String t) {
+        int[][] dp = new int[s.length() + 1][t.length() + 1];
+        for (int i = 1; i <= s.length(); i++){
+            char ch1 = s.charAt(i - 1);
+            for (int j = 1; j <= t.length(); j++){
+                char ch2 = t.charAt(j - 1);
+                if (ch1 == ch2){
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                }else{
+                    // 相比较下
+                    // 1143.最长公共子序列 是两个字符串都可以删元素
+                    // 而这题只需要删除t字符串的元素
+                    // 所以不相等时的递推公式从
+                    // Math.max(dp[i - 1][j], dp[i][j - 1]) 考虑删哪边字符串的
+                    // 变为了 dp[i][j - 1] 只用删t字符串的
+                    dp[i][j] = dp[i][j - 1];
+                }
+            }
+        }
+        return dp[s.length()][t.length()] == s.length();
+    }
 
 
 
