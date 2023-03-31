@@ -556,9 +556,57 @@ public class DPQuestion {
         return dp[n][m];
     }
 
+	/**
+	 * 583. 两个字符串的删除操作
+	 */
+	public int minDistance(String word1, String word2) {
+		int n = word1.length();
+		int m = word2.length();
+		// dp[i-1, j-1] 想要得到相等所需要删除的最少次数，这样dp[0][0]可以表示为空串
+		int[][] dp = new int[n + 1][m + 1];
+		// 作为空字符串时，另一边最少要删除 i 个
+		for (int i = 0; i <= n; i++) {
+			dp[i][0] = i;
+		}
+		// 作为空字符串时，另一边最少要删除 j 个
+		for (int j = 0; j <= m; j++) {
+			dp[0][j] = j;
+		}
+		for (int i = 1; i <= n; i++){
+			for (int j = 1; j <= m; j++) {
+				if (word1.charAt(i - 1) == word2.charAt(j - 1)){
+					// 相等，不删
+					dp[i][j] = dp[i - 1][j - 1];
+				}else {
+					// 情况1：两边都删，次数+2
+					// 情况2：删word1，次数+1
+					// 情况3：删word2，次数+1
+					dp[i][j] = Math.min(dp[i - 1][j - 1] + 2, Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1));
+				}
+			}
+		}
+		return dp[n][m];
+	}
 
-
-
+	public int minDistance2(String word1, String word2) {
+		int n = word1.length();
+		int m = word2.length();
+		// dp[i-1, j-1] 想要得到相等所需要删除的最少次数，这样dp[0][0]可以表示为空串
+		// 最长公共子序列解法
+		int[][] dp = new int[n + 1][m + 1];
+		for (int i = 1; i <= n; i++){
+			for (int j = 1; j <= m; j++) {
+				if (word1.charAt(i - 1) == word2.charAt(j - 1)){
+					// 找到一个子序列
+					dp[i][j] = dp[i - 1][j - 1] + 1;
+				}else {
+					dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+				}
+			}
+		}
+		// 两个字符串的长度减去最长公共子序列的长度就是需要删除的最少个数了
+		return n + m - dp[n][m] * 2;
+	}
 
 
 
