@@ -559,7 +559,7 @@ public class DPQuestion {
 	/**
 	 * 583. 两个字符串的删除操作
 	 */
-	public int minDistance(String word1, String word2) {
+	public int minDistance1(String word1, String word2) {
 		int n = word1.length();
 		int m = word2.length();
 		// dp[i-1, j-1] 想要得到相等所需要删除的最少次数，这样dp[0][0]可以表示为空串
@@ -607,6 +607,106 @@ public class DPQuestion {
 		// 两个字符串的长度减去最长公共子序列的长度就是需要删除的最少个数了
 		return n + m - dp[n][m] * 2;
 	}
+
+	/**
+	 * 72. 编辑距离
+	 */
+	public int minDistance(String word1, String word2) {
+		int n = word1.length();
+		int m = word2.length();
+		int[][] dp = new int[n + 1][m + 1];
+		// 如果为空字符串，则变成另一个字符串需要编辑的步数为 i
+		for (int i = 0; i <= n; i++) {
+			dp[i][0] = i;
+		}
+		// 如果为空字符串，则变成另一个字符串需要编辑的步数为 j
+		for (int j = 0; j <= m; j++) {
+			dp[0][j] = j;
+		}
+		for (int i = 1; i <= n; i++) {
+			for (int j = 1; j <= m; j++) {
+				if (word1.charAt(i - 1) == word2.charAt(j - 1)){
+					// 相等则不用编辑
+					dp[i][j] = dp[i - 1][j - 1];
+				} else {
+					// 不相等有三种操作情况
+					// 增加字符 增加一个字符相当于另一个字符串删除一个字符，所以直接可以不算添加，交给删除
+					// 替换字符 dp[i - 1][j - 1] + 1
+					// 删除字符 选择删word1还是word2 dp[i - 1][j], dp[i][j - 1]
+					dp[i][j] = Math.min(dp[i - 1][j - 1], Math.min(dp[i - 1][j], dp[i][j - 1])) + 1;
+				}
+			}
+		}
+		return dp[n][m];
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
