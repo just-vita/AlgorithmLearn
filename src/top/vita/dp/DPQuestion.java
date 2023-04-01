@@ -688,7 +688,32 @@ public class DPQuestion {
 		return res;
 	}
 
-
+	public int countSubstrings2(String s) {
+		int n = s.length();
+		boolean[][] dp = new boolean[n][n];
+		// 需要使用到已修改的数据，所以要使用这种遍历顺序
+		for (int j = 0; j < n; j++) {
+			for (int i = 0; i <= j; i++) {
+				if (s.charAt(j) == s.charAt(i)){
+					// 两个相等的字符是回文串，单个字符也是回文串
+					if (j - i < 3){
+						dp[i][j] = true;
+					}else{
+						dp[i][j] = dp[i + 1][j - 1];
+					}
+				}
+			}
+		}
+		int res = 0;
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				if (dp[i][j]){
+					res++;
+				}
+			}
+		}
+		return res;
+	}
 
 
 
