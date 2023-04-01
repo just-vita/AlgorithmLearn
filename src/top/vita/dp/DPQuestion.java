@@ -640,6 +640,101 @@ public class DPQuestion {
 		return dp[n][m];
 	}
 
+	/**
+	 * 647. 回文子串
+	 */
+	public int countSubstrings(String s) {
+		int[] dp = new int[s.length()];
+		Arrays.fill(dp, 1);
+		for (int i = 1; i < s.length(); i++) {
+			for (int j = 0; j <= i; j++) {
+				if (s.charAt(i) != s.charAt(j)){
+					continue;
+				}
+				if (isPalindrome(s, i, j)){
+					dp[i] = Math.max(dp[i], dp[i - 1]) + 1;
+				}
+			}
+		}
+		return dp[s.length() - 1];
+	}
+
+	private boolean isPalindrome(String s, int i, int j) {
+		while (j < i && s.charAt(i) == s.charAt(j)){
+			i--;
+			j++;
+		}
+		return true;
+	}
+
+	public int countSubstrings1(String s) {
+		int res = 0;
+		for (int i = 0; i < s.length(); i++) {
+			// 以i为中心
+			res += getPalindrome(s, i, i);
+			// 以i + 1为中心
+			res += getPalindrome(s, i, i + 1);
+		}
+		return res;
+	}
+
+	private int getPalindrome(String s, int i, int j) {
+		int res = 0;
+		while (i >= 0 && j <s.length() && s.charAt(i) == s.charAt(j)){
+			i--;
+			j++;
+			res++;
+		}
+		return res;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
