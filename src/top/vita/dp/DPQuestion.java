@@ -715,9 +715,30 @@ public class DPQuestion {
 		return res;
 	}
 
-
-
-
+	/**
+	 * 516. 最长回文子序列
+	 */
+	public int longestPalindromeSubseq(String s) {
+		int n = s.length();
+		int[][] dp = new int[n + 1][n];
+		// 倒序遍历i，保证前面的数据被计算过
+		for (int i = n - 1; i >= 0; i--) {
+			// 当i和j相同时，代表指向了同一字符，则将子序列长度初始化为1
+			dp[i][i] = 1;
+			// j指针在i指针后面
+			for (int j = i + 1; j < n; j++) {
+				if (s.charAt(i) == s.charAt(j)){
+					// 指针指向的两个字符都相同，代表多了两个回文子串
+					// 获取往中间靠一格后回文子串的个数
+					dp[i][j] = dp[i + 1][j - 1] + 2;
+				} else{
+					// 如果两个字符不相同，则分开判断哪边回文子串最长，作为目前的最长子串长度
+					dp[i][j] = Math.max(dp[i + 1][j], dp[i][j - 1]);
+				}
+			}
+		}
+		return dp[0][n - 1];
+	}
 
 
 
