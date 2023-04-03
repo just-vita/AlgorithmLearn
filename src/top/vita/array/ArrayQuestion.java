@@ -1139,8 +1139,38 @@ public class ArrayQuestion {
 		return res == Integer.MAX_VALUE ? 0 : res;
 	}
 
+	/**
+	 * 59. 螺旋矩阵 II
+	 */
+	public int[][] generateMatrix(int n) {
+		int[][] res = new int[n][n];
+		int num = 1;
+		int loop = 0;
+		int start = 0;
+		int i, j;
+		while (loop++ < n / 2){
+			for (j = start; j < n - loop; j++){
+				res[start][j] = num++;
+			}
+			for (i = start; i < n - loop; i++){
+				res[i][j] = num++;
+			}
 
+			for (; j >= loop; j--){
+				res[i][j] = num++;
+			}
+			for (; i >= loop; i--){
+				res[i][j] = num++;
+			}
+			start++;
+		}
 
+		if (n % 2 == 1){
+			res[start][start] = num;
+		}
+
+		return res;
+	}
 
 
 
