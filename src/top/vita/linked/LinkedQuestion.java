@@ -10,24 +10,6 @@ public class LinkedQuestion {
 	}
 
 	/*
-	 * 203. 移除链表元素 给你一个链表的头节点 head 和一个整数 val ， 请你删除链表中所有满足 Node.val == val 的节点，并返回
-	 * 新的头节点 。
-	 */
-	public static ListNode removeElements(ListNode head, int val) {
-		ListNode header = new ListNode(-1);
-		header.next = head;
-		ListNode cur = header;
-		while (cur.next != null) {
-			if (cur.next.val == val) {
-				cur.next = cur.next.next;
-			} else {
-				cur = cur.next;
-			}
-		}
-		return header;
-	}
-
-	/*
 	 * 206. 反转链表 给你单链表的头节点 head ，请你反转链表，并返回反转后的链表。
 	 */
 	public static ListNode reverseList(ListNode head) {
@@ -581,23 +563,37 @@ public class LinkedQuestion {
 		}
 		return head;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-    
+
+	/**
+	 * 203. 移除链表元素
+	 */
+	public ListNode removeElements(ListNode head, int val) {
+		ListNode header = new ListNode(-1);
+		header.next = head;
+		ListNode cur = header;
+		while (cur.next != null){
+			if (cur.next.val == val){
+				cur.next = cur.next.next;
+			} else {
+				cur = cur.next;
+			}
+		}
+		return header.next;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
