@@ -239,28 +239,6 @@ public class ArrayQuestion {
     }
     
 	/*
-	 * 977. 有序数组的平方 
-	 * 给你一个按 非递减顺序 排序的整数数组 nums，
-	 * 返回 每个数字的平方 组成的新数组，要求也按 非递减顺序 排序。
-	 */
-    public int[] sortedSquares(int[] nums) {
-    	int i = 0;
-    	int j = nums.length - 1;
-    	int[] res = new int[nums.length];
-    	int k = res.length - 1;
-    	while (i <= j) {
-    		if (nums[i] * nums[i] > nums[j] * nums[j]) {
-    			res[k--] = nums[i] * nums[i];
-    			i++;
-    		}else {
-    			res[k--] = nums[j] * nums[j];
-    			j--;
-    		}
-    	}
-    	return res;
-    }
-    
-	/*
 	 * 118. 杨辉三角 
 	 * 给定一个非负整数 numRows，
 	 * 生成「杨辉三角」的前 numRows 行。
@@ -1120,8 +1098,26 @@ public class ArrayQuestion {
 		return slow;
 	}
 
-
-
+	/**
+	 * 977. 有序数组的平方
+	 */
+	public int[] sortedSquares(int[] nums) {
+		int[] res = new int[nums.length];
+		int i = 0;
+		int j = nums.length - 1;
+		int k = res.length - 1;
+		while (i <= j){
+			if (nums[i] * nums[i] < nums[j] * nums[j]){
+				res[k] = nums[j] * nums[j];
+				j--;
+			} else{
+				res[k] = nums[i] * nums[i];
+				i++;
+			}
+			k--;
+		}
+		return res;
+	}
 
 
 
