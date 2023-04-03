@@ -1103,40 +1103,51 @@ public class ArrayQuestion {
     	}
     	return left + k;
     }
-    
-    /*
-     * 1539. 第 k 个缺失的正整数
-     */
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+	/**
+	 * 27. 移除元素
+	 */
+	public int removeElement(int[] nums, int val) {
+		int n = nums.length;
+		int slow = 0;
+		for (int fast = 0; fast < n; fast++){
+			if (nums[fast] != val){
+				// 每次都赋值是因为 在找到目标值后slow指针不会变，fast指针会将后面的数值赋值到slow指针的位置上
+				nums[slow] = nums[fast];
+				slow++;
+			}
+		}
+		return slow;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
