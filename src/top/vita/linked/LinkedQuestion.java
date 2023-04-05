@@ -597,9 +597,21 @@ public class LinkedQuestion {
 		return reverse(cur, next);
 	}
 
-
-
-
+	/**
+	 * 24. 两两交换链表中的节点
+	 */
+	public ListNode swapPairs2(ListNode head) {
+		if (head == null || head.next == null){
+			return head;
+		}
+		ListNode next = head.next;
+		// 假设中间已经是一个按要求排好序的链表
+		// 先将当前节点的next改成结果中的next (1 -> 3)
+		head.next = swapPairs2(next.next);
+		// 将原本的next指向当前节点 (2 -> 1)
+		next.next = head;
+		return next;
+	}
 
 
 
