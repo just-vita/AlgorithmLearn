@@ -613,8 +613,25 @@ public class LinkedQuestion {
 		return next;
 	}
 
-
-
+	/**
+	 * 19. 删除链表的倒数第 N 个结点
+	 */
+	public ListNode removeNthFromEnd2(ListNode head, int n) {
+		ListNode header = new ListNode(-1);
+		header.next = head;
+		ListNode fast = header;
+		ListNode slow = header;
+		while (n-- > 0 && fast != null){
+			fast = fast.next;
+		}
+		fast = fast.next;
+		while (fast != null){
+			fast = fast.next;
+			slow = slow.next;
+		}
+		slow.next = slow.next.next;
+		return header.next;
+	}
 
 
 
