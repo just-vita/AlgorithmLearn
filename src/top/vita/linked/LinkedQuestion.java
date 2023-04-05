@@ -581,8 +581,21 @@ public class LinkedQuestion {
 		return header.next;
 	}
 
+	/**
+	 * 206. ·´×ªÁ´±í
+	 */
+	public ListNode reverseList2(ListNode head) {
+		return reverse1(null, head);
+	}
 
-
+	public ListNode reverse1(ListNode pre, ListNode cur){
+		if (cur == null){
+			return pre;
+		}
+		ListNode next = cur.next;
+		cur.next = pre;
+		return reverse(cur, next);
+	}
 
 
 
