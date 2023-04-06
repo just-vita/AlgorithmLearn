@@ -52,4 +52,26 @@ public class HashQuertion {
         }
         return sum;
     }
+
+    /**
+     * 349. 两个数组的交集
+     */
+    public int[] intersection(int[] nums1, int[] nums2) {
+        HashSet<Integer> resSet = new HashSet<>();
+        HashSet<Integer> set = new HashSet<>();
+        for (int i : nums1){
+            set.add(i);
+        }
+        for (int i : nums2){
+            if (set.contains(i)){
+                resSet.add(i);
+            }
+        }
+        int[] res = new int[resSet.size()];
+        int j = 0;
+        for (int i : resSet){
+            res[j++] = i;
+        }
+        return res;
+    }
 }
