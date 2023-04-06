@@ -633,8 +633,25 @@ public class LinkedQuestion {
 		return header.next;
 	}
 
-
-
+    /**
+     * 面试题 02.07. 链表相交
+     */
+    public ListNode getIntersectionNode1(ListNode headA, ListNode headB) {
+        ListNode cur = headA;
+        HashSet set = new HashSet();
+        while (cur != null){
+            set.add(cur);
+            cur = cur.next;
+        }
+        cur = headB;
+        while (cur != null){
+            if (set.contains(cur)){
+                return cur;
+            }
+            cur = cur.next;
+        }
+        return null;
+    }
 
 
 }
