@@ -121,8 +121,23 @@ public class HashQuertion {
         return count;
     }
 
-
-
+    /**
+     * 383. 赎金信
+     */
+    public boolean canConstruct(String ransomNote, String magazine) {
+        int[] record = new int[26];
+        // 是由magazine里面的字符组成，所以先记录magazine中字符出现的次数
+        for (char ch : magazine.toCharArray()) {
+            record[ch - 'a']++;
+        }
+        for (char ch : ransomNote.toCharArray()) {
+            record[ch - 'a']--;
+            if (record[ch - 'a'] < 0) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 
 
