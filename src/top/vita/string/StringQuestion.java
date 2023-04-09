@@ -811,9 +811,45 @@ public class StringQuestion {
 		}
 		return new String(chs);
 	}
-	
-	
-	
+
+	/**
+	 * 剑指 Offer 05. 替换空格
+	 */
+	public String replaceSpace2(String s) {
+		if(s == null || s.length() == 0){
+			return s;
+		}
+		StringBuilder space = new StringBuilder();
+		for (char ch : s.toCharArray()) {
+			if (ch == ' '){
+				// 加上两个空格，用来放%20
+				space.append("  ");
+			}
+		}
+		if (space.length() == 0){
+			return s;
+		}
+		// 指向加入空格前的最后一位字符
+		int left = s.length() - 1;
+		// 将放置%20所需要的空间加入字符串，底层使用的是StringBuilder的append方法然后toString()
+		s += space;
+		// 指向最后一个空格字符
+		int right = s.length() - 1;
+		char[] chs = s.toCharArray();
+		while (left >= 0){
+			if (chs[left] == ' '){
+				// 填充字符串
+				chs[right--] = '0';
+				chs[right--] = '2';
+				chs[right] = '%';
+			} else{
+				chs[right] = chs[left];
+			}
+			left--;
+			right--;
+		}
+		return new String(chs);
+	}
 	
 	
 	
