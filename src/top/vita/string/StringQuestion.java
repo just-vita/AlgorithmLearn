@@ -792,9 +792,25 @@ public class StringQuestion {
 			right--;
 		}
 	}
-	
-	
-	
+
+	/**
+	 * 541. ·´×ª×Ö·û´® II
+	 */
+	public String reverseStr1(String s, int k) {
+		char[] chs = s.toCharArray();
+		for (int i = 0; i < chs.length; i += 2 * k) {
+			int left = i;
+			int right = Math.min(s.length(), left + k - 1);
+			while (left < right) {
+				char tmp = chs[left];
+				chs[left] = chs[right];
+				chs[right] = tmp;
+				left++;
+				right--;
+			}
+		}
+		return new String(chs);
+	}
 	
 	
 	
