@@ -850,10 +850,63 @@ public class StringQuestion {
 		}
 		return new String(chs);
 	}
-	
-	
-	
-	
-	
-	
+
+	/**
+	 * 151. 反转字符串中的单词
+	 */
+	public String reverseWords1(String s) {
+		StringBuilder sb = removeSpace(s);
+		reverseStrings(sb, 0, sb.length() - 1);
+		reverseWord(sb);
+		return sb.toString();
+	}
+
+	private StringBuilder removeSpace(String s) {
+		int left = 0;
+		int right = s.length() - 1;
+		while (s.charAt(left) == ' '){
+			left++;
+		}
+		while (s.charAt(right) == ' '){
+			right--;
+		}
+		StringBuilder sb = new StringBuilder();
+		while (left <= right){
+			char ch = s.charAt(left);
+			if (ch != ' ' || sb.charAt(sb.length() - 1) != ' '){
+				sb.append(ch);
+			}
+			left++;
+		}
+		return sb;
+	}
+
+	private void reverseStrings(StringBuilder sb, int left, int right) {
+		while (left < right) {
+			char tmp = sb.charAt(left);
+			sb.setCharAt(left, sb.charAt(right));
+			sb.setCharAt(right, tmp);
+			left++;
+			right--;
+		}
+	}
+
+	private void reverseWord(StringBuilder sb) {
+		int left = 0;
+		int right = 1;
+		while (left < sb.length()){
+			// 找到单词中最后一个字符的位置
+			while (right < sb.length() && sb.charAt(right) != ' '){
+				right++;
+			}
+			reverseStrings(sb, left, right - 1);
+			// 指向后一个单词
+			left = right + 1;
+			right = left + 1;
+		}
+	}
+
+
+
+
 }
