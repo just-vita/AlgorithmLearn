@@ -1,4 +1,4 @@
-package top.vita.stack;
+package top.vita.stack_queue;
 
 import java.util.Stack;
 
