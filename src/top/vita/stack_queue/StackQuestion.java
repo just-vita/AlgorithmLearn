@@ -1,5 +1,6 @@
 package top.vita.stack_queue;
 
+import java.util.ArrayDeque;
 import java.util.LinkedList;
 import java.util.Stack;
 
@@ -85,7 +86,7 @@ public class StackQuestion {
 	 * 1047. 删除字符串中的所有相邻重复项
 	 */
 	public String removeDuplicates(String s) {
-		Stack<Character> stack = new Stack<>();
+		ArrayDeque<Character> stack = new ArrayDeque<>();
 		for (char ch : s.toCharArray()){
 			if (stack.isEmpty() || stack.peek() != ch){
 				stack.push(ch);
@@ -101,7 +102,30 @@ public class StackQuestion {
 		return res;
 	}
 
-
+	/**
+	 * 150. 逆波兰表达式求值
+	 */
+	public int evalRPN(String[] tokens) {
+		ArrayDeque<Integer> stack = new ArrayDeque<>();
+		for (String s : tokens){
+			if ("+".equals(s)){
+				stack.push(stack.pop() + stack.pop());
+			} else if ("-".equals(s)){
+				// 特殊处理
+				stack.push(-stack.pop() + stack.pop());
+			} else if ("*".equals(s)){
+				stack.push(stack.pop() * stack.pop());
+			} else if ("/".equals(s)){
+				// 特殊处理
+				Integer tmp1 = stack.pop();
+				Integer tmp2 = stack.pop();
+				stack.push(tmp2 / tmp1);
+			} else{
+				stack.push(Integer.valueOf(s));
+			}
+		}
+		return stack.pop();
+	}
 
 
 
