@@ -1,5 +1,6 @@
 package top.vita.stack_queue;
 
+import java.util.LinkedList;
 import java.util.Stack;
 
 public class StackQuestion {
@@ -80,8 +81,25 @@ public class StackQuestion {
 		return stack.isEmpty();
 	}
 
-
-
+	/**
+	 * 1047. 删除字符串中的所有相邻重复项
+	 */
+	public String removeDuplicates(String s) {
+		Stack<Character> stack = new Stack<>();
+		for (char ch : s.toCharArray()){
+			if (stack.isEmpty() || stack.peek() != ch){
+				stack.push(ch);
+			} else{
+				stack.pop();
+			}
+		}
+		String res = "";
+		while (!stack.isEmpty()){
+			// 反转栈中的字符
+			res = stack.pop() + res;
+		}
+		return res;
+	}
 
 
 
