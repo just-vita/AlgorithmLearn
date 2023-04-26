@@ -116,4 +116,33 @@ public class TreeQuestion {
         Collections.reverse(result);
         return result;
     }
+
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        if (root == null){
+            return result;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()){
+            // 创建保存一层数的容器
+            ArrayList<Integer> path = new ArrayList<>();
+            // 在外面先定义一个，防止在进行添加子节点的时候影响到循环次数
+            int size = queue.size();
+            while (size > 0){
+                TreeNode node = queue.poll();
+                path.add(node.val);
+                if (node.left != null){
+                    queue.offer(node.left);
+                }
+                if (node.right != null){
+                    queue.offer(node.right);
+                }
+                // 减少这一层的长度
+                size--;
+            }
+            result.add(path);
+        }
+        return result;
+    }
 }
