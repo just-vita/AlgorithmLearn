@@ -1,9 +1,6 @@
 package top.vita.tree;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * @Author vita
@@ -143,6 +140,33 @@ public class TreeQuestion {
             }
             result.add(path);
         }
+        return result;
+    }
+
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null){
+            return result;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()){
+            ArrayList<Integer> path = new ArrayList<>();
+            int size = queue.size();
+            while (size > 0){
+                TreeNode node = queue.poll();
+                path.add(node.val);
+                if (node.left != null){
+                    queue.offer(node.left);
+                }
+                if (node.right != null){
+                    queue.offer(node.right);
+                }
+                size--;
+            }
+            result.add(path);
+        }
+        Collections.reverse(result);
         return result;
     }
 }
