@@ -1363,6 +1363,9 @@ public class TreePractice {
 class Node {
 	public int val;
 	public List<Node> children;
+	public Node next;
+	public Node left
+	public Node right;
 
 	public Node() {
 	}
