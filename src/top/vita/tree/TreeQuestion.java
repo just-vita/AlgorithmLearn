@@ -250,7 +250,31 @@ public class TreeQuestion {
         return result;
     }
 
-
+    public List<Integer> largestValues(TreeNode root) {
+        List<Integer> result = new ArrayList();
+        if(root == null){
+            return result;
+        }
+        Queue<TreeNode> queue = new LinkedList();
+        queue.offer(root);
+        while (!queue.isEmpty()){
+            int size = queue.size();
+            int max = Integer.MIN_VALUE;
+            while (size > 0){
+                size--;
+                TreeNode node = queue.poll();
+                max = max > node.val ? max : node.val;
+                if (node.left != null){
+                    queue.offer(node.left);
+                }
+                if (node.right != null){
+                    queue.offer(node.right);
+                }
+            }
+            result.add(max);
+        }
+        return result;
+    }
 
 
 
