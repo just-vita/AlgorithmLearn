@@ -220,4 +220,47 @@ public class TreeQuestion {
         }
         return result;
     }
+
+    public List<List<Integer>> levelOrder(Node root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()){
+            int size = queue.size();
+            ArrayList<Integer> path = new ArrayList<>();
+            while (size > 0){
+                size--;
+                Node node = queue.poll();
+                path.add(node.val);
+                List<Node> children = node.children;
+                if (children == null || children.size() == 0){
+                    continue;
+                }
+                for (Node cur : children){
+                    if (cur != null){
+                        queue.offer(cur);
+                    }
+                }
+            }
+            result.add(path);
+        }
+        return result;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
