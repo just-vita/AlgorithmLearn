@@ -194,4 +194,30 @@ public class TreeQuestion {
         }
         return result;
     }
+
+    public List<Double> averageOfLevels(TreeNode root) {
+        ArrayList<Double> result = new ArrayList<>();
+        if (root == null){
+            return result;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()){
+            int size = queue.size();
+            double sum = 0;
+            for (int i = 0; i < size; i++){
+                TreeNode node = queue.poll();
+                sum += node.val;
+                if (node.left != null){
+                    queue.offer(node.left);
+                }
+                if (node.right != null){
+                    queue.offer(node.right);
+                }
+            }
+            // 直接使用队列的长度求平均值
+            result.add(sum / size);
+        }
+        return result;
+    }
 }
