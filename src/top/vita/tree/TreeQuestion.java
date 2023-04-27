@@ -276,7 +276,32 @@ public class TreeQuestion {
         return result;
     }
 
-
+    public Node connect(Node root) {
+        if (root == null){
+            return null;
+        }
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()){
+            int size = queue.size();
+            Node pre = null;
+            while (size > 0){
+                size--;
+                Node node = queue.poll();
+                if (pre != null){
+                    pre.next = node;
+                }
+                pre = node;
+                if (node.left != null){
+                    queue.offer(node.left);
+                }
+                if (node.right != null){
+                    queue.offer(node.right);
+                }
+            }
+        }
+        return root;
+    }
 
 
 
