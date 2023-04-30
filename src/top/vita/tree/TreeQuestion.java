@@ -377,4 +377,42 @@ public class TreeQuestion {
         }
     }
 
+    public int maxDepth(Node root) {
+        getMaxDepth(root, 0);
+        return max;
+    }
+
+    public void getMaxDepth(Node node, int depth){
+        if (node == null){
+            return;
+        }
+        depth++;
+        max = Math.max(max, depth);
+        for (Node child : node.children){
+            getMaxDepth(child, depth);
+        }
+    }
+
+    public int maxDepth1(Node root) {
+        if (root == null){
+            return 0;
+        }
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(root);
+        int depth = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            depth++;
+            while (size > 0){
+                size--;
+                Node node = queue.poll();
+                for (Node child : node.children){
+                    queue.offer(child);
+                }
+            }
+        }
+        return depth;
+    }
+
+
 }
