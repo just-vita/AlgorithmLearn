@@ -357,5 +357,24 @@ public class TreeQuestion {
         return outside && inside;
     }
 
+    int max = 0;
+    public int maxDepth(TreeNode root) {
+        getMaxDepth(root, 0);
+        return max;
+    }
+
+    public void getMaxDepth(TreeNode node, int depth){
+        if (node == null){
+            return;
+        }
+        depth++;
+        max = Math.max(max, depth);
+        if (node.left != null){
+            getMaxDepth(node.left, depth);
+        }
+        if (node.right != null){
+            getMaxDepth(node.right, depth);
+        }
+    }
 
 }
