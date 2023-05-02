@@ -441,4 +441,13 @@ public class TreeQuestion {
         return depth;
     }
 
+
+    public int countNodes(TreeNode root) {
+        if (root == null) return 0;
+        int leftNum = countNodes(root.left); // 左边
+        int rightNum = countNodes(root.right); // 右边
+        int treeNum = leftNum + rightNum + 1; // 中间，加一是因为算上中间节点
+        return treeNum;
+    }
+
 }
