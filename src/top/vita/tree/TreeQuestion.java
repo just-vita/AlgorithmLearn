@@ -475,29 +475,111 @@ public class TreeQuestion {
             return 1 + Math.max(left, right);
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+    public List<String> binaryTreePaths(TreeNode root) {
+        List<String> res = new ArrayList<>();
+        if (root == null){
+            return res;
+        }
+        List<Integer> path = new ArrayList<>();
+        binaryTreePathsDfs(root, res, path);
+        return res;
+    }
+
+    public void binaryTreePathsDfs(TreeNode node, List<String> res, List<Integer> path){
+        path.add(node.val);
+        if (node.left == null && node.right == null){
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < path.size() - 1; i++){
+                sb.append(path.get(i));
+                sb.append("->");
+            }
+            sb.append(path.get(path.size() - 1));
+            res.add(sb.toString());
+        }
+        if (node.left != null){
+            binaryTreePathsDfs(node.left, res, path);
+            path.remove(path.size() - 1);
+        }
+        if (node.right != null){
+            binaryTreePathsDfs(node.right, res, path);
+            path.remove(path.size() - 1);
+        }
+    }
+
+    public List<String> binaryTreePaths2(TreeNode root) {
+        List<String> res = new ArrayList<>();
+        if (root == null){
+            return res;
+        }
+        Stack<Object> stack = new Stack<>();
+        stack.push(root);
+        stack.push(root.val + "");
+        while (!stack.isEmpty()){
+            String path = (String) stack.pop();
+            TreeNode node = (TreeNode) stack.pop();
+            if (node.left == null && node.right == null){
+                res.add(path);
+            }
+            if (node.left != null){
+                stack.push(node.left);
+                stack.push(path + "->" + node.left.val);
+            }
+            if (node.right != null){
+                stack.push(node.right);
+                stack.push(path + "->" + node.right.val);
+            }
+        }
+        return res;
+    }
+
+    public List<String> binaryTreePaths3(TreeNode root) {
+        List<String> res = new ArrayList<>();
+        if (root == null){
+            return res;
+        }
+        String path = "";
+        binaryTreePathsDfs(root, res, path);
+        return res;
+    }
+
+    public void binaryTreePathsDfs(TreeNode node, List<String> res, String path){
+        path += node.val;
+        if (node.left == null && node.right == null){
+            res.add(path);
+            return;
+        }
+        if (node.left != null){
+            binaryTreePathsDfs(node.left, res, path + "->");
+        }
+        if (node.right != null){
+            binaryTreePathsDfs(node.right, res, path + "->");
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
