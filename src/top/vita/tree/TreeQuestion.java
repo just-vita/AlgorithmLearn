@@ -451,25 +451,53 @@ public class TreeQuestion {
     }
 
     public boolean isBalanced(TreeNode root) {
-        return getHeight(root) != -1;
+        return isBalancedDfs(root, 0) != -1;
     }
 
-    public int getHeight(TreeNode root) {
-        if (root == null) {
+    // 返回-1代表不是平衡树
+    public int isBalancedDfs(TreeNode node, int depth){
+        if (node == null){
             return 0;
         }
-        int leftHeight = getHeight(root.left);
-        if (leftHeight == -1) {
+        // 左子树高度
+        int left = isBalancedDfs(node.left, depth + 1);
+        if (left == -1){
             return -1;
         }
-        int rightHeight = getHeight(root.right);
-        if (rightHeight == -1) {
+        // 右子树高度
+        int right = isBalancedDfs(node.right, depth + 1);
+        if (right == -1){
             return -1;
         }
-        // 左右子树高度差大于1，return -1表示已经不是平衡树了
-        if (Math.abs(leftHeight - rightHeight) > 1) {
+        if (Math.abs(left - right) > 1){
             return -1;
+        } else {
+            return 1 + Math.max(left, right);
         }
-        return Math.max(leftHeight, rightHeight) + 1;
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 }
