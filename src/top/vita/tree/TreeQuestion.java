@@ -557,7 +557,27 @@ public class TreeQuestion {
         }
     }
 
-
+    public int sumOfLeftLeaves(TreeNode root) {
+        if (root == null){
+            return 0;
+        }
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        int sum = 0;
+        while (!stack.isEmpty()){
+            TreeNode node = stack.pop();
+            if (node.left != null && node.left.left == null && node.left.right == null){
+                sum += node.left.val;
+            }
+            if (node.left != null){
+                stack.push(node.left);
+            }
+            if (node.right != null){
+                stack.push(node.right);
+            }
+        }
+        return sum;
+    }
 
 
 
