@@ -579,7 +579,30 @@ public class TreeQuestion {
         return sum;
     }
 
-
+    public int findBottomLeftValue(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        int res = 0;
+        while (!queue.isEmpty()){
+            int size = queue.size();
+            int i = 0;
+            while (size > 0){
+                size--;
+                TreeNode node = queue.poll();
+                if (node.left == null && node.right == null && i == 0){
+                    res = node.val;
+                }
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+                i++;
+            }
+        }
+        return res;
+    }
 
 
 
