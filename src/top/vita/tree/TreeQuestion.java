@@ -602,12 +602,63 @@ public class TreeQuestion {
             }
         }
         return res;
-
     }
 
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        if (root == null){
+            return false;
+        }
 
+        return dfs(root, targetSum, root.val);
+    }
 
+    public boolean dfs(TreeNode node, int targetSum, int sum){
+        if (node == null){
+            return false;
+        }
+        if (node.left == null && node.right == null){
+            if (targetSum == sum){
+                return true;
+            }
+        }
+        boolean left = false;
+        if (node.left != null){
+            left = dfs(node.left, targetSum, sum + node.left.val);
+        }
+        boolean right = false;
+        if (node.right != null){
+            right = dfs(node.right, targetSum, sum + node.right.val);
+        }
+        return left || right;
+    }
 
+    public boolean hasPathSum1(TreeNode root, int targetSum) {
+        if (root == null){
+            return false;
+        }
+        // 用两个栈来实现
+        Stack<TreeNode> stack = new Stack<>();
+        Stack<Integer> intStack = new Stack<>();
+        stack.push(root);
+        intStack.push(root.val);
+        while (!stack.isEmpty()){
+            TreeNode node = stack.pop();
+            Integer sum = intStack.pop();
+            if (node.left == null && node.right == null && targetSum == sum){
+                return true;
+            }
+            if (node.left != null){
+                stack.push(node.left);
+                intStack.push(sum + node.left.val);
+            }
+            if (node.right != null){
+                stack.push(node.right);
+                intStack.push(sum + node.right.val);
+            }
+        }
+
+        return false;
+    }
 
 
 
