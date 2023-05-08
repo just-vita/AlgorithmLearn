@@ -660,7 +660,33 @@ public class TreeQuestion {
         return false;
     }
 
+    public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (root == null){
+            return res;
+        }
+        dfs(root, targetSum, root.val, res, new ArrayList<Integer>());
+        return res;
+    }
 
+    public void dfs(TreeNode node, int targetSum, int sum, List<List<Integer>> res, List<Integer> path){
+        if (node == null){
+            return;
+        }
+        path.add(node.val);
+        if (node.left == null && node.right == null && targetSum == sum){
+            res.add(new ArrayList<>(path));
+            return;
+        }
+        if (node.left != null){
+            dfs(node.left, targetSum, sum + node.left.val, res, path);
+            path.remove(path.size() - 1);
+        }
+        if (node.right != null){
+            dfs(node.right, targetSum, sum + node.right.val, res, path);
+            path.remove(path.size() - 1);
+        }
+    }
 
 
 
