@@ -788,6 +788,39 @@ public class TreeQuestion {
         return root1;
     }
 
+    public int[] findMode(TreeNode root) {
+        if (root == null) {
+            return new int[0];
+        }
+        Map<Integer, Integer> map = new HashMap<>();
+        List<Integer> list = new ArrayList<>();
+        // 获得频率 Map
+        searchBST(root, map);
+        List<Map.Entry<Integer, Integer>> mapList = map.entrySet().stream()
+                .sorted((c1, c2) -> c2.getValue().compareTo(c1.getValue()))
+                .collect(Collectors.toList());
+        // 把频率最高的加入 list
+        list.add(mapList.get(0).getKey());
+        // 将频率相同的也加入
+        for (int i = 1; i < mapList.size(); i++) {
+            if (mapList.get(i).getValue() == mapList.get(i - 1).getValue()) {
+                list.add(mapList.get(i).getKey());
+            } else {
+                break;
+            }
+        }
+        return list.stream().mapToInt(Integer::intValue).toArray();
+    }
+
+    void searchBST(TreeNode cur, Map<Integer, Integer> map) {
+        if (cur == null) {
+            return;
+        }
+        map.put(cur.val, map.getOrDefault(cur.val, 0) + 1);
+        searchBST(cur.left, map);
+        searchBST(cur.right, map);
+    }
+
 
 
 
