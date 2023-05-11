@@ -854,7 +854,29 @@ public class TreeQuestion {
         dfs(cur.right);
     }
 
+    public int getMinimumDifference(TreeNode root) {
+        ArrayList<Integer> list = new ArrayList<>();
+        // 中序遍历BST树取出有序列表
+        getMinimumDifferenceDfs(root, list);
+        if (list.size() < 2){
+            return 0;
+        }
+        int result = Integer.MAX_VALUE;
+        // 直接循环判断
+        for (int i = 1; i < list.size(); i++){
+            result = Math.min(result, list.get(i) - list.get(i - 1));
+        }
+        return result;
+    }
 
+    public void getMinimumDifferenceDfs(TreeNode root, ArrayList<Integer> list){
+        if (root == null){
+            return;
+        }
+        getMinimumDifferenceDfs(root.left, list);
+        list.add(root.val);
+        getMinimumDifferenceDfs(root.right, list);
+    }
 
 
 }
