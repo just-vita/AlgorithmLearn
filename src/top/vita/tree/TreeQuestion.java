@@ -1,11 +1,13 @@
 package top.vita.tree;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @Author vita
  * @Date 2023/4/26 12:30
  */
+@SuppressWarnings("all")
 public class TreeQuestion {
     public List<Integer> preorderTraversal(TreeNode root) {
         ArrayList<Integer> result = new ArrayList<>();
@@ -821,7 +823,36 @@ public class TreeQuestion {
         searchBST(cur.right, map);
     }
 
+    TreeNode pre = null;
+    List<Integer> result = new ArrayList<>();
+    int count = 0;
+    int maxCount = 0;
+    public int[] findMode2(TreeNode root) {
+        dfs(root);
+        return result.stream().mapToInt(Integer::intValue).toArray();
+    }
 
+    public void dfs(TreeNode cur) {
+        if (cur == null){
+            return;
+        }
+        dfs(cur.left);
+        if (pre == null || pre.val != cur.val){
+            count = 1;
+        } else {
+            count++;
+        }
+        // 发现了频率更高的数字，重置结果列表
+        if (count > maxCount){
+            result.clear();
+            result.add(cur.val);
+            maxCount = count;
+        } else if (count == maxCount){
+            result.add(cur.val);
+        }
+        pre = cur;
+        dfs(cur.right);
+    }
 
 
 
