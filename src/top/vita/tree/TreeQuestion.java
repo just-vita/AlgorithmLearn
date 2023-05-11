@@ -968,7 +968,31 @@ public class TreeQuestion {
         return true;
     }
 
+    public boolean isValidBST3(TreeNode root) {
+        if (root == null){
+            return true;
+        }
+        TreeNode pre = null;
+        TreeNode cur = root;
+        Stack<TreeNode> stack = new Stack<>();
+        while (cur != null || !stack.isEmpty()){
+            while (cur != null){
+                stack.push(cur);
+                // ◊Û
+                cur = cur.left;
+            }
+            // ÷–
+            cur = stack.pop();
+            if (pre != null && pre.val >= cur.val){
+                return false;
+            }
+            pre = cur;
 
+            // ”“
+            cur = cur.right;
+        }
+        return true;
+    }
 
 
 
