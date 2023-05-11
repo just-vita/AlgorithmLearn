@@ -896,6 +896,44 @@ public class TreeQuestion {
         pre = cur;
         getMinimumDifferenceDfs(cur.right);
     }
+
+    public int getMinimumDifference2(TreeNode root) {
+        if (root == null){
+            return 0;
+        }
+        int result = Integer.MAX_VALUE;
+        TreeNode pre = null;
+        TreeNode cur = root;
+        Stack<TreeNode> stack = new Stack<>();
+        while (cur != null || !stack.isEmpty()){
+            while (cur != null){
+                stack.push(cur);
+                cur = cur.left;
+            }
+            cur = stack.pop();
+
+            if (pre != null){
+                result = Math.min(result, cur.val - pre.val);
+            }
+            pre = cur;
+
+            cur = cur.right;
+        }
+        return result;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 
