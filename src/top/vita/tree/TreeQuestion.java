@@ -1047,7 +1047,23 @@ public class TreeQuestion {
         return null;
     }
 
-
+    public TreeNode lowestCommonAncestor3(TreeNode root, TreeNode p, TreeNode q) {
+        while (root != null){
+            // 比两个子孙都大，搜索左边
+            if (root.val > p.val && root.val > q.val) {
+                root = root.left;
+            }
+            // 比两个子孙都小，搜索右边
+            else if (root.val < p.val && root.val < q.val) {
+                root = root.right;
+            }
+            // 找到第一个在（p, q）区间中的节点，这个就是最近公共祖先（BST特性）
+            else {
+                return root;
+            }
+        }
+        return null;
+    }
 
 
 }
