@@ -994,7 +994,24 @@ public class TreeQuestion {
         return true;
     }
 
-
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        // 找到了就返回节点，没找到就返回null
+        if (root == null || root == p || root == q){
+            return root;
+        }
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        // 两个子孙都找到了，那么当前节点就是最近的公共祖先
+        if (left != null && right != null){
+            return root;
+        }
+        // 左边没找到，但是右边找到了，代表右边已经找到了最近的公共祖先，往上返回
+        if (left == null && right != null){
+            return right;
+        }
+        // 左边找到了，但是右边没找到，代表左边已经找到了最近的公共祖先，往上返回
+        return left;
+    }
 
 
 
