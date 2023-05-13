@@ -16,7 +16,7 @@ public class TreeQuestion {
     }
 
     public void dfs1(TreeNode root, ArrayList<Integer> result) {
-        if (root == null){
+        if (root == null) {
             return;
         }
         result.add(root.val);
@@ -26,19 +26,19 @@ public class TreeQuestion {
 
     public List<Integer> preorderTraversal2(TreeNode root) {
         ArrayList<Integer> result = new ArrayList<>();
-        if (root == null){
+        if (root == null) {
             return result;
         }
         Stack<TreeNode> stack = new Stack<>();
         stack.push(root);
-        while (!stack.isEmpty()){
+        while (!stack.isEmpty()) {
             TreeNode node = stack.pop();
             result.add(node.val);
 
-            if (node.right != null){
+            if (node.right != null) {
                 stack.push(node.right);
             }
-            if (node.left != null){
+            if (node.left != null) {
                 stack.push(node.left);
             }
         }
@@ -52,7 +52,7 @@ public class TreeQuestion {
     }
 
     public void dfs2(TreeNode root, ArrayList<Integer> result) {
-        if (root == null){
+        if (root == null) {
             return;
         }
         dfs(root.left, result);
@@ -62,16 +62,16 @@ public class TreeQuestion {
 
     public List<Integer> inorderTraversal1(TreeNode root) {
         ArrayList<Integer> result = new ArrayList<>();
-        if (root == null){
+        if (root == null) {
             return result;
         }
         Stack<TreeNode> stack = new Stack<>();
         TreeNode cur = root;
-        while (cur != null || !stack.isEmpty()){
-            if (cur != null){
+        while (cur != null || !stack.isEmpty()) {
+            if (cur != null) {
                 stack.push(cur);
                 cur = cur.left;
-            } else{
+            } else {
                 cur = stack.pop();
                 result.add(cur.val);
                 cur = cur.right;
@@ -87,7 +87,7 @@ public class TreeQuestion {
     }
 
     public void dfs(TreeNode root, ArrayList<Integer> result) {
-        if (root == null){
+        if (root == null) {
             return;
         }
         dfs(root.left, result);
@@ -97,18 +97,18 @@ public class TreeQuestion {
 
     public List<Integer> postorderTraversal1(TreeNode root) {
         ArrayList<Integer> result = new ArrayList<>();
-        if (root == null){
+        if (root == null) {
             return result;
         }
         Stack<TreeNode> stack = new Stack<>();
         stack.push(root);
-        while (!stack.isEmpty()){
+        while (!stack.isEmpty()) {
             TreeNode node = stack.pop();
             result.add(node.val);
-            if (node.left != null){
+            if (node.left != null) {
                 stack.push(node.left);
             }
-            if (node.right != null){
+            if (node.right != null) {
                 stack.push(node.right);
             }
         }
@@ -118,23 +118,23 @@ public class TreeQuestion {
 
     public List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> result = new ArrayList<List<Integer>>();
-        if (root == null){
+        if (root == null) {
             return result;
         }
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
-        while (!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             // 创建保存一层数的容器
             ArrayList<Integer> path = new ArrayList<>();
             // 在外面先定义一个，防止在进行添加子节点的时候影响到循环次数
             int size = queue.size();
-            while (size > 0){
+            while (size > 0) {
                 TreeNode node = queue.poll();
                 path.add(node.val);
-                if (node.left != null){
+                if (node.left != null) {
                     queue.offer(node.left);
                 }
-                if (node.right != null){
+                if (node.right != null) {
                     queue.offer(node.right);
                 }
                 // 减少这一层的长度
@@ -147,21 +147,21 @@ public class TreeQuestion {
 
     public List<List<Integer>> levelOrderBottom(TreeNode root) {
         List<List<Integer>> result = new ArrayList<>();
-        if (root == null){
+        if (root == null) {
             return result;
         }
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
-        while (!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             ArrayList<Integer> path = new ArrayList<>();
             int size = queue.size();
-            while (size > 0){
+            while (size > 0) {
                 TreeNode node = queue.poll();
                 path.add(node.val);
-                if (node.left != null){
+                if (node.left != null) {
                     queue.offer(node.left);
                 }
-                if (node.right != null){
+                if (node.right != null) {
                     queue.offer(node.right);
                 }
                 size--;
@@ -174,22 +174,22 @@ public class TreeQuestion {
 
     public List<Integer> rightSideView(TreeNode root) {
         ArrayList<Integer> result = new ArrayList<>();
-        if (root == null){
+        if (root == null) {
             return result;
         }
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
-        while (!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             int size = queue.size();
-            for (int i = 0; i < size; i++){
+            for (int i = 0; i < size; i++) {
                 TreeNode node = queue.poll();
-                if (i == size - 1){
+                if (i == size - 1) {
                     result.add(node.val);
                 }
-                if (node.left != null){
+                if (node.left != null) {
                     queue.offer(node.left);
                 }
-                if (node.right != null){
+                if (node.right != null) {
                     queue.offer(node.right);
                 }
             }
@@ -199,21 +199,21 @@ public class TreeQuestion {
 
     public List<Double> averageOfLevels(TreeNode root) {
         ArrayList<Double> result = new ArrayList<>();
-        if (root == null){
+        if (root == null) {
             return result;
         }
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
-        while (!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             int size = queue.size();
             double sum = 0;
-            for (int i = 0; i < size; i++){
+            for (int i = 0; i < size; i++) {
                 TreeNode node = queue.poll();
                 sum += node.val;
-                if (node.left != null){
+                if (node.left != null) {
                     queue.offer(node.left);
                 }
-                if (node.right != null){
+                if (node.right != null) {
                     queue.offer(node.right);
                 }
             }
@@ -230,19 +230,19 @@ public class TreeQuestion {
         }
         Queue<Node> queue = new LinkedList<>();
         queue.offer(root);
-        while (!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             int size = queue.size();
             ArrayList<Integer> path = new ArrayList<>();
-            while (size > 0){
+            while (size > 0) {
                 size--;
                 Node node = queue.poll();
                 path.add(node.val);
                 List<Node> children = node.children;
-                if (children == null || children.size() == 0){
+                if (children == null || children.size() == 0) {
                     continue;
                 }
-                for (Node cur : children){
-                    if (cur != null){
+                for (Node cur : children) {
+                    if (cur != null) {
                         queue.offer(cur);
                     }
                 }
@@ -254,22 +254,22 @@ public class TreeQuestion {
 
     public List<Integer> largestValues(TreeNode root) {
         List<Integer> result = new ArrayList();
-        if(root == null){
+        if (root == null) {
             return result;
         }
         Queue<TreeNode> queue = new LinkedList();
         queue.offer(root);
-        while (!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             int size = queue.size();
             int max = Integer.MIN_VALUE;
-            while (size > 0){
+            while (size > 0) {
                 size--;
                 TreeNode node = queue.poll();
                 max = max > node.val ? max : node.val;
-                if (node.left != null){
+                if (node.left != null) {
                     queue.offer(node.left);
                 }
-                if (node.right != null){
+                if (node.right != null) {
                     queue.offer(node.right);
                 }
             }
@@ -279,25 +279,25 @@ public class TreeQuestion {
     }
 
     public Node connect(Node root) {
-        if (root == null){
+        if (root == null) {
             return null;
         }
         Queue<Node> queue = new LinkedList<>();
         queue.offer(root);
-        while (!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             int size = queue.size();
             Node pre = null;
-            while (size > 0){
+            while (size > 0) {
                 size--;
                 Node node = queue.poll();
-                if (pre != null){
+                if (pre != null) {
                     pre.next = node;
                 }
                 pre = node;
-                if (node.left != null){
+                if (node.left != null) {
                     queue.offer(node.left);
                 }
-                if (node.right != null){
+                if (node.right != null) {
                     queue.offer(node.right);
                 }
             }
@@ -306,25 +306,25 @@ public class TreeQuestion {
     }
 
     public Node connect1(Node root) {
-        if (root == null){
+        if (root == null) {
             return null;
         }
         Queue<Node> queue = new LinkedList<>();
         queue.offer(root);
-        while (!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             int size = queue.size();
             Node pre = null;
-            while (size > 0){
+            while (size > 0) {
                 size--;
                 Node node = queue.poll();
-                if (pre != null){
+                if (pre != null) {
                     pre.next = node;
                 }
                 pre = node;
-                if (node.left != null){
+                if (node.left != null) {
                     queue.offer(node.left);
                 }
-                if (node.right != null){
+                if (node.right != null) {
                     queue.offer(node.right);
                 }
             }
@@ -333,7 +333,7 @@ public class TreeQuestion {
     }
 
     public TreeNode invertTree(TreeNode root) {
-        if (root == null){
+        if (root == null) {
             return null;
         }
         TreeNode tmp = root.left;
@@ -349,9 +349,9 @@ public class TreeQuestion {
     }
 
     private boolean checkIsSymmetric(TreeNode left, TreeNode right) {
-        if (left == null && right == null){
+        if (left == null && right == null) {
             return true;
-        } else if (left == null || right == null || left.val != right.val){
+        } else if (left == null || right == null || left.val != right.val) {
             return false;
         }
         boolean outside = checkIsSymmetric(left.left, right.right);
@@ -360,21 +360,22 @@ public class TreeQuestion {
     }
 
     int max = 0;
+
     public int maxDepth(TreeNode root) {
         getMaxDepth(root, 0);
         return max;
     }
 
-    public void getMaxDepth(TreeNode node, int depth){
-        if (node == null){
+    public void getMaxDepth(TreeNode node, int depth) {
+        if (node == null) {
             return;
         }
         depth++;
         max = Math.max(max, depth);
-        if (node.left != null){
+        if (node.left != null) {
             getMaxDepth(node.left, depth);
         }
-        if (node.right != null){
+        if (node.right != null) {
             getMaxDepth(node.right, depth);
         }
     }
@@ -384,19 +385,19 @@ public class TreeQuestion {
         return max;
     }
 
-    public void getMaxDepth(Node node, int depth){
-        if (node == null){
+    public void getMaxDepth(Node node, int depth) {
+        if (node == null) {
             return;
         }
         depth++;
         max = Math.max(max, depth);
-        for (Node child : node.children){
+        for (Node child : node.children) {
             getMaxDepth(child, depth);
         }
     }
 
     public int maxDepth1(Node root) {
-        if (root == null){
+        if (root == null) {
             return 0;
         }
         Queue<Node> queue = new LinkedList<>();
@@ -405,10 +406,10 @@ public class TreeQuestion {
         while (!queue.isEmpty()) {
             int size = queue.size();
             depth++;
-            while (size > 0){
+            while (size > 0) {
                 size--;
                 Node node = queue.poll();
-                for (Node child : node.children){
+                for (Node child : node.children) {
                     queue.offer(child);
                 }
             }
@@ -426,16 +427,16 @@ public class TreeQuestion {
         while (!queue.isEmpty()) {
             int size = queue.size();
             depth++;
-            while (size > 0){
+            while (size > 0) {
                 size--;
                 TreeNode node = queue.poll();
                 if (node.left == null && node.right == null) {
                     return depth;
                 }
-                if (node.left != null){
+                if (node.left != null) {
                     queue.offer(node.left);
                 }
-                if (node.right != null){
+                if (node.right != null) {
                     queue.offer(node.right);
                 }
             }
@@ -457,21 +458,21 @@ public class TreeQuestion {
     }
 
     // 返回-1代表不是平衡树
-    public int isBalancedDfs(TreeNode node, int depth){
-        if (node == null){
+    public int isBalancedDfs(TreeNode node, int depth) {
+        if (node == null) {
             return 0;
         }
         // 左子树高度
         int left = isBalancedDfs(node.left, depth + 1);
-        if (left == -1){
+        if (left == -1) {
             return -1;
         }
         // 右子树高度
         int right = isBalancedDfs(node.right, depth + 1);
-        if (right == -1){
+        if (right == -1) {
             return -1;
         }
-        if (Math.abs(left - right) > 1){
+        if (Math.abs(left - right) > 1) {
             return -1;
         } else {
             return 1 + Math.max(left, right);
@@ -480,7 +481,7 @@ public class TreeQuestion {
 
     public List<String> binaryTreePaths(TreeNode root) {
         List<String> res = new ArrayList<>();
-        if (root == null){
+        if (root == null) {
             return res;
         }
         List<Integer> path = new ArrayList<>();
@@ -488,22 +489,22 @@ public class TreeQuestion {
         return res;
     }
 
-    public void binaryTreePathsDfs(TreeNode node, List<String> res, List<Integer> path){
+    public void binaryTreePathsDfs(TreeNode node, List<String> res, List<Integer> path) {
         path.add(node.val);
-        if (node.left == null && node.right == null){
+        if (node.left == null && node.right == null) {
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < path.size() - 1; i++){
+            for (int i = 0; i < path.size() - 1; i++) {
                 sb.append(path.get(i));
                 sb.append("->");
             }
             sb.append(path.get(path.size() - 1));
             res.add(sb.toString());
         }
-        if (node.left != null){
+        if (node.left != null) {
             binaryTreePathsDfs(node.left, res, path);
             path.remove(path.size() - 1);
         }
-        if (node.right != null){
+        if (node.right != null) {
             binaryTreePathsDfs(node.right, res, path);
             path.remove(path.size() - 1);
         }
@@ -511,23 +512,23 @@ public class TreeQuestion {
 
     public List<String> binaryTreePaths2(TreeNode root) {
         List<String> res = new ArrayList<>();
-        if (root == null){
+        if (root == null) {
             return res;
         }
         Stack<Object> stack = new Stack<>();
         stack.push(root);
         stack.push(root.val + "");
-        while (!stack.isEmpty()){
+        while (!stack.isEmpty()) {
             String path = (String) stack.pop();
             TreeNode node = (TreeNode) stack.pop();
-            if (node.left == null && node.right == null){
+            if (node.left == null && node.right == null) {
                 res.add(path);
             }
-            if (node.left != null){
+            if (node.left != null) {
                 stack.push(node.left);
                 stack.push(path + "->" + node.left.val);
             }
-            if (node.right != null){
+            if (node.right != null) {
                 stack.push(node.right);
                 stack.push(path + "->" + node.right.val);
             }
@@ -537,7 +538,7 @@ public class TreeQuestion {
 
     public List<String> binaryTreePaths3(TreeNode root) {
         List<String> res = new ArrayList<>();
-        if (root == null){
+        if (root == null) {
             return res;
         }
         String path = "";
@@ -545,36 +546,36 @@ public class TreeQuestion {
         return res;
     }
 
-    public void binaryTreePathsDfs(TreeNode node, List<String> res, String path){
+    public void binaryTreePathsDfs(TreeNode node, List<String> res, String path) {
         path += node.val;
-        if (node.left == null && node.right == null){
+        if (node.left == null && node.right == null) {
             res.add(path);
             return;
         }
-        if (node.left != null){
+        if (node.left != null) {
             binaryTreePathsDfs(node.left, res, path + "->");
         }
-        if (node.right != null){
+        if (node.right != null) {
             binaryTreePathsDfs(node.right, res, path + "->");
         }
     }
 
     public int sumOfLeftLeaves(TreeNode root) {
-        if (root == null){
+        if (root == null) {
             return 0;
         }
         Stack<TreeNode> stack = new Stack<>();
         stack.push(root);
         int sum = 0;
-        while (!stack.isEmpty()){
+        while (!stack.isEmpty()) {
             TreeNode node = stack.pop();
-            if (node.left != null && node.left.left == null && node.left.right == null){
+            if (node.left != null && node.left.left == null && node.left.right == null) {
                 sum += node.left.val;
             }
-            if (node.left != null){
+            if (node.left != null) {
                 stack.push(node.left);
             }
-            if (node.right != null){
+            if (node.right != null) {
                 stack.push(node.right);
             }
         }
@@ -585,13 +586,13 @@ public class TreeQuestion {
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
         int res = 0;
-        while (!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             int size = queue.size();
             int i = 0;
-            while (size > 0){
+            while (size > 0) {
                 size--;
                 TreeNode node = queue.poll();
-                if (node.left == null && node.right == null && i == 0){
+                if (node.left == null && node.right == null && i == 0) {
                     res = node.val;
                 }
                 if (node.left != null) {
@@ -607,35 +608,35 @@ public class TreeQuestion {
     }
 
     public boolean hasPathSum(TreeNode root, int targetSum) {
-        if (root == null){
+        if (root == null) {
             return false;
         }
 
         return dfs(root, targetSum, root.val);
     }
 
-    public boolean dfs(TreeNode node, int targetSum, int sum){
-        if (node == null){
+    public boolean dfs(TreeNode node, int targetSum, int sum) {
+        if (node == null) {
             return false;
         }
-        if (node.left == null && node.right == null){
-            if (targetSum == sum){
+        if (node.left == null && node.right == null) {
+            if (targetSum == sum) {
                 return true;
             }
         }
         boolean left = false;
-        if (node.left != null){
+        if (node.left != null) {
             left = dfs(node.left, targetSum, sum + node.left.val);
         }
         boolean right = false;
-        if (node.right != null){
+        if (node.right != null) {
             right = dfs(node.right, targetSum, sum + node.right.val);
         }
         return left || right;
     }
 
     public boolean hasPathSum1(TreeNode root, int targetSum) {
-        if (root == null){
+        if (root == null) {
             return false;
         }
         // 用两个栈来实现
@@ -643,17 +644,17 @@ public class TreeQuestion {
         Stack<Integer> intStack = new Stack<>();
         stack.push(root);
         intStack.push(root.val);
-        while (!stack.isEmpty()){
+        while (!stack.isEmpty()) {
             TreeNode node = stack.pop();
             Integer sum = intStack.pop();
-            if (node.left == null && node.right == null && targetSum == sum){
+            if (node.left == null && node.right == null && targetSum == sum) {
                 return true;
             }
-            if (node.left != null){
+            if (node.left != null) {
                 stack.push(node.left);
                 intStack.push(sum + node.left.val);
             }
-            if (node.right != null){
+            if (node.right != null) {
                 stack.push(node.right);
                 intStack.push(sum + node.right.val);
             }
@@ -664,27 +665,27 @@ public class TreeQuestion {
 
     public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
         List<List<Integer>> res = new ArrayList<>();
-        if (root == null){
+        if (root == null) {
             return res;
         }
         dfs(root, targetSum, root.val, res, new ArrayList<Integer>());
         return res;
     }
 
-    public void dfs(TreeNode node, int targetSum, int sum, List<List<Integer>> res, List<Integer> path){
-        if (node == null){
+    public void dfs(TreeNode node, int targetSum, int sum, List<List<Integer>> res, List<Integer> path) {
+        if (node == null) {
             return;
         }
         path.add(node.val);
-        if (node.left == null && node.right == null && targetSum == sum){
+        if (node.left == null && node.right == null && targetSum == sum) {
             res.add(new ArrayList<>(path));
             return;
         }
-        if (node.left != null){
+        if (node.left != null) {
             dfs(node.left, targetSum, sum + node.left.val, res, path);
             path.remove(path.size() - 1);
         }
-        if (node.right != null){
+        if (node.right != null) {
             dfs(node.right, targetSum, sum + node.right.val, res, path);
             path.remove(path.size() - 1);
         }
@@ -698,7 +699,7 @@ public class TreeQuestion {
         if (l > r) {
             return null;
         }
-        int max = findMax(nums,l,r);
+        int max = findMax(nums, l, r);
         TreeNode root = new TreeNode(nums[max]);
         root.left = createMaxTree(nums, l, max - 1);
         root.right = createMaxTree(nums, max + 1, r);
@@ -731,12 +732,12 @@ public class TreeQuestion {
     }
 
     public TreeNode searchBST2(TreeNode root, int val) {
-        while (root != null){
-            if (val < root.val){
+        while (root != null) {
+            if (val < root.val) {
                 root = root.left;
-            } else if (val > root.val){
+            } else if (val > root.val) {
                 root = root.right;
-            } else{
+            } else {
                 return root;
             }
         }
@@ -745,10 +746,10 @@ public class TreeQuestion {
 
     public TreeNode mergeTrees(TreeNode root1, TreeNode root2) {
         // 一方为空就用另一方，为null也无所谓
-        if (root1 == null){
+        if (root1 == null) {
             return root2;
         }
-        if (root2 == null){
+        if (root2 == null) {
             return root1;
         }
         root1.val += root2.val;
@@ -758,32 +759,32 @@ public class TreeQuestion {
     }
 
     public TreeNode mergeTrees1(TreeNode root1, TreeNode root2) {
-        if (root1 == null){
+        if (root1 == null) {
             return root2;
         }
-        if (root2 == null){
+        if (root2 == null) {
             return root1;
         }
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root1);
         queue.offer(root2);
-        while (!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             TreeNode node1 = queue.poll();
             TreeNode node2 = queue.poll();
             node1.val += node2.val;
-            if (node1.left != null && node2.left != null){
+            if (node1.left != null && node2.left != null) {
                 queue.offer(node1.left);
                 queue.offer(node2.left);
             }
-            if (node1.right != null && node2.right != null){
+            if (node1.right != null && node2.right != null) {
                 queue.offer(node1.right);
                 queue.offer(node2.right);
             }
             // 直接操作这棵树
-            if (node1.left == null){
+            if (node1.left == null) {
                 node1.left = node2.left;
             }
-            if (node1.right == null){
+            if (node1.right == null) {
                 node1.right = node2.right;
             }
         }
@@ -827,27 +828,28 @@ public class TreeQuestion {
     List<Integer> result = new ArrayList<>();
     int count = 0;
     int maxCount = 0;
+
     public int[] findMode2(TreeNode root) {
         dfs(root);
         return result.stream().mapToInt(Integer::intValue).toArray();
     }
 
     public void dfs(TreeNode cur) {
-        if (cur == null){
+        if (cur == null) {
             return;
         }
         dfs(cur.left);
-        if (pre == null || pre.val != cur.val){
+        if (pre == null || pre.val != cur.val) {
             count = 1;
         } else {
             count++;
         }
         // 发现了频率更高的数字，重置结果列表
-        if (count > maxCount){
+        if (count > maxCount) {
             result.clear();
             result.add(cur.val);
             maxCount = count;
-        } else if (count == maxCount){
+        } else if (count == maxCount) {
             result.add(cur.val);
         }
         pre = cur;
@@ -858,19 +860,19 @@ public class TreeQuestion {
         ArrayList<Integer> list = new ArrayList<>();
         // 中序遍历BST树取出有序列表
         getMinimumDifferenceDfs(root, list);
-        if (list.size() < 2){
+        if (list.size() < 2) {
             return 0;
         }
         int result = Integer.MAX_VALUE;
         // 直接循环判断
-        for (int i = 1; i < list.size(); i++){
+        for (int i = 1; i < list.size(); i++) {
             result = Math.min(result, list.get(i) - list.get(i - 1));
         }
         return result;
     }
 
-    public void getMinimumDifferenceDfs(TreeNode root, ArrayList<Integer> list){
-        if (root == null){
+    public void getMinimumDifferenceDfs(TreeNode root, ArrayList<Integer> list) {
+        if (root == null) {
             return;
         }
         getMinimumDifferenceDfs(root.left, list);
@@ -879,18 +881,19 @@ public class TreeQuestion {
     }
 
     int result1 = Integer.MAX_VALUE;
-//    TreeNode pre = null;
+
+    //    TreeNode pre = null;
     public int getMinimumDifference1(TreeNode root) {
         getMinimumDifferenceDfs(root);
         return result1;
     }
 
-    public void getMinimumDifferenceDfs(TreeNode cur){
-        if (cur == null){
+    public void getMinimumDifferenceDfs(TreeNode cur) {
+        if (cur == null) {
             return;
         }
         getMinimumDifferenceDfs(cur.left);
-        if (pre != null){
+        if (pre != null) {
             result1 = Math.min(result1, cur.val - pre.val);
         }
         pre = cur;
@@ -898,21 +901,21 @@ public class TreeQuestion {
     }
 
     public int getMinimumDifference2(TreeNode root) {
-        if (root == null){
+        if (root == null) {
             return 0;
         }
         int result = Integer.MAX_VALUE;
         TreeNode pre = null;
         TreeNode cur = root;
         Stack<TreeNode> stack = new Stack<>();
-        while (cur != null || !stack.isEmpty()){
-            while (cur != null){
+        while (cur != null || !stack.isEmpty()) {
+            while (cur != null) {
                 stack.push(cur);
                 cur = cur.left;
             }
             cur = stack.pop();
 
-            if (pre != null){
+            if (pre != null) {
                 result = Math.min(result, cur.val - pre.val);
             }
             pre = cur;
@@ -922,15 +925,15 @@ public class TreeQuestion {
         return result;
     }
 
-//    TreeNode pre = null;
+    //    TreeNode pre = null;
     public boolean isValidBST(TreeNode root) {
-        if (root == null){
+        if (root == null) {
             return true;
         }
         // 中序遍历
         boolean left = isValidBST(root.left);
 
-        if (pre != null && pre.val >= root.val){
+        if (pre != null && pre.val >= root.val) {
             return false;
         }
         pre = root;
@@ -941,22 +944,22 @@ public class TreeQuestion {
     }
 
     public boolean isValidBST2(TreeNode root) {
-        if (root == null){
+        if (root == null) {
             return true;
         }
         TreeNode pre = null;
         TreeNode cur = root;
         Stack<TreeNode> stack = new Stack<>();
-        while (cur != null || !stack.isEmpty()){
-            if (cur != null){
+        while (cur != null || !stack.isEmpty()) {
+            if (cur != null) {
                 stack.push(cur);
                 // 左
                 cur = cur.left;
-            } else{
+            } else {
                 cur = stack.pop();
 
                 // 中
-                if (pre != null && pre.val >= cur.val){
+                if (pre != null && pre.val >= cur.val) {
                     return false;
                 }
                 pre = cur;
@@ -969,21 +972,21 @@ public class TreeQuestion {
     }
 
     public boolean isValidBST3(TreeNode root) {
-        if (root == null){
+        if (root == null) {
             return true;
         }
         TreeNode pre = null;
         TreeNode cur = root;
         Stack<TreeNode> stack = new Stack<>();
-        while (cur != null || !stack.isEmpty()){
-            while (cur != null){
+        while (cur != null || !stack.isEmpty()) {
+            while (cur != null) {
                 stack.push(cur);
                 // 左
                 cur = cur.left;
             }
             // 中
             cur = stack.pop();
-            if (pre != null && pre.val >= cur.val){
+            if (pre != null && pre.val >= cur.val) {
                 return false;
             }
             pre = cur;
@@ -996,27 +999,37 @@ public class TreeQuestion {
 
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         // 找到了就返回节点，没找到就返回null
-        if (root == null || root == p || root == q){
+        if (root == null || root == p || root == q) {
             return root;
         }
         TreeNode left = lowestCommonAncestor(root.left, p, q);
         TreeNode right = lowestCommonAncestor(root.right, p, q);
         // 两个子孙都找到了，那么当前节点就是最近的公共祖先
-        if (left != null && right != null){
+        if (left != null && right != null) {
             return root;
         }
         // 左边没找到，但是右边找到了，代表右边已经找到了最近的公共祖先，往上返回
-        if (left == null && right != null){
+        if (left == null && right != null) {
             return right;
         }
         // 左边找到了，但是右边没找到，代表左边已经找到了最近的公共祖先，往上返回
         return left;
     }
 
+    public TreeNode lowestCommonAncestor1(TreeNode root, TreeNode p, TreeNode q) {
+        // 比两个子孙都大，搜索左边
+        if (root.val > p.val && root.val > q.val) {
+            return lowestCommonAncestor1(root.left, p, q);
+        }
+        // 比两个子孙都小，搜索右边
+        if (root.val < p.val && root.val < q.val) {
+            return lowestCommonAncestor1(root.right, p, q);
+        }
+        // 找到第一个在（p, q）区间中的节点，这个就是最近公共祖先（BST特性）
+        return root;
+    }
 
 
 
 
 }
-
-
