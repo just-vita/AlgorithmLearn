@@ -1029,6 +1029,24 @@ public class TreeQuestion {
         return root;
     }
 
+    public TreeNode lowestCommonAncestor2(TreeNode root, TreeNode p, TreeNode q) {
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode cur = stack.pop();
+            if (cur.val > p.val && cur.val > q.val) {
+                stack.push(cur.left);
+                continue;
+            }
+            if (cur.val < p.val && cur.val < q.val) {
+                stack.push(cur.right);
+                continue;
+            }
+            return cur;
+        }
+        return null;
+    }
+
 
 
 
