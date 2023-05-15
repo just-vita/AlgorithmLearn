@@ -1099,5 +1099,33 @@ public class TreeQuestion {
         return root;
     }
 
+    public TreeNode deleteNode(TreeNode root, int key) {
+        if (root == null) {
+            return null;
+        }
+        if (root.val > key) {
+            root.left = deleteNode(root.left, key);
+        } else if (root.val < key) {
+            root.right = deleteNode(root.right, key);
+        } else {
+            if (root.left == null) {
+                return root.right;
+            } else if (root.right == null) {
+                return root.left;
+            } else if (root.left != null && root.right != null) {
+                // 把左节点移动到「右节点的最左节点」的左节点上
+                // 找到「右节点的最左节点」
+                TreeNode cur = root.right;
+                while (cur.left != null){
+                    cur = cur.left;
+                }
+                // 将待删除节点的左节点移动「右节点的最左节点」上
+                cur.left = root.left;
+                // 将待删除节点用右节点覆盖
+                root = root.right;
+            }
+        }
+        return root;
+    }
 
 }
