@@ -1128,4 +1128,31 @@ public class TreeQuestion {
         return root;
     }
 
+    public TreeNode trimBST(TreeNode root, int low, int high) {
+        if (root == null){
+            return null;
+        }
+
+        // 根节点不在范围内的情况
+        if (root.val < low){
+            // low比根节点大，希望右子树可以比low大
+            return trimBST(root.right, low, high);
+        }
+        if (root.val > high){
+            // high比根节点小，希望左子树可以比high小
+            return trimBST(root.left, low, high);
+        }
+
+        // 根节点在范围内的情况
+        root.left = trimBST(root.left, low, high);
+        root.right = trimBST(root.right, low, high);
+        // 保留根节点
+        return root;
+    }
+
+
+
+
+
+
 }
