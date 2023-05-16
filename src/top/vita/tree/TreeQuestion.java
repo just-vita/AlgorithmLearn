@@ -1185,5 +1185,22 @@ public class TreeQuestion {
         convertBSTDfs(cur.left);
     }
 
+    public TreeNode convertBST2(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        int preNum = 0;
+        TreeNode cur = root;
+        while (cur != null || !stack.isEmpty()){
+            while (cur != null){
+                // 先遍历到最右节点，从后往前遍历
+                stack.push(cur);
+                cur = cur.right;
+            }
+            cur = stack.pop();
+            cur.val += preNum;
+            preNum = cur.val;
+            cur = cur.left;
+        }
+        return root;
+    }
 
 }
