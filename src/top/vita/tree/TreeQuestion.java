@@ -1150,9 +1150,23 @@ public class TreeQuestion {
         return root;
     }
 
+    public TreeNode sortedArrayToBST(int[] nums) {
+        return sortedArrayToBSTDfs(nums, 0, nums.length - 1);
+    }
 
-
-
+    private TreeNode sortedArrayToBSTDfs(int[] nums, int left, int right) {
+        if (left > right){
+            return null;
+        }
+        // 取中间值作为当前的根节点
+        int mid = left + ((right - left) / 2);
+        TreeNode cur = new TreeNode(nums[mid]);
+        // 左节点用比中间节点小的
+        cur.left = sortedArrayToBSTDfs(nums, left, mid - 1);
+        // 右节点用比中间节点大的
+        cur.right = sortedArrayToBSTDfs(nums, mid + 1, right);
+        return cur;
+    }
 
 
 }
