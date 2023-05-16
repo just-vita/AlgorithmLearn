@@ -1168,5 +1168,22 @@ public class TreeQuestion {
         return cur;
     }
 
+    int preNum = 0;
+    public TreeNode convertBST(TreeNode root) {
+        convertBSTDfs(root);
+        return root;
+    }
+
+    private void convertBSTDfs(TreeNode cur) {
+        if (cur == null){
+            return;
+        }
+        // 先遍历右节点，从后往前遍历，拿到累加和
+        convertBSTDfs(cur.right);
+        cur.val += preNum;
+        preNum = cur.val;
+        convertBSTDfs(cur.left);
+    }
+
 
 }
