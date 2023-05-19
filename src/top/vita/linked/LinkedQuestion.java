@@ -676,5 +676,35 @@ public class LinkedQuestion {
 		}
 		return slow;
 	}
+
+	public ListNode rotateRight(ListNode head, int k) {
+		if (head == null || head.next == null || k == 0){
+			return head;
+		}
+		ListNode cur = head;
+		// 获取链表长度
+		int len = 1;
+		while (cur.next != null){
+			len++;
+			cur = cur.next;
+		}
+		k = k % len;
+		// 不需要旋转
+		if (k == 0){
+			return head;
+		}
+		// 头尾相连
+		cur.next = head;
+		int i = 0;
+		// 找到倒数第len-k个节点，也就是链表旋转后的结尾节点
+		while (i++ < len - k){
+			cur = cur.next;
+		}
+		// 得到旋转后的头节点
+		ListNode newHead = cur.next;
+		// 将链表旋转后的结尾节点的next置空
+		cur.next = null;
+		return newHead;
+	}
 }
 
