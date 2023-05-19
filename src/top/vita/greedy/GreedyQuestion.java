@@ -54,7 +54,13 @@ public class GreedyQuestion {
         return maxSum;
     }
 
-
+    public int maxProfit(int[] prices) {
+        int res = 0;
+        for (int i = 1; i < prices.length; i++) {
+            res += Math.max(prices[i - 1] - prices[i], 0);
+        }
+        return res;
+    }
 
 
 
