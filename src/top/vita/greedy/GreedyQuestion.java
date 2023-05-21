@@ -63,16 +63,18 @@ public class GreedyQuestion {
     }
 
     public boolean canJump(int[] nums) {
-        int n = nums.length;
-        int[] dp = new int[n];
-        dp[0] = nums[0];
-        for (int i = 1; i < n; i++){
-            if (dp[i - 1] < i){
-                return false;
-            }
-            dp[i] = Math.max(dp[i - 1], i + nums[i]);
+        if (nums.length == 1){
+            return true;
         }
-        return true;
+        int cover = 0;
+        for (int i = 0; i <= cover; i++){
+            // 计算能到达的最大范围，看看能不能到达终点
+            cover = Math.max(i + nums[i], cover);
+            if (cover >= nums.length - 1){
+                return true;
+            }
+        }
+        return false;
     }
 
 
