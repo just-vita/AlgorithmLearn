@@ -77,6 +77,28 @@ public class GreedyQuestion {
         return false;
     }
 
+    public int jump(int[] nums) {
+        if (nums.length == 1){
+            return 0;
+        }
+        int res = 0;
+        int curDistance = 0;
+        int maxDistance = 0;
+        for (int i = 0; i < nums.length; i++){
+            maxDistance = Math.max(maxDistance, nums[i] + i);
+            // 能够到达的距离能够到终点，那么再走一步就能到
+            if (maxDistance >= nums.length - 1){
+                res++;
+                break;
+            }
+            // 已经到达能够到达的最远距离，但还没到终点，只能再走一步看看
+            if (i == curDistance){
+                res++;
+                curDistance = maxDistance;
+            }
+        }
+        return res;
+    }
 
 
 
