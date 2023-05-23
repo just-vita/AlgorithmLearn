@@ -100,7 +100,31 @@ public class GreedyQuestion {
         return res;
     }
 
-
+    public int largestSumAfterKNegations(int[] nums, int k) {
+        Arrays.sort(nums);
+        // 局部最优 先将绝对值最大的负数取反，尽量得到最大和
+        for (int i = 0; i < nums.length && k > 0; i++){
+            if (nums[i] < 0){
+                nums[i] = -nums[i];
+                k--;
+            }
+        }
+        // 将全部负数都取反后k还有剩余
+        if (k > 0){
+            // 将经历取反后的数组重新排序
+            Arrays.sort(nums);
+            // 避免多余操作
+            if (k % 2 == 1){
+                // 只将最小数取反，得到最大和
+                nums[0] = -nums[0];
+            }
+        }
+        int sum = 0;
+        for (int i = 0; i < nums.length; i++){
+            sum += nums[i];
+        }
+        return sum;
+    }
 
 
 }
