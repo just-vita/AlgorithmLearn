@@ -706,5 +706,23 @@ public class LinkedQuestion {
 		cur.next = null;
 		return newHead;
 	}
+
+	public int[] reversePrint(ListNode head) {
+		int len = 0;
+		ListNode cur = head;
+		while (cur != null){
+			len++;
+			cur = cur.next;
+		}
+		// 创建一个数组，逆序存储链表元素
+		int[] res = new int[len];
+		int right = len - 1;
+		cur = head;
+		while (cur != null){
+			res[right--] = cur.val;
+			cur = cur.next;
+		}
+		return res;
+	}
 }
 
