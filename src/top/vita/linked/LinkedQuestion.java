@@ -724,5 +724,41 @@ public class LinkedQuestion {
 		}
 		return res;
 	}
+
+	public Node copyRandomList(Node head) {
+		if (head == null){
+			return head;
+		}
+		// 将链表变为1,1,2,2,3,3...
+		Node cur = head;
+		while (cur != null){
+			Node copyNode = new Node(cur.val);
+			copyNode.next = cur.next;
+			cur.next = copyNode;
+			cur = cur.next.next;
+		}
+		cur = head;
+		while (cur != null){
+			if (cur.random != null){
+				// 处理复制出的节点的random
+				cur.next.random = cur.random.next;
+			}
+			cur = cur.next.next;
+		}
+		// 得到复制出的节点的头节点
+		Node copyHead = head.next;
+		// 将为1,1,2,2,3,3...的链表拆分成1,2,3... 1,2,3...
+		cur = head;
+		Node copyNode = head.next;
+		while (cur != null){
+			cur.next = cur.next.next;
+			cur = cur.next;
+			if (copyNode.next != null){
+				copyNode.next = copyNode.next.next;
+				copyNode = copyNode.next;
+			}
+		}
+		return copyHead;
+	}
 }
 
