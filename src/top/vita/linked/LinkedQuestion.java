@@ -787,7 +787,7 @@ public class LinkedQuestion {
 		return slow;
 	}
 
-	public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+	public ListNode mergeTwoLists1(ListNode l1, ListNode l2) {
 		ListNode cur1 = l1;
 		ListNode cur2 = l2;
 		ListNode header = new ListNode(0);

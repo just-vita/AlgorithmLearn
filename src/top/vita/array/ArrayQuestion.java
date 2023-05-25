@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.TreeSet;
 
+@SuppressWarnings("all")
 public class ArrayQuestion {
 
 	public static void main(String[] args) {
@@ -1172,7 +1173,19 @@ public class ArrayQuestion {
 		return res;
 	}
 
-
+	public int[] exchange(int[] nums) {
+		int[] res = new int[nums.length];
+		int left = 0;
+		int right = res.length - 1;
+		for (int i = 0; i < nums.length; i++){
+			if (nums[i] % 2 == 1){
+				res[left++] = nums[i];
+			} else {
+				res[right--] = nums[i];
+			}
+		}
+		return res;
+	}
 
 
 
