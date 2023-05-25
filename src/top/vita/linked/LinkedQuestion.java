@@ -3,6 +3,7 @@ package top.vita.linked;
 import java.util.HashSet;
 import java.util.Stack;
 
+@SuppressWarnings("all")
 public class LinkedQuestion {
 
 	public static void main(String[] args) {
@@ -725,6 +726,18 @@ public class LinkedQuestion {
 		return res;
 	}
 
+	class Node {
+		int val;
+		Node next;
+		Node random;
+
+		public Node(int val) {
+			this.val = val;
+			this.next = null;
+			this.random = null;
+		}
+	}
+
 	public Node copyRandomList(Node head) {
 		if (head == null){
 			return head;
@@ -760,5 +773,23 @@ public class LinkedQuestion {
 		}
 		return copyHead;
 	}
+
+	public ListNode getKthFromEnd(ListNode head, int k) {
+		ListNode fast = head;
+		ListNode slow = head;
+		while (fast != null && k-- > 0){
+			fast = fast.next;
+		}
+		while (fast != null){
+			fast = fast.next;
+			slow = slow.next;
+		}
+		return slow;
+	}
+
+
+
+
+
 }
 
