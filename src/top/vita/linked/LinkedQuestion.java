@@ -787,6 +787,34 @@ public class LinkedQuestion {
 		return slow;
 	}
 
+	public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+		ListNode cur1 = l1;
+		ListNode cur2 = l2;
+		ListNode header = new ListNode(0);
+		ListNode res = header;
+		while (cur1 != null && cur2 != null){
+			if (cur1.val < cur2.val){
+				res.next = cur1;
+				cur1 = cur1.next;
+				res = res.next;
+			} else {
+				res.next = cur2;
+				cur2 = cur2.next;
+				res = res.next;
+			}
+		}
+		while (cur1 != null) {
+			res.next = cur1;
+			cur1 = cur1.next;
+			res = res.next;
+		}
+		while (cur2 != null) {
+			res.next = cur2;
+			cur2 = cur2.next;
+			res = res.next;
+		}
+		return header.next;
+	}
 
 
 
