@@ -927,7 +927,7 @@ public class StringQuestion {
 		}
 	}
 
-	public String reverseWords(String s) {
+	public String reverseWords12(String s) {
 		// 将传进来的字符串以空格拆分
 		String[] strings = s.trim().split(" ");
 		StringBuilder sb = new StringBuilder();
