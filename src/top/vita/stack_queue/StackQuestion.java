@@ -152,5 +152,19 @@ public class StackQuestion {
 		return res;
 	}
 
+	public boolean validateStackSequences(int[] pushed, int[] popped) {
+		Deque<Integer> stack = new ArrayDeque<>();
+		int j = 0;
+		for (int elem : pushed){
+			stack.push(elem);
+			// 栈头元素与popped[j]相等，代表其符合出栈顺序
+			while (j < popped.length && !stack.isEmpty() && stack.peek() == popped[j]) {
+				stack.pop();
+				j++;
+			}
+		}
+		// 如果全部正常出栈，则代表出栈顺序没有问题
+		return j == popped.length;
+	}
 
 }
