@@ -1269,7 +1269,33 @@ public class ArrayQuestion {
 		return -1;
 	}
 
-
+	public int search(int[] nums, int target) {
+		if (nums.length == 0){
+			return 0;
+		}
+		int left = 0;
+		int right = nums.length - 1;
+		int count = 0;
+		while (left <= right){
+			int mid = left + ((right - left) / 2);
+			if (nums[mid] < target) {
+				left = mid + 1;
+			} else if (nums[mid] > target) {
+				right = mid - 1;
+			} else {
+				int l = mid - 1;
+				int r = mid;
+				while (l >= 0 && nums[l--] == target) {
+					count++;
+				}
+				while (r < nums.length && nums[r++] == target) {
+					count++;
+				}
+				return count;
+			}
+		}
+		return 0;
+	}
 
 
 
