@@ -1248,7 +1248,26 @@ public class ArrayQuestion {
 		return res;
 	}
 
-
+	public int findRepeatNumber(int[] nums) {
+		int i = 0;
+		while (i < nums.length){
+			// 已经将数字和下标下的数字交换过，进行下一个数字的操作
+			if (nums[i] == i){
+				i++;
+				continue;
+			}
+			// 根据题意 nums[i] < nums.length，也就是每个数字都会对应一个下标
+			// 如果下标下已经有数字了，那么就找到了一个重复的数
+			if (nums[nums[i]] == nums[i]) {
+				return nums[i];
+			}
+			// 交换数字与下标下的数字，实现下标对应数字
+			int temp = nums[i];
+			nums[i] = nums[temp];
+			nums[temp] = temp;
+		}
+		return -1;
+	}
 
 
 
