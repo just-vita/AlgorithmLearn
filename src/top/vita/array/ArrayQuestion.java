@@ -1297,8 +1297,30 @@ public class ArrayQuestion {
 		return 0;
 	}
 
+	public int missingNumber(int[] nums) {
+		int i;
+		for (i = 0; i < nums.length; i++){
+			if (i != nums[i]){
+				return i;
+			}
+		}
+		return i;
+	}
 
-
+	public int missingNumber1(int[] nums) {
+		int left = 0;
+		int right = nums.length - 1;
+		while (left <= right) {
+			int mid = (right + (right - left)) / 2;
+			if (mid == nums[mid]) {
+				left = mid + 1;
+			} else if (mid < nums[mid]) {
+				// 只有小于的情况
+				right = mid - 1;
+			}
+		}
+		return left;
+	}
 
 
 
