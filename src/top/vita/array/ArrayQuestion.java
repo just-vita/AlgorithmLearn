@@ -1322,7 +1322,25 @@ public class ArrayQuestion {
 		return left;
 	}
 
-
+	public boolean findNumberIn2DArray(int[][] matrix, int target) {
+		if (matrix.length < 1) {
+			return false;
+		}
+		int i = 0;
+		int j = matrix[0].length - 1;
+		while (i < matrix.length && j >= 0){
+			if (target == matrix[i][j]) {
+				return  true;
+			} else if (target < matrix[i][j]) {
+				// 从同一层往前找
+				j--;
+			} else {
+				// 从同一列往下找
+				i++;
+			}
+		}
+		return false;
+	}
 
 
 
