@@ -1342,7 +1342,24 @@ public class ArrayQuestion {
 		return false;
 	}
 
-
+	public int minArray(int[] numbers) {
+		int left = 0;
+		int right = numbers.length - 1;
+		while (left < right) {
+			int mid = (right + left) / 2;
+			if (numbers[mid] > numbers[right]) {
+				// 中间数比右边大，那可以认为右边是有序的
+				left = mid + 1;
+			} else if (numbers[mid] < numbers[right]) {
+				// 比右边小，那可以认为中间是有序的
+				right = mid;
+			} else {
+				// 跟当前数相等，移动右指针
+				right--;
+			}
+		}
+		return numbers[left];
+	}
 
 
 
