@@ -1,9 +1,6 @@
 package top.vita.string;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class StringQuestion {
 
@@ -926,7 +923,6 @@ public class StringQuestion {
 			end--;
 		}
 	}
-
 	public String reverseWords12(String s) {
 		// 将传进来的字符串以空格拆分
 		String[] strings = s.trim().split(" ");
@@ -949,5 +945,20 @@ public class StringQuestion {
 		return sb.toString();
 	}
 
-
+	public char firstUniqChar(String s) {
+		Map<Character, Integer> map = new LinkedHashMap<>();
+		for (char ch : s.toCharArray()){
+			if (map.containsKey(ch)){
+				map.put(ch, map.get(ch) + 1);
+			} else {
+				map.put(ch, 1);
+			}
+		}
+		for (Map.Entry<Character, Integer> entry : map.entrySet()){
+			if (entry.getValue() == 1) {
+				return entry.getKey();
+			}
+		}
+		return ' ';
+	}
 }
