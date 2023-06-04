@@ -1257,8 +1257,55 @@ public class TreeQuestion {
         return res;
     }
 
-
-
+    public List<List<Integer>> levelOrder3(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (root == null) {
+            return res;
+        }
+        // 用栈实现从右往左存入
+        Stack<TreeNode> stack = new Stack<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        // 用来判断层数奇偶
+        int level = 1;
+        while (!queue.isEmpty()){
+            int size = queue.size();
+            List<Integer> list = new ArrayList<>();
+            while (size > 0) {
+                size--;
+                TreeNode cur = queue.poll();
+                list.add(cur.val);
+                if (level % 2 == 1) {
+                    // 现在是寄数，那么下一层就是偶数，需要的是逆序结果
+                    // 因为栈的出栈顺序是逆序，需要反过来先将左子树加入栈中
+                    if (cur.left != null) {
+                        stack.push(cur.left);
+                    }
+                    if (cur.right != null) {
+                        stack.push(cur.right);
+                    }
+                } else {
+                    // 现在是偶数，那么下一层就是奇数，需要的是正序结果
+                    // 因为栈的出栈顺序是逆序，需要反过来先将右子树加入栈中
+                    if (cur.right != null) {
+                        stack.push(cur.right);
+                    }
+                    if (cur.left != null) {
+                        stack.push(cur.left);
+                    }
+                }
+            }
+            // 栈的长度会在循环中减少，所以这个地方得要先保存栈的长度
+            // 否则会导致结果出错，草了，我居然和上面那个循环里的size一样卡了半天
+            int stackSize = stack.size();
+            for (int i = 0; i < stackSize; i++) {
+                queue.offer(stack.pop());
+            }
+            res.add(list);
+            level++;
+        }
+        return res;
+    }
 
 
 
