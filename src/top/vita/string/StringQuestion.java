@@ -945,7 +945,7 @@ public class StringQuestion {
 		return sb.toString();
 	}
 
-	public char firstUniqChar(String s) {
+	public char firstUniqChar1(String s) {
 		Map<Character, Integer> map = new LinkedHashMap<>();
 		for (char ch : s.toCharArray()){
 			if (map.containsKey(ch)){
