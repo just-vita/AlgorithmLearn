@@ -1203,7 +1203,7 @@ public class TreeQuestion {
         return root;
     }
 
-    public int[] levelOrder(TreeNode root) {
+    public int[] levelOrder1(TreeNode root) {
         if (root == null) {
             return new int[0];
         }
@@ -1231,7 +1231,31 @@ public class TreeQuestion {
         return res;
     }
 
-
+    public List<List<Integer>> levelOrder2(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (root == null) {
+            return res;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()){
+            int size = queue.size();
+            List<Integer> list = new ArrayList<>();
+            while (size > 0) {
+                size--;
+                TreeNode cur = queue.poll();
+                list.add(cur.val);
+                if (cur.left != null) {
+                    queue.offer(cur.left);
+                }
+                if (cur.right != null) {
+                    queue.offer(cur.right);
+                }
+            }
+            res.add(list);
+        }
+        return res;
+    }
 
 
 
