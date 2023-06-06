@@ -1328,5 +1328,39 @@ public class TreeQuestion {
         return A.val == B.val && findSub(A.left, B.left) && findSub(A.right, B.right);
     }
 
+    /*Node pre, head;
+    public Node treeToDoublyList(Node root) {
+        if (root == null) {
+            return root;
+        }
+        dfs(root);
+        // 左子树就是前驱（比当前数小），右子树就是后继（比当前数大），对着图例走一遍就理解了
+        head.left = pre;
+        pre.right = head;
+        return head;
+    }
+
+    void dfs(Node cur) {
+        if (cur == null) {
+            return;
+        }
+        // 前
+        dfs(cur.left);
+        // 中
+        // pre为空，代表到达树的最左下角的叶子节点
+        if (pre == null) {
+            // 将它作为双向链表的头节点
+            head = cur;
+        } else {
+            // 不是头节点，存储前驱节点，形成双向链表
+            cur.left = pre;
+            // 存储上一个节点的后继节点（当前节点）
+            pre.right = cur;
+        }
+        // 存储前驱节点
+        pre = cur;
+        // 后
+        dfs(cur.right);
+    }*/
 
 }
