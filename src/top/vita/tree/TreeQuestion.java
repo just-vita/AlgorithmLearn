@@ -1307,7 +1307,26 @@ public class TreeQuestion {
         return res;
     }
 
+    public boolean isSubStructure(TreeNode A, TreeNode B) {
+        if (A == null || B == null) {
+            return false;
+        }
+        // 把当前节点作为起点 || 把左子树作为起点 || 把右子树作为起点
+        return findSub(A, B) || isSubStructure(A.left, B) || isSubStructure(A.right, B);
+    }
 
+    public boolean findSub(TreeNode A, TreeNode B) {
+        // B树遍历到底了，也就是说在A树中找到了一条完全重合的路径
+        if (B == null) {
+            return true;
+        }
+        // A树遍历到底了，也就是说在A树中没有找到一条完全重合的路径
+        if (A == null) {
+            return false;
+        }
+        // 当节点值相等且左右子树都能证明路径重合的话才会返回true
+        return A.val == B.val && findSub(A.left, B.left) && findSub(A.right, B.right);
+    }
 
 
 }
