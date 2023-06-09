@@ -1363,4 +1363,30 @@ public class TreeQuestion {
         dfs(cur.right);
     }*/
 
+    int res = 0;
+    int rank = 0;
+    public int kthLargest(TreeNode root, int k) {
+        kthLargestDfs(root, k);
+        return res;
+    }
+
+    public void kthLargestDfs(TreeNode cur, int k) {
+        if (res != 0) {
+            return;
+        }
+        // 直接先找到最大的数
+        if (cur.right != null) {
+            kthLargestDfs(cur.right, k);
+        }
+
+        // 找到了第k大的数
+        if (++rank == k) {
+            res = cur.val;
+            return;
+        }
+
+        if (cur.left != null) {
+            kthLargestDfs(cur.left, k);
+        }
+    }
 }
