@@ -34,4 +34,11 @@ public class DFSQuestion {
         board[i][j] -= 256;
         return top || bottom || left || right;
     }
+
+    public int sumNums(int n) {
+        // 当不满足 n > 1 时，因为短路与的原因，会跳出递归
+        // 后面的 == 0 只是用来让后面的表达式返回的是boolean，改成别的也没问题
+        boolean x = n > 1 && (n += sumNums(n - 1)) == 0;
+        return n;
+    }
 }
