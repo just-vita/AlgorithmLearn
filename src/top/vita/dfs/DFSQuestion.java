@@ -41,4 +41,30 @@ public class DFSQuestion {
         boolean x = n > 1 && (n += sumNums(n - 1)) == 0;
         return n;
     }
+
+    public String[] permutation(String s) {
+        Set<String> res = new HashSet<>();
+        permutationDfs(0, s, new StringBuilder(), new boolean[s.length()], res);
+        return res.toArray(new String[0]);
+    }
+
+    void permutationDfs(int startIndex, String s, StringBuilder sb, boolean[] visited,Set<String> res) {
+        if (sb.length() >= s.length()) {
+            res.add(sb.toString());
+            return;
+        }
+        for (int i = 0; i < s.length(); i++) {
+            if (visited[i]) {
+                continue;
+            }
+            if (i > 0 && s.charAt(i) == s.charAt(i - 1) && !visited[i - 1]) {
+                continue;
+            }
+            visited[i] = true;
+            sb.append(s.charAt(i));
+            permutationDfs(i, s, sb, visited, res);
+            sb.deleteCharAt(sb.length() - 1);
+            visited[i] = false;
+        }
+    }
 }
