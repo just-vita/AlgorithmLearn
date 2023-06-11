@@ -1389,4 +1389,44 @@ public class TreeQuestion {
             kthLargestDfs(cur.left, k);
         }
     }
+
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        // 分治思想
+        // 前序遍历数组的第一个永远是树（或子树）的根节点
+        // 中序遍历时找出当前的根节点，分出左右子树
+        // 也就是：找出root，分出左右子树，之后递归到的子树都是这个流程，直到不能分
+        return preOrder(0, preorder.length - 1, 0, inorder.length - 1, preorder, inorder);
+    }
+
+    // 参数是前序和中序遍历的节点的索引位置
+    TreeNode preOrder(int preLeft, int preRight, int inLeft, int inRight, int[] pre, int[] in) {
+        // 左右子树索引相撞，分不了了，直接返回null
+        if (preLeft > preRight || inLeft > inRight) {
+            return null;
+        }
+        // 创建当前的根节点
+        TreeNode root = new TreeNode(pre[preLeft]);
+        // 从中序的最左元素位置开始
+        int InRoot = inLeft;
+        // 在中序中查找根节点位置，判断是否是根节点（前序的第一个节点）
+        while (InRoot <= inRight && pre[preLeft] != in[InRoot]) {
+            InRoot++;
+        }
+        // 在中序中找到了根节点位置
+        // 中序的根节点的左边都是左子树，右边都是右子树
+        // 得到中序的左子树的长度，剩下的都是右子树
+        int length = InRoot - inLeft;
+        // 从左至右依次为
+        // 前序的左子树里的下一个根节点的位置
+        // 前序的最后一个左子树的位置
+        // 中序的第一个左子树的位置
+        // 中序的最后一个左子树的位置
+        root.left = preOrder(preLeft + 1, preLeft + length, inLeft, InRoot - 1, pre, in);
+        //  前序的右子树里的下一个根节点的位置
+        //  前序的最后一个右子树的位置
+        //  中序的第一个右子树的位置
+        //  中序的最后一个右子树的位置
+        root.right = preOrder(preLeft + length + 1, preRight, InRoot + 1, inRight, pre, in);
+        return root;
+    }
 }
