@@ -1429,4 +1429,31 @@ public class TreeQuestion {
         root.right = preOrder(preLeft + length + 1, preRight, InRoot + 1, inRight, pre, in);
         return root;
     }
+
+    public boolean verifyPostorder(int[] postorder) {
+        return verifyPostorder(0, postorder.length - 1, postorder);
+    }
+
+    boolean verifyPostorder(int left, int right, int[] postorder) {
+        // 当前节点为叶子节点，当然是了，直接返回true
+        if (left >= right) {
+            return true;
+        }
+        // 记录根节点的值
+        int rootValue = postorder[right];
+        // 记录一个遍历指针，最后会指向根节点
+        int rootPosition = left;
+        // 找到第一个大于根节点的节点，也就是第一个右子树（后序遍历的根节点在最后）
+        while (rootValue > postorder[rootPosition]) {
+            rootPosition++;
+        }
+        // 记录第一个右子树的位置
+        int firstRight = rootPosition;
+        // 从右子树开始找，找到最后一个右子树的位置之后的位置（根节点）
+        while (rootValue < postorder[rootPosition]) {
+            rootPosition++;
+        }
+        // 判断是否到达根节点 判断左子树是否正确 判断右子树是否正确
+        return rootPosition == right && verifyPostorder(left, firstRight - 1, postorder) && verifyPostorder(firstRight, right - 1, postorder);
+    }
 }
