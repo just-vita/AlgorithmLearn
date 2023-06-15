@@ -186,4 +186,18 @@ public class SortDemo {
 		}
     	return out.toArray(new int[out.size()][]);
     }
+
+	public String minNumber(int[] nums) {
+		String[] strs = new String[nums.length];
+		for (int i = 0; i < nums.length; i++) {
+			strs[i] = nums[i] + "";
+		}
+		Arrays.sort(strs, (a, b) -> (a + b).compareTo(b + a));
+		StringBuilder sb = new StringBuilder();
+		for (String str : strs) {
+			sb.append(str);
+		}
+		return sb.toString();
+	}
+
 }
