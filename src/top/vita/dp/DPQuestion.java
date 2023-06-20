@@ -739,7 +739,7 @@ public class DPQuestion {
 		return dp[0][n - 1];
 	}
 
-	public int fib1(int n) {
+	public int fib2(int n) {
 		if (n == 0) {
 			return 0;
 		}
