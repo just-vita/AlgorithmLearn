@@ -215,4 +215,19 @@ public class SortDemo {
 		}
 		return max - min < 5;
 	}
+
+	public boolean isStraight1(int[] nums) {
+		int joker = 0;
+		Arrays.sort(nums);
+		for (int i = 0; i < nums.length - 1; i++) {
+			// 可以有多个大小王
+			if (nums[i] == 0) {
+				joker++;
+			} else if (nums[i] == nums[i + 1]) {
+				return false;
+			}
+		}
+		// max - min < 5
+		return nums[nums.length - 1] - nums[joker] < 5;
+	}
 }
