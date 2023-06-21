@@ -1,9 +1,6 @@
 package top.vita.sort;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class SortDemo {
 
@@ -200,4 +197,22 @@ public class SortDemo {
 		return sb.toString();
 	}
 
+	public boolean isStraight(int[] nums) {
+		Set<Integer> set = new HashSet<>();
+		int min = 14;
+		int max = 0;
+		// 满足max - min < 5 即可组成顺子
+		for (int i : nums) {
+			if (i == 0) {
+				continue;
+			}
+			min = Math.min(min, i);
+			max = Math.max(max, i);
+			if (set.contains(i)) {
+				return false;
+			}
+			set.add(i);
+		}
+		return max - min < 5;
+	}
 }
