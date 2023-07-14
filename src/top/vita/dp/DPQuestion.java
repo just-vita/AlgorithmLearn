@@ -795,6 +795,28 @@ public class DPQuestion {
 		return dp[grid.length][grid[0].length];
 	}
 
+	public int translateNum(int num) {
+		String s = String.valueOf(num);
+		// a => dp[i - 1]
+		int a = 1;
+		// b => dp[i - 2]
+		int b = 1;
+		for (int i = 2; i <= s.length(); i++) {
+			String str = s.substring(i - 2, i);
+			// dp[i]
+			int c = 0;
+			if (str.compareTo("10") >= 0 && str.compareTo("25") <= 0) {
+				c = a + b;
+			} else {
+				c = a;
+			}
+			// b => dp[i - 1]
+			b = a;
+			// a => dp[i]
+			a = c;
+		}
+		return a;
+	}
 
 
 
