@@ -1,7 +1,6 @@
 package top.vita.dp;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class DPQuestion {
 
@@ -818,8 +817,41 @@ public class DPQuestion {
 		return a;
 	}
 
+	public int lengthOfLongestSubstring(String s) {
+		int i = 0;
+		int max = 0;
+		LinkedList<Character> queue = new LinkedList<>();
+		while (i < s.length()) {
+			char ch = s.charAt(i);
+			while (queue.contains(ch)) {
+				queue.pollFirst();
+			}
+			i++;
+			queue.add(ch);
+			max = Math.max(max, queue.size());
+		}
+		return max;
+	}
 
+	public int lengthOfLongestSubstring1(String s) {
+		int left = 0;
+		int right = 0;
+		int max = 0;
 
+		while (right < s.length()) {
+			char ch = s.charAt(right);
+			for (int i = left; i < right; i++) {
+				if (s.charAt(i) == ch) {
+					// Ëõ¼õ´°¿Ú
+					left = i + 1;
+					break;
+				}
+			}
+			max = Math.max(max, right - left + 1);
+			right++;
+		}
+		return max;
+	}
 
 
 
