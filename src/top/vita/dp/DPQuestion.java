@@ -853,7 +853,35 @@ public class DPQuestion {
 		return max;
 	}
 
-
+	public int nthUglyNumber(int n) {
+		int[] dp = new int[n];
+		// 1为丑数
+		dp[0] = 1;
+		int a = 0;
+		int b = 0;
+		int c = 0;
+		for (int i = 1; i < n; i++) {
+			// 丑数 = 某较小丑数 X 某因子
+			int n2 = dp[a] * 2;
+			int n3 = dp[b] * 3;
+			int n5 = dp[c] * 5;
+			// 取最小的为离dp[i]最近的丑数
+			dp[i] = Math.min(n2, Math.min(n3, n5));
+			// 继续找下一个没有 * 2 的丑数
+			if (dp[i] == n2) {
+				a++;
+			}
+			// 继续找下一个没有 * 3 的丑数()
+			if (dp[i] == n3) {
+				b++;
+			}
+			// 继续找下一个没有 * 5 的丑数()
+			if (dp[i] == n5) {
+				c++;
+			}
+		}
+		return dp[n - 1];
+	}
 
 
 
