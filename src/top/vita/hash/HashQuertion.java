@@ -238,7 +238,19 @@ public class HashQuertion {
         return res;
     }
 
-
+    public List<List<String>> groupAnagrams(String[] strs) {
+        HashMap<String, List<String>> map = new HashMap<>();
+        for (String str : strs) {
+            char[] chs = str.toCharArray();
+            Arrays.sort(chs);
+            // 使用排序后的字符作为键，把用了这些字符的字符串列表作为值
+            String key = new String(chs);
+            List<String> list = map.getOrDefault(key, new ArrayList<>());
+            list.add(str);
+            map.put(key, list);
+        }
+        return new ArrayList<List<String>>(map.values());
+    }
 
 
 
