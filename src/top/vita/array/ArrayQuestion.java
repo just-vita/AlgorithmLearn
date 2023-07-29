@@ -1381,6 +1381,20 @@ public class ArrayQuestion {
 		return max;
 	}
 
-
+	public void moveZeroes1(int[] nums) {
+		int slow = 0;
+		int fast = 0;
+		while (fast < nums.length) {
+			// 将有效的数字都放到慢指针的位置
+			if (nums[fast] != 0) {
+				nums[slow++] = nums[fast];
+			}
+			fast++;
+		}
+		// 循环结束后慢指针往后的都是0
+		while (slow < nums.length) {
+			nums[slow++] = 0;
+		}
+	}
 
 }
