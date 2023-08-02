@@ -883,8 +883,32 @@ public class DPQuestion {
 		return dp[n - 1];
 	}
 
+	public int trap(int[] height) {
+		int sum = 0;
+		// dp[i]就是当前列左右侧的最高高度
+		int[] left_max_height = new int[height.length];
+		int[] right_max_height = new int[height.length];
 
+		// 用前一列的高度和前一列左侧的最高高度计算出dp[i]列的最高高度
+		for(int i = 1; i < left_max_height.length; i++) {
+			left_max_height[i] = Math.max(left_max_height[i - 1], height[i - 1]);
+		}
+		// 用后一列的高度和后一列右侧的最高高度计算出dp[i]列的最高高度
+		for(int i = right_max_height.length - 2; i > 0; i--) {
+			right_max_height[i] = Math.max(right_max_height[i + 1], height[i + 1]);
+		}
 
+		// 第一列和最后一列必定装不了雨水，直接跳过
+		for (int i = 1; i < height.length - 1; i++) {
+			// 取最矮的一边的柱子的高度来计算
+			int min_height = Math.min(left_max_height[i], right_max_height[i]);
+			// 如果最矮的柱子比当前柱子还矮，则当前列无法接到雨水，所以只有大于时才会接到雨水
+			if (min_height > height[i]) {
+				sum = sum + (min_height - height[i]);
+			}
+		}
+		return sum;
+	}
 
 
 
