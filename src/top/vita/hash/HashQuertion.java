@@ -252,7 +252,26 @@ public class HashQuertion {
         return new ArrayList<List<String>>(map.values());
     }
 
-
+    public int lengthOfLongestSubstring(String s) {
+        if (s.length() == 0) {
+            return 0;
+        }
+        char[] chs = s.toCharArray();
+        int max = 0;
+        int start = 0;
+        int[] hash = new int[128];
+        Arrays.fill(hash, -1);
+        for (int i = 0; i < chs.length; i++) {
+            // 看看这个字符是否出现过
+            // 出现过的话就将上一次出现的位置+1作为子串的起始点
+            start = Math.max(start, hash[chs[i]] + 1);
+            // 得到长度
+            max = Math.max(max, i - start + 1);
+            // 记录字符位置
+            hash[chs[i]] = i;
+        }
+        return max;
+    }
 
 
 
