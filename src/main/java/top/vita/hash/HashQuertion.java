@@ -1,5 +1,6 @@
 package top.vita.hash;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -273,6 +274,67 @@ public class HashQuertion {
         return max;
     }
 
+    public List<Integer> findAnagrams(String s, String p) {
+        if (s.length() < p.length()) {
+            return new ArrayList<>();
+        }
+        List<Integer> res = new ArrayList<>();
+        int[] sHash = new int[26];
+        int[] pHash = new int[26];
+        // 记录字母频次
+        for (int i = 0; i < p.length(); i++) {
+            sHash[s.charAt(i) - 'a']++;
+            pHash[p.charAt(i) - 'a']++;
+        }
+        // 判断 [0, p.length() - 1] 位置是否是字母异位词
+        // 如果直接能对应上，代表 [0, p.length() - 1] 位置是结果集之一
+        if (Arrays.equals(sHash, pHash)) {
+            res.add(0);
+        }
+        for (int i = 0; i < s.length() - p.length(); i++) {
+            // 窗口左边界缩小一格（因为上面已经判断了 [0, p.length() - 1]
+            sHash[s.charAt(i) - 'a']--;
+            // 窗口右边界扩充一格
+            sHash[s.charAt(i + p.length()) - 'a']++;
+            // 直接判断数组是否相等
+            if (Arrays.equals(sHash, pHash)) {
+                res.add(i + 1);
+            }
+        }
+        return res;
+    }
+
+    public List<Integer> findAnagrams1(String s, String p) {
+        List<Integer> res = new ArrayList<>();
+        int[] hash = new int[26];
+        // 记录字母频次
+        for (int i = 0; i < p.length(); i++) {
+            hash[p.charAt(i) - 'a']++;
+        }
+        int left = 0;
+        int right = 0;
+        while (right < s.length()) {
+            // 如果出现了p字符串中没有的字符，会先进else再进if
+            // 会先移动left再移动right，加上之后又会减去
+            // 也就是说，哈希表中的数据不会受到无关字符的影响
+            if (hash[s.charAt(right) - 'a'] > 0) {
+                // 直接减少
+                hash[s.charAt(right) - 'a']--;
+                // 只有遇到p字符串中的字符时，right指针才会超过left指针，形成窗口
+                // 窗口右边界扩充一格
+                right++;
+                if (right - left == p.length()) {
+                    res.add(left);
+                }
+            } else {
+                // 在窗口移动时，将窗口左边的字母重新加入哈希表
+                hash[s.charAt(left) - 'a']++;
+                // 窗口左边界缩小一格
+                left++;
+            }
+        }
+        return res;
+    }
 
 
 
