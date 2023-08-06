@@ -1,14 +1,6 @@
 package top.vita.array;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.TreeSet;
+import java.util.*;
 
 @SuppressWarnings("all")
 public class ArrayQuestion {
@@ -1433,6 +1425,36 @@ public class ArrayQuestion {
                 res += map.get(presum - k);
             }
             map.put(presum, map.getOrDefault(presum, 0) + 1);
+        }
+        return res;
+    }
+
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        if(nums.length == 0 || k == 0) {
+            return new int[0];
+        }
+        Deque<Integer> queue = new LinkedList<>();
+        // 滑动窗口长度为k，需要先达到k位数字时才能得到结果，所以减去k
+        int[] res = new int[nums.length - k + 1];
+        // 左窗口前移k-1位，方便在形成窗口前将数据加入queue中
+        int left = 1 - k;
+        int right = 0;
+        while (right < nums.length) {
+            // 队头元素（最大值）已经不在窗口中，将其从队列中移除
+            if (left > 0 && queue.peekFirst() == nums[left - 1]) {
+                queue.removeFirst();
+            }
+            // 删除比新数值小的元素，让队头永远是最大值，保持递减
+            while (!queue.isEmpty() && queue.peekLast() < nums[right]) {
+                queue.removeLast();
+            }
+            queue.addLast(nums[right]);
+            if (left >= 0) {
+                // res中加入的永远是窗口中的最大值
+                res[left] = queue.peekFirst();
+            }
+            left++;
+            right++;
         }
         return res;
     }
