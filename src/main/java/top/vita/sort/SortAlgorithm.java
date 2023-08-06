@@ -21,12 +21,12 @@ public class SortAlgorithm {
         int[] arr = RandomUtil.randomInts(100);
         int[] arr2 = RandomUtil.randomInts(100);
         int[] ints = ArrayUtil.addAll(arr, arr2, new int[]{-1, -2});
-        System.out.println(Arrays.toString(ints));
+        System.out.println(Arrays.toString(arr));
 //        sortAlgorithm.quickSort1(arr, 0, arr.length - 1);
-        sortAlgorithm.bucketSort(ints);
-//        System.out.println(Arrays.toString(arr));
+        sortAlgorithm.radixSort(arr);
+        System.out.println(Arrays.toString(arr));
 //        arr = sortAlgorithm.bucketSort(ints);
-        System.out.println(Arrays.toString(ints));
+//        System.out.println(Arrays.toString(ints));
     }
 
     public void bubbleSort(int[] arr) {
@@ -369,5 +369,38 @@ public class SortAlgorithm {
         }
     }
 
+    public void radixSort(int[] arr) {
+        int max = 0;
+        for (int i : arr) {
+            if (max < i) {
+                max = i;
+            }
+        }
+        // N表示最大数字的位数
+        int N = 1;
+        // 得到最大数的位数
+        while (max / 10 != 0) {
+            max /= 10;
+            N++;
+        }
+        for (int i = 0; i < N; i++) {
+            List<List<Integer>> radix = new ArrayList<>();
+            // 建立从0到9的桶
+            for (int k = 0; k < 10; k++) {
+                radix.add(new ArrayList<>());
+            }
+            // 根据这次要操作的位数存放相应位数的数字
+            for (int num : arr) {
+                int index = (num / (int) Math.pow(10, i)) % 10;
+                radix.get(index).add(num);
+            }
+            int index = 0;
+            for (List<Integer> list : radix) {
+                for (Integer num : list) {
+                    arr[index++] = num;
+                }
+            }
+        }
+    }
 }
 
