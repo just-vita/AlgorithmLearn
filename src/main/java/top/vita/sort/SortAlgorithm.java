@@ -3,7 +3,10 @@ package top.vita.sort;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.RandomUtil;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * 排序算法
@@ -20,10 +23,10 @@ public class SortAlgorithm {
         int[] ints = ArrayUtil.addAll(arr, arr2, new int[]{-1, -2});
         System.out.println(Arrays.toString(ints));
 //        sortAlgorithm.quickSort1(arr, 0, arr.length - 1);
-//        sortAlgorithm.heapSort(arr);
+        sortAlgorithm.bucketSort(ints);
 //        System.out.println(Arrays.toString(arr));
-        arr = sortAlgorithm.countingSort1(ints);
-        System.out.println(Arrays.toString(arr));
+//        arr = sortAlgorithm.bucketSort(ints);
+        System.out.println(Arrays.toString(ints));
     }
 
     public void bubbleSort(int[] arr) {
@@ -324,7 +327,47 @@ public class SortAlgorithm {
         return res;
     }
 
+    public void bucketSort(int[] arr) {
+        if (arr.length == 0) {
+            return;
+        }
+        // 每个桶可以存放的数量
+        int bucketSize = 30;
 
+        // 找到数组中的最大值和最小值
+        int minValue = arr[0];
+        int maxValue = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] < minValue) {
+                minValue = arr[i];
+            } else if (arr[i] > maxValue) {
+                maxValue = arr[i];
+            }
+        }
+
+        // 计算桶的数量
+        int bucketCount = (maxValue - minValue) / bucketSize + 1;
+        ArrayList<ArrayList<Integer>> buckets = new ArrayList<>(bucketCount);
+        for (int i = 0; i < bucketCount; i++) {
+            buckets.add(new ArrayList<>());
+        }
+
+        // 将元素分配到对应的桶中
+        for (int i : arr) {
+            int bucketIndex = (i - minValue) / bucketSize;
+            buckets.get(bucketIndex).add(i);
+        }
+
+        // 对每个桶进行排序，并将排序后的元素放回原数组
+        int currentIndex = 0;
+        for (int i = 0; i < bucketCount; i++) {
+            ArrayList<Integer> bucket = buckets.get(i);
+            Collections.sort(bucket);
+            for (Integer integer : bucket) {
+                arr[currentIndex++] = integer;
+            }
+        }
+    }
 
 }
 
