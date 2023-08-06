@@ -1,5 +1,6 @@
 package top.vita.sort;
 
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.RandomUtil;
 
 import java.util.Arrays;
@@ -15,9 +16,13 @@ public class SortAlgorithm {
     public static void main(String[] args) {
         SortAlgorithm sortAlgorithm = new SortAlgorithm();
         int[] arr = RandomUtil.randomInts(100);
-        System.out.println(Arrays.toString(arr));
-        sortAlgorithm.quickSort1(arr, 0, arr.length - 1);
+        int[] arr2 = RandomUtil.randomInts(100);
+        int[] ints = ArrayUtil.addAll(arr, arr2, new int[]{-1, -2});
+        System.out.println(Arrays.toString(ints));
+//        sortAlgorithm.quickSort1(arr, 0, arr.length - 1);
 //        sortAlgorithm.heapSort(arr);
+//        System.out.println(Arrays.toString(arr));
+        arr = sortAlgorithm.countingSort1(ints);
         System.out.println(Arrays.toString(arr));
     }
 
@@ -228,6 +233,97 @@ public class SortAlgorithm {
         // 将原本的根节点放到合适的位置
         arr[i] = temp;
     }
+
+    public int[] countingSort(int[] arr) {
+        int max = 0;
+        for (int i : arr) {
+            if (max < i) {
+                max = i;
+            }
+        }
+        int[] countArr = new int[max + 1];
+        // 记录数字出现的次数
+        for (int i = 0; i < arr.length; i++) {
+            countArr[arr[i]]++;
+        }
+        // 计算出当前位置的前缀和
+        for (int i = 1; i < countArr.length; i++) {
+            countArr[i] += countArr[i - 1];
+        }
+        int[] res = new int[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            // 通过数字的前缀和减一即可得到数字应该放的位置
+            res[countArr[arr[i]] - 1] = arr[i];
+            // 数字个数减一
+            countArr[arr[i]]--;
+        }
+        return res;
+    }
+
+    public int[] countingSort1(int[] arr) {
+        int max = 0;
+        int min = 0;
+        for (int i : arr) {
+            if (max < i) {
+                max = i;
+            } else if (min > i) {
+                min = i;
+            }
+        }
+        // 如果有负数存在，减去负数就相当于加上负数的绝对值
+        // 如果有负数不存在，代表数组中有重复的数，可以节省一点存放数字的空间
+        // 比如 [1, 1, 2, 3] 的前缀和数组只需要存放 [1, 2, 3]
+        int[] countArr = new int[max - min + 1];
+        // 记录数字出现的次数
+        for (int i = 0; arr.length > i; i++) {
+            countArr[arr[i] - min]++;
+        }
+        // 计算出当前位置的前缀和
+        for (int i = 1; i < countArr.length; i++) {
+            countArr[i] += countArr[i - 1];
+        }
+        int[] res = new int[arr.length];
+        for (int j : arr) {
+            // 通过数字的前缀和减去最小值即可得到数字应该放的位置
+            res[countArr[j - min] - 1] = j;
+            // 数字个数减一
+            countArr[j - min]--;
+        }
+        return res;
+    }
+
+    public int[] countingSort2(int[] arr) {
+        int max = 0;
+        int min = 0;
+        for (int i : arr) {
+            if (max < i) {
+                max = i;
+            } else if (min > i) {
+                min = i;
+            }
+        }
+        // 如果有负数存在，减去负数就相当于加上负数的绝对值
+        // 如果有负数不存在，代表数组中有重复的数，可以节省一点存放数字的空间
+        // 比如 [1, 1, 2, 3] 的前缀和数组只需要存放 [1, 2, 3]
+        int[] countArr = new int[max - min + 1];
+        // 记录数字出现的次数
+        for (int j : arr) {
+            countArr[j - min]++;
+        }
+        // 计算出当前位置的前缀和
+        for (int i = 1; i < countArr.length; i++) {
+            countArr[i] += countArr[i - 1];
+        }
+        int[] res = new int[arr.length];
+        for (int j : arr) {
+            // 通过数字的前缀和减去最小值即可得到数字应该放的位置
+            res[countArr[j - min] - 1] = j;
+            // 数字个数减一
+            countArr[j - min]--;
+        }
+        return res;
+    }
+
 
 
 }
