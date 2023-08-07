@@ -961,4 +961,51 @@ public class StringQuestion {
 		}
 		return ' ';
 	}
+
+	public String minWindow(String s, String t) {
+		if (s.length() < t.length()) {
+			return "";
+		}
+		int[] hash = new int['z' - 'A' + 1];
+		for (char c : t.toCharArray()) {
+			hash[c - 'A']++;
+		}
+		int left = 0;
+		int right = 0;
+		// 需要的字符的数量，也就是t字符串的字符的个数
+		int count = t.length();
+		// 结果字符串的起始位置
+		int begin = -1;
+		// 符合需求的最小子串的长度
+		int size = s.length() + 1;
+		char[] chs = s.toCharArray();
+		while (right < s.length()) {
+			// 找到一个t的字符
+			// 循环减少需要的个数，不是需要的字符的话会被减到-1甚至更小
+			if (hash[chs[right] - 'A']-- > 0) {
+				// 减少需要的字符个数
+				count--;
+			}
+			// 直接在这里加，省的在后面计算结果的时候还要加一
+			right++;
+			// 已经找齐t字符串的字符
+			if (count == 0) {
+				// 开始从左窗口开始尽量缩小窗口
+				// 只要左窗口找到一个t的字符，缩小窗口就停止
+				while (hash[chs[left] - 'A']++ < 0) {
+					// 恢复之前减去的字符个数
+					left++;
+				}
+				// 记录长度和起始位置
+				if (right - left < size) {
+					size = right - left;
+					begin = left;
+				}
+				// 因为移动了已经有需要字符的左窗口，所以需要的字符加一
+				count++;
+				left++;
+			}
+		}
+		return begin == -1 ? "" : new String(chs, begin, size);
+	}
 }
