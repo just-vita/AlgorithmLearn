@@ -1458,4 +1458,22 @@ public class ArrayQuestion {
         }
         return res;
     }
+
+    public int maxAbsoluteSum(int[] nums) {
+        int max = 0;
+        int min = 0;
+        int sum = 0;
+        for (int num : nums) {
+            sum += num;
+            // 正数的累计和尽可能大，负数的累计和尽可能小
+            if (sum > max) {
+                max = sum;
+            } else if (sum < min) {
+                min = sum;
+            }
+        }
+        // 返回 max - min 时，实际上就是在计算了数组中的一个子数组
+        // 使得其中正数和最大、负数和最小，从而得到这个子数组的最大绝对和
+        return max - min;
+    }
 }
