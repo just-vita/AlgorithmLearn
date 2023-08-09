@@ -1476,4 +1476,15 @@ public class ArrayQuestion {
         // 使得其中正数和最大、负数和最小，从而得到这个子数组的最大绝对和
         return max - min;
     }
+
+    public int subtractProductAndSum(int n) {
+        int sum = 0;
+        int prod = 1;
+        while (n != 0) {
+            sum += n % 10;
+            prod *= n % 10;
+            n /= 10;
+        }
+        return prod - sum;
+    }
 }
