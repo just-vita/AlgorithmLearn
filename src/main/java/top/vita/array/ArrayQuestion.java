@@ -1487,4 +1487,24 @@ public class ArrayQuestion {
         }
         return prod - sum;
     }
+
+    public int[][] merge1(int[][] intervals) {
+        // 按第一位数升序排序
+        Arrays.sort(intervals, (a, b) -> {
+            return a[0] - b[0];
+        });
+        List<int[]> res = new ArrayList<>();
+        // 直接将第一个区间加入
+        res.add(intervals[0]);
+        for (int i = 1; i < intervals.length; i++) {
+            // 当前区间的最小值大于上一个区间的最大值，如[0, 1]和[2, 3]，不是重复区间
+            if (intervals[i][0] > res.get(res.size() - 1)[1]) {
+                res.add(intervals[i]);
+            } else {
+                // 否则是重复区间，直接将右区间改为两个区间的最大值
+                res.get(res.size() - 1)[1] = Math.max(intervals[i][1], res.get(res.size() - 1)[1]);
+            }
+        }
+        return res.toArray(new int[res.size()][]);
+    }
 }
