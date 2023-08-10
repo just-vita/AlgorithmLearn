@@ -277,16 +277,6 @@ public class ArrayQuestion {
         reverse(nums, k, nums.length - 1);
     }
 
-    private void reverse(int[] nums, int begin, int end) {
-        while (begin < end) {
-            int temp = nums[begin];
-            nums[begin] = nums[end];
-            nums[end] = temp;
-            begin++;
-            end--;
-        }
-    }
-
     /*
      * 36. 有效的数独
      * 请你判断一个 9 x 9 的数独是否有效。只需要 根据以下规则 ，
@@ -1506,5 +1496,29 @@ public class ArrayQuestion {
             }
         }
         return res.toArray(new int[res.size()][]);
+    }
+
+    public void rotate1(int[] nums, int k) {
+        if (nums.length < 2){
+            return;
+        }
+        // 对 k 取余，k 大于数组长度时也能翻转
+        k %= nums.length;
+        // 整个数组翻转
+        reverse(nums, 0, nums.length - 1);
+        // 翻转前 k 个
+        reverse(nums, 0, k - 1);
+        // 翻转后 k 个
+        reverse(nums, k, nums.length - 1);
+    }
+
+    private void reverse(int[] nums, int begin, int end) {
+        while (begin < end) {
+            int temp = nums[begin];
+            nums[begin] = nums[end];
+            nums[end] = temp;
+            begin++;
+            end--;
+        }
     }
 }
