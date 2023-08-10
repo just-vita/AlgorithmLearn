@@ -910,7 +910,35 @@ public class DPQuestion {
 		return sum;
 	}
 
-
+	public int minFallingPathSum(int[][] grid) {
+		int n = grid.length;
+		int[][] dp = new int[n][n];
+		for (int i = 0; i < dp.length; i++) {
+			Arrays.fill(dp[i], Integer.MAX_VALUE);
+		}
+		// 初始化第一列
+		for (int j = 0; j < dp.length; j++) {
+			dp[0][j] = grid[0][j];
+		}
+		for (int i = 1; i < n; i++) {
+			// j 和 k 指向同一行不同的位置
+			for (int j = 0; j < n; j++) {
+				for (int k = 0; k < n; k++) {
+					// 列相同不计算
+					if (j == k) {
+						continue;
+					}
+					// 计算dp[i][j]和dp[i - 1][k]哪个的和最小
+					dp[i][j] = Math.min(dp[i][j], dp[i - 1][k] + grid[i][j]);
+				}
+			}
+		}
+		int res = Integer.MAX_VALUE;
+		for (int j = 0; j < n; j++) {
+			res = Math.min(res, dp[n - 1][j]);
+		}
+		return res;
+	}
 
 
 
