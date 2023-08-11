@@ -1521,4 +1521,17 @@ public class ArrayQuestion {
             end--;
         }
     }
+
+    public int diagonalSum(int[][] mat) {
+        int res = 0;
+        for (int i = 0; i < mat.length; i++) {
+            for (int j = 0; j < mat.length; j++) {
+                // 在实例1的情况下 i == j 能处理1 5 9 i + j 能处理3 5 7（对角线
+                if (i == j || i + j == mat.length - 1) {
+                    res += mat[i][j];
+                }
+            }
+        }
+        return res;
+    }
 }
