@@ -1,6 +1,7 @@
 package top.vita.linked;
 
 import java.util.HashSet;
+import java.util.PriorityQueue;
 import java.util.Stack;
 
 @SuppressWarnings("all")
@@ -305,7 +306,7 @@ public class LinkedQuestion {
 	 * 将两个升序链表合并为一个新的 升序 链表并返回。
 	 * 新链表是通过拼接给定的两个链表的所有节点组成的。
 	 */
-    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+    public ListNode mergeTwoLists2(ListNode list1, ListNode list2) {
     	ListNode cur1 = list1;
     	ListNode cur2 = list2;
     	ListNode header = new ListNode(0);
@@ -832,7 +833,51 @@ public class LinkedQuestion {
 		return header.next;
 	}
 
+	public ListNode mergeKLists(ListNode[] lists) {
+		return merge(lists, 0, lists.length - 1);
+	}
 
+	private ListNode merge(ListNode[] lists, int left, int right) {
+		// 分成一个链表再进行处理
+		if (left == right) {
+			return lists[left];
+		}
+		// 防止 mid+1 大于 right 造成死递归
+		if (left > right) {
+			return null;
+		}
+		// 归并排序思想
+		int mid = (left + right) >> 1;
+		return mergeTwoLists(merge(lists, left, mid), merge(lists, mid + 1, right));
+	}
+
+	private ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+		ListNode cur1 = l1;
+		ListNode cur2 = l2;
+		ListNode header = new ListNode(0);
+		ListNode res = header;
+		while (cur1 != null && cur2 != null) {
+			if (cur1.val < cur2.val) {
+				res.next = cur1;
+				cur1 = cur1.next;
+			} else {
+				res.next = cur2;
+				cur2 = cur2.next;
+			}
+			res = res.next;
+		}
+		while (cur1 != null) {
+			res.next = cur1;
+			cur1 = cur1.next;
+			res = res.next;
+		}
+		while (cur2 != null) {
+			res.next = cur2;
+			cur2 = cur2.next;
+			res = res.next;
+		}
+		return header.next;
+	}
 
 
 }
