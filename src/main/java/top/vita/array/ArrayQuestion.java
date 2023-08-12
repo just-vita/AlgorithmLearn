@@ -1550,4 +1550,26 @@ public class ArrayQuestion {
         }
         return res;
     }
+
+    public int firstMissingPositive(int[] nums) {
+        int n = nums.length;
+        for (int i = 0; i < n; i++) {
+            // nums[i] != nums[nums[i] - 1] 当前位置不是它应该在的位置
+            while (nums[i] > 0 && nums[i] <= n && nums[i] != nums[nums[i] - 1]) {
+                // 调整数组，将数字放到正确的位置上
+                int temp = nums[nums[i] - 1];
+                nums[nums[i] - 1] = nums[i];
+                nums[i] = temp;
+            }
+        }
+        // 因为上面的循环已经把数字都尽量调整到了正确的位置
+        // 所以可以直接从0开始遍历来找到第一个位置不正确的数字
+        for (int i = 0; i < n; i++) {
+            if (nums[i] != i + 1) {
+                return i + 1;
+            }
+        }
+        // 最小的不正确的数不在[0, n]中，则返回n+1
+        return n + 1;
+    }
 }
