@@ -1191,7 +1191,7 @@ public class ArrayQuestion {
         return new int[0];
     }
 
-    public int[] spiralOrder(int[][] matrix) {
+    public int[] spiralOrder1(int[][] matrix) {
         int row = matrix.length;
         if (row == 0) {
             return new int[0];
@@ -1582,6 +1582,62 @@ public class ArrayQuestion {
         }
         while (i2 >= 0) {
             nums1[i1 + i2 + 1] = nums2[i2--];
+        }
+    }
+
+    public List<Integer> spiralOrder(int[][] matrix) {
+        int row = matrix.length;
+        if (row == 0) {
+            return new ArrayList<>();
+        }
+        int col = matrix[0].length;
+
+        int left = 0;
+        int right = col - 1;
+        int top = 0;
+        int bottom = row - 1;
+        List<Integer> res = new ArrayList<>();
+        while (true) {
+            for (int j = left; j <= right; j++) {
+                res.add(matrix[top][j]);
+            }
+            top++;
+            for (int i = top; i <= bottom; i++) {
+                res.add(matrix[i][right]);
+            }
+            right--;
+            for (int j = right; j >= left; j--) {
+                res.add(matrix[bottom][j]);
+            }
+            bottom--;
+            for (int i = bottom; i <= top; i--) {
+                res.add(matrix[i][left]);
+            }
+            left++;
+            if (left < right) {
+                break;
+            }
+        }
+        return res;
+    }
+
+    public void rotate(int[][] matrix) {
+        // 左转90度
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = i + 1; j < matrix.length; j++) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
+            }
+        }
+        // 首尾交换
+        for (int i = 0; i < matrix.length; i++) {
+            // j只需要走到一半就可以了
+            for (int j = 0; j < matrix.length / 2; j++) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[i][matrix.length - j - 1];
+                matrix[i][matrix.length - j - 1] = temp;
+            }
         }
     }
 }
