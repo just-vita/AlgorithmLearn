@@ -1655,6 +1655,28 @@ public class ArrayQuestion {
         }
         return false;
     }
+
+    public int[] circularGameLosers(int n, int k) {
+        boolean[] visited = new boolean[n];
+        int prod = k;
+        int j = 0;
+        while (true) {
+            if (visited[j]) {
+                break;
+            }
+            visited[j] = true;
+            j = (j + prod) % n;
+            prod += k;
+        }
+        List<Integer> list = new ArrayList<>();
+        for (j = 0; j < n; j++) {
+            if (!visited[j]) {
+                list.add(j + 1);
+            }
+        }
+        return list.stream().mapToInt(Integer::intValue).toArray();
+    }
+
 }
 
 
