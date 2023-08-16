@@ -891,5 +891,21 @@ public class LinkedQuestion {
 		}
 		return cur1;
 	}
+
+	public ListNode reverseList3(ListNode head) {
+		ListNode pre = null;
+		ListNode cur = head;
+		while (cur != null) {
+			// 暂存next
+			ListNode next = cur.next;
+			// 交换 next 和 pre
+			// pre => cur => next ==> cur => pre
+			cur.next = pre;
+			pre = cur;
+			// 使用暂存的next继续往后遍历
+			cur = next;
+		}
+		return pre;
+	}
 }
 
