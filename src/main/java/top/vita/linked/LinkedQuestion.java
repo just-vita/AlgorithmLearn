@@ -849,7 +849,7 @@ public class LinkedQuestion {
 		return mergeTwoLists(merge(lists, left, mid), merge(lists, mid + 1, right));
 	}
 
-	private ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+	private ListNode mergeTwoLists12(ListNode l1, ListNode l2) {
 		ListNode cur1 = l1;
 		ListNode cur2 = l2;
 		ListNode header = new ListNode(0);
@@ -999,5 +999,22 @@ public class LinkedQuestion {
 		}
 		return null;
 	}
+
+	public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+		// 递归到最后时，会直接将不为null的节点作为next
+		if (list1 == null) {
+			return list2;
+		} else if (list2 == null) {
+			return list1;
+		} else if (list1.val <= list2.val) {
+			// 用更小的节点去指向剩下节点的合并结果，将问题抛给后面的节点来计算
+			list1.next = mergeTwoLists(list1.next, list2);
+			return list1;
+		} else {
+			list2.next = mergeTwoLists(list1, list2.next);
+			return list2;
+		}
+	}
+
 }
 
