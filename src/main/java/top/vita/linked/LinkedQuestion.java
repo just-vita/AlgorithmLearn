@@ -980,5 +980,24 @@ public class LinkedQuestion {
 		}
 		return false;
 	}
+
+	public ListNode detectCycle1(ListNode head) {
+		ListNode fast = head;
+		ListNode slow = head;
+		// 找到第一个相等的地方
+		while (fast != null && fast.next != null) {
+			fast = fast.next.next;
+			slow = slow.next;
+			if (fast == slow) {
+				// 重置快指针，下一个指针相遇的地方就是入环节点
+				while (slow != head) {
+					head = head.next;
+					slow = slow.next;
+				}
+				return head;
+			}
+		}
+		return null;
+	}
 }
 
