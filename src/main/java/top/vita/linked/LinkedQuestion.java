@@ -1,8 +1,6 @@
 package top.vita.linked;
 
-import java.util.HashSet;
-import java.util.PriorityQueue;
-import java.util.Stack;
+import java.util.*;
 
 @SuppressWarnings("all")
 public class LinkedQuestion {
@@ -906,6 +904,65 @@ public class LinkedQuestion {
 			cur = next;
 		}
 		return pre;
+	}
+
+	ListNode front;
+
+	public boolean isPalindrome(ListNode head) {
+		front = head;
+		return checkIsPalindrome(head);
+	}
+
+	private boolean checkIsPalindrome(ListNode back) {
+		// 利用递归的特性，等递归到底开始回溯的时候，得到链表最后一个节点back，实现从后往前遍历的效果
+		if (back != null) {
+			// 开始递归，如果有一层出现了false，就会一直往上传
+			if (!checkIsPalindrome(back.next)) {
+				return false;
+			}
+			// 如果上一层递归是回文，就判断当前的front和back是否相同来判断是否回文
+			if (back.val != front.val){
+				return false;
+			}
+			// 移动前指针
+			front = front.next;
+		}
+		// 如果这一层递归正常结束，则认为从front到back是回文
+		return true;
+	}
+
+	public boolean isPalindrome1(ListNode head) {
+		ListNode fast = head;
+		ListNode slow = head;
+		while (fast.next != null && fast.next.next != null) {
+			fast = fast.next.next;
+			slow = slow.next;
+		}
+		// 找到指向链表中间的节点
+		ListNode mid = slow;
+
+		// 反转中间之后的节点
+		ListNode pre = null;
+		ListNode cur = mid.next;
+		while (cur != null) {
+			ListNode next = cur.next;
+			cur.next = pre;
+			pre = cur;
+			cur = next;
+		}
+
+		// 逐步比较反转后的节点，实现从两边向中间遍历的效果
+		ListNode right = pre;
+		boolean flag = true;
+		while (flag && right != null) {
+			// 有一个不是回文，那整体都不是回文
+			if (head.val != right.val) {
+				flag = false;
+			}
+			head = head.next;
+			right = right.next;
+		}
+		return flag;
 	}
 }
 
