@@ -1043,5 +1043,21 @@ public class LinkedQuestion {
 		return root.next;
 	}
 
+
+	int curNum = 0;
+	public ListNode removeNthFromEnd12(ListNode head, int n) {
+		if (head == null) {
+			return null;
+		}
+		// 递归到底的时候才会开始返回，也就相当于是逆序遍历链表了
+		head.next = removeNthFromEnd12(head.next, n);
+		curNum++;
+		if (curNum == n) {
+			return head.next;
+		}
+		return head;
+	}
+
+
 }
 
