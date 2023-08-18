@@ -1016,5 +1016,32 @@ public class LinkedQuestion {
 		}
 	}
 
+	public ListNode addTwoNumbers1(ListNode l1, ListNode l2) {
+		ListNode root = new ListNode(0);
+		ListNode cur = root;
+		// 代表进位 逢十进一
+		int carry = 0;
+		// carry != 0 时也要进行一次循环，把进位加入节点
+		while (l1 != null || l2 != null || carry != 0) {
+			int x = l1 == null ? 0 : l1.val;
+			int y = l2 == null ? 0 : l2.val;
+			// 增加两个节点的数字，要加上前一位的进位
+			int sum = x + y + carry;
+			carry = sum / 10;
+			// 只取个位数字
+			ListNode sumNode = new ListNode(sum % 10);
+			cur.next = sumNode;
+			cur = cur.next;
+
+			if (l1 != null) {
+				l1 = l1.next;
+			}
+			if (l2 != null) {
+				l2 = l2.next;
+			}
+		}
+		return root.next;
+	}
+
 }
 
