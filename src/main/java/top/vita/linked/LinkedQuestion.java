@@ -1058,6 +1058,35 @@ public class LinkedQuestion {
 		return head;
 	}
 
+	public ListNode reverseKGroup1(ListNode head, int k) {
+		// 找到下一组的第一个节点，方便跳出循环
+		ListNode test = head;
+		for (int i = 0; i < k; i++) {
+			// 如果这一组不够k个直接返回原节点
+			if (test == null) {
+				return head;
+			}
+			test = test.next;
+		}
+		ListNode cur = head;
+		ListNode pre = null;
+		// 处理这一组的节点
+		while (cur != test) {
+			// 将这组的k个节点逐个进行位置互换，也就是反转
+			ListNode next = cur.next;
+			cur.next = pre;
+			pre = cur;
+			cur = next;
+		}
+
+		// 交给下一组继续处理，cur就是下一组的第一个节点（循环后后cur = test）
+		head.next = reverseKGroup(cur, k);
+		// 因为反转过，pre指向的就是当前head位置的节点
+		return pre;
+		// 比如12345的案例，到5时开始出倒数第一层栈，递归结果为5
+		// 然后倒数第二层栈，head参数是3，3的next指向倒数第一层的结果5
+		// 最后倒数第三层栈，head参数是1，1的next指向倒数第二层的结果3
+	}
 
 }
 
