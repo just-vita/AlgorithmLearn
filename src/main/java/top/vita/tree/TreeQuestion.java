@@ -1456,4 +1456,8 @@ public class TreeQuestion {
         // 判断是否到达根节点 判断左子树是否正确 判断右子树是否正确
         return rootPosition == right && verifyPostorder(left, firstRight - 1, postorder) && verifyPostorder(firstRight, right - 1, postorder);
     }
+
+    public boolean checkTree(TreeNode root) {
+        return root.left.val + root.right.val == root.val;
+    }
 }
