@@ -1118,5 +1118,95 @@ public class LinkedQuestion {
 		return header.next;
 	}
 
+	public ListNode sortList1(ListNode head) {
+		if (head == null) {
+			return null;
+		}
+		ListNode header = new ListNode(0);
+		header.next = head;
+		// 标记已排序数组的最后节点
+		ListNode lastNode = head;
+		ListNode cur = head.next;
+		while (cur != null) {
+			// 当前数比最大数大，则不用排序，相当于直接添加到末尾
+			if (lastNode.val <= cur.val) {
+				lastNode = lastNode.next;
+			} else {
+				// 比最大数小，就要用pre指针找到最后一个小于当前数的节点
+				ListNode pre = header;
+				// 使用next是因为最后pre = pre.next后会指向比cur大的节点
+				while (pre.next.val <= cur.val) {
+					pre = pre.next;
+				}
+				// 将下一个需要进行插入排序的节点加入，方便继续向后遍历
+				lastNode.next = cur.next;
+				// 当前节点的next指向已排序节点中的比它大的第一个节点
+				cur.next = pre.next;
+				// 修改原链表，真正的将cur加入已排序节点中
+				pre.next = cur;
+			}
+			// cur根据已排序节点改变，因为cur.next可能指向已排序的节点
+			cur = lastNode.next;
+		}
+		return header.next;
+	}
+
+	public ListNode sortList(ListNode head) {
+		return sortList(head, null);
+	}
+
+	private ListNode sortList(ListNode head, ListNode tail) {
+		// 归并排序解法
+		if (head == null) {
+			return null;
+		}
+		// 递归结束条件，链表中只有一个节点
+		if (head.next == tail) {
+			head.next = null;
+			return head;
+		}
+		ListNode slow = head;
+		ListNode fast = head;
+		while (fast != tail) {
+			slow = slow.next;
+			fast = fast.next;
+			// 还没到当前处理的链表结尾，就让快指针多走一步
+			if (fast != tail) {
+				fast = fast.next;
+			}
+		}
+		// 当fast到达结尾时，slow就指向了中间的节点
+		ListNode mid = slow;
+		// 递归分割链表
+		ListNode res1 = sortList(head, mid);
+		ListNode res2 = sortList(mid, tail);
+		// 最后直接使用合并链表的方法合并
+		return merge(res1, res2);
+	}
+
+	private ListNode merge(ListNode list1, ListNode list2) {
+		ListNode header = new ListNode(0);
+		ListNode res = header;
+		ListNode cur1 = list1;
+		ListNode cur2 = list2;
+		while (cur1 != null && cur2 != null) {
+			if (cur1.val <= cur2.val) {
+				res.next = cur1;
+				cur1 = cur1.next;
+			} else {
+				res.next = cur2;
+				cur2 = cur2.next;
+			}
+			res = res.next;
+		}
+		// 两个链表的节点数相同，可以直接用if-else
+		if (cur1 != null) {
+			res.next = cur1;
+		} else {
+			res.next = cur2;
+		}
+		return header.next;
+	}
+
 }
 
