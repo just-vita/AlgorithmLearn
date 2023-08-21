@@ -1088,5 +1088,35 @@ public class LinkedQuestion {
 		// 最后倒数第三层栈，head参数是1，1的next指向倒数第二层的结果3
 	}
 
+	public ListNode insertionSortList(ListNode head) {
+		ListNode header = new ListNode(0);
+		header.next = head;
+		// 标记已排序数组的最后节点
+		ListNode lastNode = head;
+		ListNode cur = head.next;
+		while (cur != null) {
+			// 当前数比最大数大，则不用排序，相当于直接添加到末尾
+			if (lastNode.val <= cur.val) {
+				lastNode = lastNode.next;
+			} else {
+				// 比最大数小，就要用pre指针找到最后一个小于当前数的节点
+				ListNode pre = header;
+				// 使用next是因为最后pre = pre.next后会指向比cur大的节点
+				while (pre.next.val <= cur.val) {
+					pre = pre.next;
+				}
+				// 将下一个需要进行插入排序的节点加入，方便继续向后遍历
+				lastNode.next = cur.next;
+				// 当前节点的next指向已排序节点中的比它大的第一个节点
+				cur.next = pre.next;
+				// 修改原链表，真正的将cur加入已排序节点中
+				pre.next = cur;
+			}
+			// cur根据已排序节点改变，因为cur.next可能指向已排序的节点
+			cur = lastNode.next;
+		}
+		return header.next;
+	}
+
 }
 
