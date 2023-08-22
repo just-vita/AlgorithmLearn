@@ -1677,6 +1677,31 @@ public class ArrayQuestion {
         return list.stream().mapToInt(Integer::intValue).toArray();
     }
 
+    public int maxDistToClosest(int[] seats) {
+        int first = -1;
+        int last = -1;
+        int res = 0;
+        for (int i = 0; i < seats.length; i++) {
+            if (seats[i] == 1) {
+                // 初始化前一个人和后一个人的位置
+                if (first == -1) {
+                    first = i;
+                    // 可以解决开头一直为0的情况
+                    res = Math.max(res, i);
+                } else if (last == -1) {
+                    last = i;
+                    // 计算出第一次遇到左右同时有人时的距离
+                    res = Math.max(res, (last - first) / 2);
+                    // 重置变量，重新开始找
+                    first = i;
+                    last = -1;
+                }
+            }
+        }
+        // 可以解决结尾一直为0的情况
+        return Math.max(res, seats.length - first - 1);
+    }
+
 }
 
 
