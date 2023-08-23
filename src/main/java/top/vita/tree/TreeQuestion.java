@@ -1460,4 +1460,13 @@ public class TreeQuestion {
     public boolean checkTree(TreeNode root) {
         return root.left.val + root.right.val == root.val;
     }
+
+    public void inorderTraversal23(TreeNode root, List<Integer> res) {
+        if (root == null) {
+            return;
+        }
+        inorderTraversal23(root.left, res);
+        res.add(root.val);
+        inorderTraversal23(root.right, res);
+    }
 }
