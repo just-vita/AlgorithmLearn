@@ -1469,4 +1469,28 @@ public class TreeQuestion {
         res.add(root.val);
         inorderTraversal23(root.right, res);
     }
+
+    public int maxDepth3(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int depth = 0;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            while (size != 0) {
+                size--;
+                TreeNode cur = queue.poll();
+                if (cur.left != null) {
+                    queue.add(cur.left);
+                }
+                if (cur.right != null) {
+                    queue.add(cur.right);
+                }
+            }
+            depth++;
+        }
+        return depth;
+    }
 }
