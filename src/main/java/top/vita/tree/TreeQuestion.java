@@ -344,18 +344,18 @@ public class TreeQuestion {
         return root;
     }
 
-    public boolean isSymmetric(TreeNode root) {
-        return checkIsSymmetric(root.left, root.right);
+    public boolean isSymmetric3(TreeNode root) {
+        return checkIsSymmetric2(root.left, root.right);
     }
 
-    private boolean checkIsSymmetric(TreeNode left, TreeNode right) {
+    private boolean checkIsSymmetric2(TreeNode left, TreeNode right) {
         if (left == null && right == null) {
             return true;
         } else if (left == null || right == null || left.val != right.val) {
             return false;
         }
-        boolean outside = checkIsSymmetric(left.left, right.right);
-        boolean inside = checkIsSymmetric(left.right, right.left);
+        boolean outside = checkIsSymmetric2(left.left, right.right);
+        boolean inside = checkIsSymmetric2(left.right, right.left);
         return outside && inside;
     }
 
@@ -1521,5 +1521,20 @@ public class TreeQuestion {
         } else {
             return goodNodesDfs(cur.left, max) + goodNodesDfs(cur.right, max);
         }
+    }
+
+    public boolean isSymmetric(TreeNode root) {
+        return checkIsSymmetric(root.left, root.right);
+    }
+
+    private boolean checkIsSymmetric(TreeNode left, TreeNode right) {
+        if (left == null && right == null) {
+            return true;
+        } else if (left == null || right == null || left.val != right.val) {
+            return false;
+        }
+        boolean out = checkIsSymmetric(left.left, right.right);
+        boolean in = checkIsSymmetric(left.right, right.left);
+        return out && in;
     }
 }
