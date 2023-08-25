@@ -1559,4 +1559,21 @@ public class TreeQuestion {
         return Math.max(left, right);
     }
 
+    int maxPathSum = Integer.MIN_VALUE;
+    public int maxPathSum(TreeNode root) {
+        getMaxPathSum(root);
+        return maxPathSum;
+    }
+
+    private int getMaxPathSum(TreeNode cur) {
+        if (cur == null) {
+            return 0;
+        }
+        // ÉáÆú¸ºÊý
+        int leftSum = Math.max(0, getMaxPathSum(cur.left));
+        int rightSum = Math.max(0, getMaxPathSum(cur.right));
+        maxPathSum = Math.max(maxPathSum, leftSum + rightSum + cur.val);
+        return Math.max(leftSum, rightSum) + cur.val;
+    }
+
 }
