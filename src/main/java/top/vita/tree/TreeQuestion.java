@@ -1,5 +1,8 @@
 package top.vita.tree;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -1537,4 +1540,23 @@ public class TreeQuestion {
         boolean in = checkIsSymmetric(left.right, right.left);
         return out && in;
     }
+
+    int maxDiameter = 0;
+    public int diameterOfBinaryTree(TreeNode root) {
+        getDiameterOfBinaryTree(root);
+        return maxDiameter;
+    }
+    private int getDiameterOfBinaryTree(TreeNode cur) {
+        // 到达叶子节点时开始返回
+        if (cur.left == null && cur.right == null) {
+            return 0;
+        }
+        // 向左右节点索取节点个数信息，加上当前节点本身的1个
+        int left = cur.left == null ? 0 : getDiameterOfBinaryTree(cur.left) + 1;
+        int right = cur.right == null ? 0 : getDiameterOfBinaryTree(cur.right) + 1;
+        // 记录最高直径，其实就是不算根节点，计算左右子节点的最大个数的和
+        maxDiameter = Math.max(maxDiameter, left + right);
+        return Math.max(left, right);
+    }
+
 }
