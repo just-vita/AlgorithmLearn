@@ -1504,6 +1504,22 @@ public class TreeQuestion {
         root.left = root.right;
         root.right = temp;
         return root;
+    }
 
+    public int goodNodes(TreeNode root) {
+        // 加上当前节点的1个
+        return 1 + goodNodesDfs(root.left, root.val) + goodNodesDfs(root.right, root.val);
+    }
+
+    private int goodNodesDfs(TreeNode cur, int max) {
+        if (cur == null) {
+            return 0;
+        }
+        if (cur.val >= max) {
+            // 如果大的话，就把比较大的那个值往下传
+            return 1 + goodNodesDfs(cur.left, cur.val) + goodNodesDfs(cur.right, cur.val);
+        } else {
+            return goodNodesDfs(cur.left, max) + goodNodesDfs(cur.right, max);
+        }
     }
 }
