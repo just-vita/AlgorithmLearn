@@ -1576,4 +1576,29 @@ public class TreeQuestion {
         return Math.max(leftSum, rightSum) + cur.val;
     }
 
+    int longestUnivaluePath = 0;
+    public int longestUnivaluePath(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        getLongestUnivaluePath(root);
+        return longestUnivaluePath;
+    }
+
+    private int getLongestUnivaluePath(TreeNode cur) {
+        if (cur.left == null && cur.right == null) {
+            return 0;
+        }
+        int left = cur.left == null ? 0 : getLongestUnivaluePath(cur.left) + 1;
+        int right = cur.right == null ? 0 : getLongestUnivaluePath(cur.right) + 1;
+        if (left >= 0 && cur.val != cur.left.val) {
+            left = 0;
+        }
+        if (right >= 0 && cur.val != cur.right.val) {
+            right = 0;
+        }
+        longestUnivaluePath = Math.max(longestUnivaluePath, left + right);
+        return Math.max(left, right);
+    }
+
 }
