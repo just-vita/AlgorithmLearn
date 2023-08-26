@@ -1420,7 +1420,7 @@ public class ArrayQuestion {
     }
 
     public int[] maxSlidingWindow(int[] nums, int k) {
-        if(nums.length == 0 || k == 0) {
+        if (nums.length == 0 || k == 0) {
             return new int[0];
         }
         Deque<Integer> queue = new LinkedList<>();
@@ -1499,7 +1499,7 @@ public class ArrayQuestion {
     }
 
     public void rotate1(int[] nums, int k) {
-        if (nums.length < 2){
+        if (nums.length < 2) {
             return;
         }
         // 对 k 取余，k 大于数组长度时也能翻转
@@ -1702,6 +1702,60 @@ public class ArrayQuestion {
         return Math.max(res, seats.length - first - 1);
     }
 
+    public List<String> summaryRanges1(int[] nums) {
+        List<String> res = new ArrayList<>();
+        if (nums.length == 0) {
+            return res;
+        }
+        int preNum = nums[0];
+        int size = 1;
+        for (int i = 1; i <= nums.length; i++) {
+            if (nums[i - 1] == nums[i] - 1) {
+                size++;
+            } else {
+                if (size == 1) {
+                    res.add(preNum + "");
+                } else {
+                    res.add(preNum + "->" + nums[i - 1]);
+                }
+                preNum = nums[i];
+                size = 1;
+            }
+        }
+        if (size == 1) {
+            res.add(preNum + "");
+        } else {
+            res.add(preNum + "->" + nums[nums.length - 1]);
+        }
+        return res;
+    }
+
+    public List<String> summaryRanges(int[] nums) {
+        List<String> res = new ArrayList<>();
+        if (nums.length == 0) {
+            return res;
+        }
+        int i = 0;
+        while (i < nums.length) {
+            // 分组循环解法
+            int start = i;
+            // 有连续数字，只移动i
+            while (i < nums.length - 1 && nums[i] + 1 == nums[i + 1]) {
+                i++;
+            }
+            // 取出开头数字
+            StringBuilder s = new StringBuilder();
+            s.append(nums[start]);
+            // 如果i移动了，则代表有区间
+            if (start < i) {
+                s.append("->");
+                s.append(nums[i]);
+            }
+            res.add(s.toString());
+            i++;
+        }
+        return res;
+    }
 }
 
 
