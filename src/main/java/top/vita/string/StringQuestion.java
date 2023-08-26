@@ -1023,4 +1023,24 @@ public class StringQuestion {
 		}
 		return max;
 	}
+
+	public boolean checkZeroOnes(String s) {
+		char[] chs = s.toCharArray();
+		int i = 0;
+		int max0 = 0;
+		int max1 = 0;
+		while (i < chs.length) {
+			int start = i;
+			while (i < chs.length - 1 && chs[i] == chs[i + 1]) {
+				i++;
+			}
+			if (chs[start] == '0') {
+				max0 = Math.max(max0, i - start + + 1);
+			} else {
+				max1 = Math.max(max1, i - start + + 1);
+			}
+			i++;
+		}
+		return max1 > max0;
+	}
 }
