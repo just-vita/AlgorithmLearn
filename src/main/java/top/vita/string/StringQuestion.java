@@ -1008,4 +1008,19 @@ public class StringQuestion {
 		}
 		return begin == -1 ? "" : new String(chs, begin, size);
 	}
+
+	public int maxPower(String s) {
+		char[] chs = s.toCharArray();
+		int i = 0;
+		int max = 0;
+		while (i < chs.length) {
+			int start = i;
+			while (i < chs.length - 1 && chs[i] == chs[i + 1]) {
+				i++;
+			}
+			max = Math.max(max, i - start + 1);
+			i++;
+		}
+		return max;
+	}
 }
