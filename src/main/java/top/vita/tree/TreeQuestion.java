@@ -1153,7 +1153,7 @@ public class TreeQuestion {
         return root;
     }
 
-    public TreeNode sortedArrayToBST(int[] nums) {
+    public TreeNode sortedArrayToBST1(int[] nums) {
         return sortedArrayToBSTDfs(nums, 0, nums.length - 1);
     }
 
@@ -1601,4 +1601,18 @@ public class TreeQuestion {
         return Math.max(left, right);
     }
 
+    public TreeNode sortedArrayToBST(int[] nums) {
+        return getSortedArrayToBST(nums, 0, nums.length);
+    }
+
+    private TreeNode getSortedArrayToBST(int[] nums, int left, int right) {
+        if (left == right) {
+            return new TreeNode(nums[left]);
+        }
+        int mid = (left + right) / 2;
+        TreeNode cur = new TreeNode(nums[mid]);
+        cur.left = getSortedArrayToBST(nums, left, mid);
+        cur.right = getSortedArrayToBST(nums, mid + 1, right);
+        return cur;
+    }
 }
