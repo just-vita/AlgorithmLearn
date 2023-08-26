@@ -1043,4 +1043,23 @@ public class StringQuestion {
 		}
 		return max1 > max0;
 	}
+
+	public String makeFancyString(String s) {
+		StringBuilder sb = new StringBuilder();
+		char[] chs = s.toCharArray();
+		int i = 0;
+		while (i < chs.length) {
+			int start = i;
+			while (i < chs.length - 1 && chs[i] == chs[i + 1]) {
+				i++;
+			}
+			sb.append(chs[start]);
+			// 如果i移动的了话，直接加一个相同的字符就可以了，因为相同字符不能超过两个
+			if (start < i) {
+				sb.append(chs[i]);
+			}
+			i++;
+		}
+		return sb.toString();
+	}
 }
