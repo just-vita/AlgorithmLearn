@@ -1,5 +1,6 @@
 package top.vita.linked;
 
+import java.awt.event.KeyAdapter;
 import java.util.*;
 
 @SuppressWarnings("all")
@@ -1208,5 +1209,26 @@ public class LinkedQuestion {
 		return header.next;
 	}
 
+	public ListNode insertionSortList1(ListNode head) {
+		ListNode header = new ListNode(0);
+		header.next = head;
+		ListNode lastNode = head;
+		ListNode cur = head.next;
+		while (cur != null) {
+			if (cur.val >= lastNode.val) {
+				lastNode = lastNode.next;
+			} else {
+				ListNode pre = header;
+				while (cur.val >= pre.next.val) {
+					pre = pre.next;
+				}
+				lastNode.next = cur.next;
+				cur.next = pre.next;
+				pre.next = cur;
+			}
+			cur = lastNode.next;
+		}
+		return header.next;
+	}
 }
 
