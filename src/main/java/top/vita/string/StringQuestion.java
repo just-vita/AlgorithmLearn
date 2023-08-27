@@ -1062,4 +1062,28 @@ public class StringQuestion {
 		}
 		return sb.toString();
 	}
+
+	public boolean winnerOfGame(String colors) {
+		char[] chs = colors.toCharArray();
+		int i = 0;
+		int a = 0;
+		int b = 0;
+		while (i < chs.length) {
+			int start = i;
+			while (i < chs.length - 1 && chs[i] == chs[i + 1]) {
+				i++;
+			}
+			// 三个相邻以上的就删除一个，中间留下2个
+			if (i - start + 1 >= 3) {
+				// 删除成功就加次数
+				if (chs[start] == 'A') {
+					a += (i - start + 1) - 2;
+				} else {
+					b += (i - start + 1) - 2;
+				}
+			}
+			i++;
+		}
+		return a > b;
+	}
 }
