@@ -1649,4 +1649,31 @@ public class TreeQuestion {
         }
         getKthSmallest(cur.right, k);
     }
+
+    public List<Integer> rightSideView123(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        if (root == null) {
+            return res;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            int i = 0;
+            while (i < size) {
+                TreeNode cur = queue.poll();
+                if (i == size - 1) {
+                    res.add(cur.val);
+                }
+                i++;
+                if (cur.left != null) {
+                    queue.add(cur.left);
+                }
+                if (cur.right != null) {
+                    queue.add(cur.right);
+                }
+            }
+        }
+        return res;
+    }
 }
