@@ -1676,4 +1676,20 @@ public class TreeQuestion {
         }
         return res;
     }
+    public void flatten(TreeNode cur) {
+        if (cur == null) {
+            return;
+        }
+        if (pre != null) {
+            pre.left = null;
+            pre.right = cur;
+        }
+        pre = cur;
+        // 在左子树的递归中cur.right会发生改变
+        // 为了防止cur.right在递归过程中被修改，在这里把原本的值保存起来
+        TreeNode temp = cur.right;
+        flatten(cur.left);
+        flatten(temp);
+    }
+
 }
