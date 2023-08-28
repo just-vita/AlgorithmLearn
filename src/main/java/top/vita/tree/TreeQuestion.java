@@ -929,19 +929,19 @@ public class TreeQuestion {
     }
 
     //    TreeNode pre = null;
-    public boolean isValidBST(TreeNode root) {
+    public boolean isValidBST123(TreeNode root) {
         if (root == null) {
             return true;
         }
         // ÖÐÐò±éÀú
-        boolean left = isValidBST(root.left);
+        boolean left = isValidBST123(root.left);
 
         if (pre != null && pre.val >= root.val) {
             return false;
         }
         pre = root;
 
-        boolean right = isValidBST(root.right);
+        boolean right = isValidBST123(root.right);
 
         return left && right;
     }
@@ -1614,5 +1614,20 @@ public class TreeQuestion {
         cur.left = getSortedArrayToBST(nums, left, mid);
         cur.right = getSortedArrayToBST(nums, mid + 1, right);
         return cur;
+    }
+
+    public boolean isValidBST(TreeNode cur) {
+        if (cur == null) {
+            return true;
+        }
+        boolean left = isValidBST(cur.left);
+
+        if (pre != null && pre.val >= cur.val) {
+            return false;
+        }
+        pre = cur;
+
+        boolean right = isValidBST(cur.right);
+        return left && right;
     }
 }
