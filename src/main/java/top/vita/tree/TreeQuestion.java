@@ -1630,4 +1630,23 @@ public class TreeQuestion {
         boolean right = isValidBST(cur.right);
         return left && right;
     }
+
+    int curCount = 0;
+    public int kthSmallest(TreeNode root, int k) {
+        getKthSmallest(root, k);
+        return res;
+    }
+
+    public void getKthSmallest(TreeNode cur, int k) {
+        if (cur == null) {
+            return;
+        }
+        getKthSmallest(cur.left, k);
+        curCount++;
+        if (k == curCount) {
+            res = cur.val;
+            return;
+        }
+        getKthSmallest(cur.right, k);
+    }
 }
