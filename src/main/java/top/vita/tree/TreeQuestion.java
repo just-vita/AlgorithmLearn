@@ -667,7 +667,7 @@ public class TreeQuestion {
         return false;
     }
 
-    public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
+    public List<List<Integer>> pathSum1(TreeNode root, int targetSum) {
         List<List<Integer>> res = new ArrayList<>();
         if (root == null) {
             return res;
@@ -1711,5 +1711,33 @@ public class TreeQuestion {
         root.right = buildTree(preLeft + length + 1, preRight, inRoot + 1, inRight, pre, in);
         return root;
     }
+
+    public int pathSum(TreeNode root, int targetSum) {
+        if (root == null) {
+            return 0;
+        }
+        // 得到当前节点作为根节点的结果个数
+        int res = getRootSum(root, targetSum);
+        // 得到左子节点作为根节点的结果个数
+        res += pathSum(root.left, targetSum);
+        // 得到右子节点作为根节点的结果个数
+        res += pathSum(root.right, targetSum);
+        return res;
+    }
+
+    private int getRootSum(TreeNode cur, long targetSum) {
+        if (cur == null) {
+            return 0;
+        }
+        int res = 0;
+        targetSum -= cur.val;
+        if (targetSum == 0) {
+            res++;
+        }
+        res += getRootSum(cur.left, targetSum);
+        res += getRootSum(cur.right, targetSum);
+        return res;
+    }
+
 
 }
