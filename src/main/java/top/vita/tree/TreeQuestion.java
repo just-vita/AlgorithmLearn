@@ -1,5 +1,6 @@
 package top.vita.tree;
 
+import com.sun.org.apache.bcel.internal.generic.LREM;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -1393,7 +1394,7 @@ public class TreeQuestion {
         }
     }
 
-    public TreeNode buildTree(int[] preorder, int[] inorder) {
+    public TreeNode buildTree123(int[] preorder, int[] inorder) {
         // 分治思想
         // 前序遍历数组的第一个永远是树（或子树）的根节点
         // 中序遍历时找出当前的根节点，分出左右子树
@@ -1690,6 +1691,25 @@ public class TreeQuestion {
         TreeNode temp = cur.right;
         flatten(cur.left);
         flatten(temp);
+    }
+
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        return buildTree(0, preorder.length - 1, 0, inorder.length - 1, preorder, inorder);
+    }
+
+    private TreeNode buildTree(int preLeft, int preRight, int inLeft, int inRight, int[] pre, int[] in) {
+        if (preLeft > preRight || inLeft > inRight) {
+            return null;
+        }
+        TreeNode root = new TreeNode(pre[preLeft]);
+        int inRoot = inLeft;
+        while (inRoot <= preRight && pre[preLeft] != in[inRoot]) {
+            inRoot++;
+        }
+        int length = inRoot - inLeft;
+        root.left = buildTree(preLeft + 1, preLeft + length, inLeft, inRoot - 1, pre, in);
+        root.right = buildTree(preLeft + length + 1, preRight, inRoot + 1, inRight, pre, in);
+        return root;
     }
 
 }
