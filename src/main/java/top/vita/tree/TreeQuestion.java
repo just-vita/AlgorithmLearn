@@ -1,5 +1,6 @@
 package top.vita.tree;
 
+import cn.hutool.core.lang.tree.Tree;
 import com.sun.org.apache.bcel.internal.generic.LREM;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -1001,13 +1002,13 @@ public class TreeQuestion {
         return true;
     }
 
-    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+    public TreeNode lowestCommonAncestor4(TreeNode root, TreeNode p, TreeNode q) {
         // 找到了就返回节点，没找到就返回null
         if (root == null || root == p || root == q) {
             return root;
         }
-        TreeNode left = lowestCommonAncestor(root.left, p, q);
-        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        TreeNode left = lowestCommonAncestor4(root.left, p, q);
+        TreeNode right = lowestCommonAncestor4(root.right, p, q);
         // 两个子孙都找到了，那么当前节点就是最近的公共祖先
         if (left != null && right != null) {
             return root;
@@ -1737,6 +1738,25 @@ public class TreeQuestion {
         res += getRootSum(cur.left, targetSum);
         res += getRootSum(cur.right, targetSum);
         return res;
+    }
+
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null || root == p || root == q) {
+            return root;
+        }
+        // 去看子节点是否是p或q，如果是就返回回来（当前是root节点，也就是子节点的父节点
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        // 左右子节点都碰到p和q了，代表它们的父节点也就是root就是最近公共祖先
+        if (left != null && right != null) {
+            return root;
+        }
+        // 只有其中一个节点碰到的话，就继续将碰到的节点往上传，直到找到公共祖先
+        else if (left != null && right == null) {
+            return left;
+        } else {
+            return right;
+        }
     }
 
 
