@@ -239,7 +239,7 @@ public class GraphQuestion {
     /*
      * 994. 腐烂的橘子 DFS
      */
-    public int orangesRotting(int[][] grid) {
+    public int orangesRotting1(int[][] grid) {
     	for (int i = 0; i < grid.length; i++) {
 			for (int j = 0; j < grid[0].length; j++) {
 				if (grid[i][j] == 2) {
@@ -263,7 +263,7 @@ public class GraphQuestion {
     	return max == 0 ? 0 : max - 2;
     }
 
-	private void rotting(int[][] grid, int i, int j, int level) {
+	private void rotting1(int[][] grid, int i, int j, int level) {
 		if (i >= grid.length || i < 0 || j >= grid[0].length || j < 0) {
 			return;
 		}
@@ -275,10 +275,10 @@ public class GraphQuestion {
         // 将当前传播次数记录在路径中
 		grid[i][j] = level;
 		level++;
-		rotting(grid, i + 1, j, level);
-		rotting(grid, i - 1, j, level);
-		rotting(grid, i, j + 1, level);
-		rotting(grid, i, j - 1, level);
+		rotting1(grid, i + 1, j, level);
+		rotting1(grid, i - 1, j, level);
+		rotting1(grid, i, j + 1, level);
+		rotting1(grid, i, j - 1, level);
 	}
 	
     /*
@@ -810,5 +810,80 @@ public class GraphQuestion {
 		infectIslands(grid, i, j - 1, n, m);
 	}
 
+	public int orangesRotting(int[][] grid) {
+		int n = grid.length;
+		int m = grid[0].length;
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				if (grid[i][j] == 2) {
+					rotting(grid, i, j, 2);
+				}
+			}
+		}
+		int max = 0;
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				if (grid[i][j] == 1) {
+					return -1;
+				}
+				max = Math.max(max, grid[i][j]);
+			}
+		}
+		return max == 0 ? 0 : max - 2;
+	}
 
+	private void rotting(int[][] grid, int i, int j, int level) {
+		if (i < 0 || j < 0 || i >= grid.length || j >= grid[0].length) {
+			return;
+		}
+		if (grid[i][j] != 1 && grid[i][j] < level) {
+			return;
+		}
+		grid[i][j] = level;
+		level++;
+		rotting(grid, i + 1, j, level);
+		rotting(grid, i - 1, j, level);
+		rotting(grid, i, j + 1, level);
+		rotting(grid, i, j - 1, level);
+	}
+
+	public int orangesRotting21(int[][] grid) {
+		int count = 0;
+		Queue<int[]> queue = new LinkedList<>();
+		int n = grid.length;
+		int m = grid[0].length;
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				if (grid[i][j] == 1) {
+					count++;
+				} else if(grid[i][j] == 2) {
+					queue.add(new int[]{i, j});
+				}
+			}
+		}
+		int[][] direction = { { 0, 1 }, { 0, -1 }, { 1, 0 }, { -1, 0 } };
+		int round = 0;
+		while (count > 0 && !queue.isEmpty()) {
+			round++;
+			int size = queue.size();
+			while (size > 0) {
+				size--;
+				int[] oranges = queue.poll();
+				for (int i = 0; i < direction.length; i++) {
+					int row = oranges[0] + direction[i][0];
+					int col = oranges[1] + direction[i][1];
+					if (row >= 0 && row < n && col >= 0 && col < m && grid[row][col] == 1) {
+						count--;
+						grid[row][col] = 2;
+						queue.add(new int[]{row, col});
+					}
+				}
+			}
+
+		}
+		if (count > 0) {
+			return -1;
+		}
+		return round;
+	}
 }
