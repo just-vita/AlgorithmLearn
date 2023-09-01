@@ -784,49 +784,31 @@ public class GraphQuestion {
 		}
 	}
 
+	public int numIslands(char[][] grid) {
+		int n = grid.length;
+		int m = grid[0].length;
+		int res = 0;
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				if (grid[i][j] == '1') {
+					infectIslands(grid, i, j, n, m);
+					res++;
+				}
+			}
+		}
+		return res;
+	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	private void infectIslands(char[][] grid, int i, int j, int n, int m) {
+		if (i < 0 || j < 0 || i >= n || j >= m || grid[i][j] != '1') {
+			return;
+		}
+		grid[i][j] = '2';
+		infectIslands(grid, i + 1, j, n, m);
+		infectIslands(grid, i - 1, j, n, m);
+		infectIslands(grid, i, j + 1, n, m);
+		infectIslands(grid, i, j - 1, n, m);
+	}
 
 
 }
