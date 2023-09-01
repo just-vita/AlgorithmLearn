@@ -1788,6 +1788,19 @@ public class ArrayQuestion {
         }
         return res.toArray(new int[res.size()][]);
     }
+
+    public long waysToBuyPensPencils(int total, int cost1, int cost2) {
+        if (cost1 < cost2) {
+            return waysToBuyPensPencils(total, cost2, cost1);
+        }
+        long res = 0;
+        int n = 0;
+        while (n * cost1 <= total) {
+            res += (total - n * cost1) / cost2 + 1;
+            n++;
+        }
+        return res;
+    }
 }
 
 
