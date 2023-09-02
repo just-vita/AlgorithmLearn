@@ -1801,6 +1801,22 @@ public class ArrayQuestion {
         }
         return res;
     }
+
+    public int captureForts(int[] forts) {
+        int pre = 0;
+        int res = 0;
+        for (int i = 0; i < forts.length; i++) {
+            if (forts[i] != 0) {
+                // 巧妙写法，只有 1 和 -1 相遇才能去到下一个城堡
+                if (forts[i] == -forts[pre]) {
+                    res = Math.max(res, i - pre - 1);
+                }
+                pre = i;
+            }
+        }
+        return res;
+    }
+
 }
 
 
