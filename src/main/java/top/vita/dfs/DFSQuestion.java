@@ -1,6 +1,8 @@
 package top.vita.dfs;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -67,6 +69,29 @@ public class DFSQuestion {
             sb.append(s.charAt(i));
             permutationDfs(i, s, sb, visited, res);
             sb.deleteCharAt(sb.length() - 1);
+            visited[i] = false;
+        }
+    }
+
+    List<List<Integer>> res = new ArrayList<>();
+    public List<List<Integer>> permute(int[] nums) {
+        getAllPermute(nums, new ArrayList<>(), new boolean[nums.length]);
+        return res;
+    }
+
+    private void getAllPermute(int[] nums, ArrayList<Integer> path, boolean[] visited) {
+        if (path.size() == nums.length) {
+            res.add(new ArrayList<>(path));
+            return;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (visited[i]) {
+                continue;
+            }
+            visited[i] = true;
+            path.add(nums[i]);
+            getAllPermute(nums, path, visited);
+            path.remove(path.size() - 1);
             visited[i] = false;
         }
     }
