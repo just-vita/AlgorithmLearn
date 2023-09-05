@@ -95,4 +95,19 @@ public class DFSQuestion {
             visited[i] = false;
         }
     }
+
+    public List<List<Integer>> subsets(int[] nums) {
+        ArrayList<List<Integer>> res = new ArrayList<>();
+        getSubsets(0, nums, new ArrayList<>(), res);
+        return res;
+    }
+
+    private void getSubsets(int startIndex, int[] nums, List<Integer> path, ArrayList<List<Integer>> res) {
+        res.add(new ArrayList<>(path));
+        for (int i = startIndex; i < nums.length; i++) {
+            path.add(nums[i]);
+            getSubsets(i + 1, nums, path, res);
+            path.remove(path.size() - 1);
+        }
+    }
 }
