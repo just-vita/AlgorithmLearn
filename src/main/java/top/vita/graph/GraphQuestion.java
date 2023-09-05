@@ -831,6 +831,7 @@ public class GraphQuestion {
 		}
 		return max == 0 ? 0 : max - 2;
 	}
+<<<<<<< HEAD
 
 	private void rotting(int[][] grid, int i, int j, int level) {
 		if (i < 0 || j < 0 || i >= grid.length || j >= grid[0].length) {
@@ -888,6 +889,58 @@ public class GraphQuestion {
 
 		}
 		// 腐烂结束后，还是有新鲜橘子存在
+=======
+
+	private void rotting(int[][] grid, int i, int j, int level) {
+		if (i < 0 || j < 0 || i >= grid.length || j >= grid[0].length) {
+			return;
+		}
+		if (grid[i][j] != 1 && grid[i][j] < level) {
+			return;
+		}
+		grid[i][j] = level;
+		level++;
+		rotting(grid, i + 1, j, level);
+		rotting(grid, i - 1, j, level);
+		rotting(grid, i, j + 1, level);
+		rotting(grid, i, j - 1, level);
+	}
+
+	public int orangesRotting21(int[][] grid) {
+		int count = 0;
+		Queue<int[]> queue = new LinkedList<>();
+		int n = grid.length;
+		int m = grid[0].length;
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				if (grid[i][j] == 1) {
+					count++;
+				} else if(grid[i][j] == 2) {
+					queue.add(new int[]{i, j});
+				}
+			}
+		}
+		int[][] direction = { { 0, 1 }, { 0, -1 }, { 1, 0 }, { -1, 0 } };
+		int round = 0;
+		while (count > 0 && !queue.isEmpty()) {
+			round++;
+			int size = queue.size();
+			while (size > 0) {
+				size--;
+				int[] oranges = queue.poll();
+				for (int i = 0; i < direction.length; i++) {
+					int row = oranges[0] + direction[i][0];
+					int col = oranges[1] + direction[i][1];
+					if (row >= 0 && row < n && col >= 0 && col < m && grid[row][col] == 1) {
+						count--;
+						grid[row][col] = 2;
+						queue.add(new int[]{row, col});
+					}
+				}
+			}
+
+		}
+>>>>>>> 59176e9c6795bf64eb5ae795362a7436d0cf21de
 		if (count > 0) {
 			return -1;
 		}
