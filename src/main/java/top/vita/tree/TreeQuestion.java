@@ -1759,5 +1759,30 @@ public class TreeQuestion {
         }
     }
 
+    int maxDepth = 0;
+    TreeNode res1;
+    public TreeNode lcaDeepestLeaves(TreeNode root) {
+        getLcaDeepestLeaves(root, 0);
+        return res1;
+    }
+
+    private int getLcaDeepestLeaves(TreeNode cur, int depth) {
+        // 递归出口，计算深度返回
+        if (cur == null) {
+            maxDepth = Math.max(maxDepth, depth);
+            return depth;
+        }
+        depth++;
+        // 去左右子树获取这条线路的深度
+        int leftDepth = getLcaDeepestLeaves(cur.left, depth);
+        int rightDepth = getLcaDeepestLeaves(cur.right, depth);
+        // 左右深度相同，并且是目前最深的节点
+        if (leftDepth == rightDepth && leftDepth == maxDepth) {
+            // 暂时将节点设置为结果，后续可能会更新
+            res1 = cur;
+        }
+        return Math.max(leftDepth, rightDepth);
+    }
+
 
 }
