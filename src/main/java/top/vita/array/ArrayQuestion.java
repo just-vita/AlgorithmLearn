@@ -1830,6 +1830,61 @@ public class ArrayQuestion {
         return nums1[0] < nums2[0] ? nums1[0] * 10 + nums2[0] : nums2[0] * 10 + nums1[0];
     }
 
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        // 初始化入度
+        Map<Integer, Integer> inDegree = new HashMap<>();
+        for (int i = 0; i <= numCourses; i++) {
+            inDegree.put(i, 0);
+        }
+        Map<Integer, List<Integer>> adj = new HashMap<>();
+        // [3, 0] 想学3得先学0
+        for (int[] prerequisite : prerequisites) {
+            // 下一个是3
+            int next = prerequisite[0];
+            // 当前是0
+            int cur = prerequisite[1];
+            // 3前面有一门课0要学，3的入度加1
+            inDegree.put(next, inDegree.get(next) + 1);
+            if (!adj.containsKey(cur)) {
+                adj.put(cur, new ArrayList<>());
+            }
+            // 给0构建邻接表，学了0可以继续学3
+            adj.get(cur).add(next);
+        }
+        Queue<Integer> queue = new LinkedList<>();
+        // 将入度为0的加入队列
+        for (Integer key : inDegree.keySet()) {
+            if (inDegree.get(key) == 0) {
+                queue.add(key);
+            }
+        }
+        // 从入度为0的开始广度优先搜索
+        while (!queue.isEmpty()) {
+            Integer cur = queue.poll();
+            // 如果邻接表里没有构建到这个数，代表这个数后续没有能学的了
+            if (!adj.containsKey(cur)) {
+                continue;
+            }
+            // 继续学习后面的课程
+            List<Integer> list = adj.get(cur);
+            for (Integer next : list) {
+                // 学了一门前面的课程，入度减1
+                inDegree.put(next, inDegree.get(next) - 1);
+                // 入度减了之后变为0了的话，继续加入队列
+                if (inDegree.get(next) == 0) {
+                    queue.add(next);
+                }
+            }
+        }
+        // 能学的都学完后还是有课程入度不为0学习不了 就开摆
+        for (Integer key : inDegree.keySet()) {
+            if (inDegree.get(key) != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
 
 
