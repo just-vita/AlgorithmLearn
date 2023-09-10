@@ -1,5 +1,6 @@
 package top.vita.array;
 
+import javax.swing.*;
 import java.util.*;
 
 @SuppressWarnings("all")
@@ -1883,6 +1884,46 @@ public class ArrayQuestion {
             }
         }
         return true;
+    }
+
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        HashSet<Integer>[] adj = new HashSet[numCourses];
+        for (int i = 0; i < adj.length; i++) {
+            adj[i] = new HashSet<>();
+        }
+
+        int[] inDegree = new int[numCourses];
+        for (int[] arr : prerequisites) {
+            int next = arr[0];
+            int cur = arr[1];
+            inDegree[next]++;
+            adj[cur].add(next);
+        }
+
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i = 0; i < numCourses; i++) {
+            if (inDegree[i] == 0) {
+                queue.add(i);
+            }
+        }
+
+        int[] res = new int[numCourses];
+        int index = 0;
+        while (!queue.isEmpty()) {
+            Integer cur = queue.poll();
+            res[index++] = cur;
+            HashSet<Integer> list = adj[cur];
+            for (Integer next : list) {
+                inDegree[next]--;
+                if (inDegree[next] == 0) {
+                    queue.add(next);
+                }
+            }
+        }
+        if (index != 0 && index == numCourses) {
+            return res;
+        }
+        return new int[0];
     }
 
 }
