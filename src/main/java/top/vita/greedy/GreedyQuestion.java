@@ -1,6 +1,7 @@
 package top.vita.greedy;
 
 import java.util.Arrays;
+import java.util.PriorityQueue;
 
 /**
  * @Author vita
@@ -124,6 +125,22 @@ public class GreedyQuestion {
             sum += nums[i];
         }
         return sum;
+    }
+
+    public int scheduleCourse(int[][] courses) {
+        // 按照学习时间升序排序，学习时间长的排在后面
+        Arrays.sort(courses, (a, b) -> a[1] - b[1]);
+        // 简历大根堆
+        PriorityQueue<Integer> queue = new PriorityQueue<>((a, b) -> b - a);
+        int sum = 0;
+        for (int[] arr : courses) {
+            sum += arr[0];
+            queue.add(arr[0]);
+            if (sum > arr[1]) {
+                sum -= queue.poll();
+            }
+        }
+        return queue.size();
     }
 
 
