@@ -1,16 +1,8 @@
 package top.vita.graph;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.Set;
+import java.util.*;
 
+@SuppressWarnings("all")
 public class GraphQuestion {
 
 	int n;
@@ -831,65 +823,6 @@ public class GraphQuestion {
 		}
 		return max == 0 ? 0 : max - 2;
 	}
-<<<<<<< HEAD
-
-	private void rotting(int[][] grid, int i, int j, int level) {
-		if (i < 0 || j < 0 || i >= grid.length || j >= grid[0].length) {
-			return;
-		}
-		if (grid[i][j] != 1 && grid[i][j] < level) {
-			return;
-		}
-		grid[i][j] = level;
-		level++;
-		rotting(grid, i + 1, j, level);
-		rotting(grid, i - 1, j, level);
-		rotting(grid, i, j + 1, level);
-		rotting(grid, i, j - 1, level);
-	}
-
-	public int orangesRotting21(int[][] grid) {
-		int n = grid.length;
-		int m = grid[0].length;
-		// 新鲜橘子的数量
-		int count = 0;
-		// 存放腐烂橘子的位置
-		Queue<int[]> queue = new LinkedList<>();
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
-				if (grid[i][j] == 1) {
-					count++;
-				} else if(grid[i][j] == 2) {
-					queue.add(new int[]{i, j});
-				}
-			}
-		}
-		// 次数/分钟数/轮数
-		int round = 0;
-		// 方向
-		int[][] direction = { { 0, 1 }, { 0, -1 }, { 1, 0 }, { -1, 0 } };
-		while (count > 0 && !queue.isEmpty()) {
-			round++;
-			int size = queue.size();
-			while (size > 0) {
-				size--;
-				int[] oranges = queue.poll();
-				// 遍历方向，往上下左右继续腐烂
-				for (int[] dir : direction) {
-					int row = oranges[0] + dir[0];
-					int col = oranges[1] + dir[1];
-					if (row >= 0 && row < n && col >= 0 && col < m && grid[row][col] == 1) {
-						count--;
-						grid[row][col] = 2;
-						// 将刚腐烂的橘子加入队列
-						queue.add(new int[]{row, col});
-					}
-				}
-			}
-
-		}
-		// 腐烂结束后，还是有新鲜橘子存在
-=======
 
 	private void rotting(int[][] grid, int i, int j, int level) {
 		if (i < 0 || j < 0 || i >= grid.length || j >= grid[0].length) {
@@ -940,10 +873,55 @@ public class GraphQuestion {
 			}
 
 		}
->>>>>>> 59176e9c6795bf64eb5ae795362a7436d0cf21de
 		if (count > 0) {
 			return -1;
 		}
 		return round;
+	}
+
+	public List<Boolean> checkIfPrerequisite(int numCourses, int[][] prerequisites, int[][] queries) {
+		int[] inDegree = new int[numCourses];
+		HashSet<Integer>[] adj = new HashSet[numCourses];
+		for (int[] arr : prerequisites) {
+			int cur = arr[0];
+			int next = arr[1];
+			inDegree[next]++;
+			if (adj[cur] == null) {
+				adj[cur] = new HashSet<>();
+			}
+			adj[cur].add(next);
+		}
+		Queue<Integer> queue = new LinkedList<>();
+		for (int i = 0; i < numCourses; i++) {
+			if (inDegree[i] == 0) {
+				queue.add(i);
+			}
+		}
+		boolean[][] isPre = new boolean[numCourses][numCourses];
+		while (!queue.isEmpty()) {
+			Integer cur = queue.poll();
+			if (adj[cur] == null) {
+				continue;
+			}
+			HashSet<Integer> list = adj[cur];
+			for (Integer next : list) {
+				// 将这个数可到达的数都设置为true
+				isPre[cur][next] = true;
+				// cur已经确定是next的先决条件，若已经能够到达cur处，则next处也必定能到达
+				// 反之，如果cur还未到达，但next处已经为true，则保留原样
+				for (int i = 0; i < numCourses; i++) {
+					isPre[i][next] = isPre[i][cur] | isPre[i][next];
+				}
+				inDegree[next]--;
+				if (inDegree[next] == 0) {
+					queue.add(next);
+				}
+			}
+		}
+		ArrayList<Boolean> res = new ArrayList<>();
+		for (int[] query : queries) {
+			res.add(isPre[query[0]][query[1]]);
+		}
+		return res;
 	}
 }
