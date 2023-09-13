@@ -924,4 +924,35 @@ public class GraphQuestion {
 		}
 		return res;
 	}
+
+	public boolean checkValidGrid(int[][] grid) {
+		if (grid[0][0] != 0) {
+			return false;
+		}
+    	// 八个方向
+		int[] dx = {-2, -2, -1, -1, 1, 1, 2, 2};
+		int[] dy = {-1, 1, -2, 2, -2, 2, -1, 1};
+		Queue<int[]> queue = new LinkedList<>();
+		queue.offer(new int[]{0, 0});
+		int index = 0;
+		while (queue.size() > 0) {
+			index++;
+			int[] arr = queue.poll();
+			// 判断八个方向中是否能够有一个是正确的
+			for (int i = 0; i < 8; i++) {
+				int x = arr[0] + dx[i];
+				int y = arr[1] + dy[i];
+				if (x < grid.length && y < grid[0].length && x >= 0 && y >= 0 && grid[x][y] == index) {
+					if (index == grid.length * grid.length - 1) {
+						// 已找到最后一个
+						return true;
+					}
+					queue.add(new int[]{x, y});
+					// 已经找到一个落点，直接跳出循环
+					break;
+				}
+			}
+		}
+		return false;
+	}
 }
