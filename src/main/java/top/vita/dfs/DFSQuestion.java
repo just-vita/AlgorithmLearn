@@ -170,4 +170,24 @@ public class DFSQuestion {
         }
     }
 
+    public List<String> generateParenthesis(int n) {
+        ArrayList<String> res = new ArrayList<>();
+        getParenthesis(n, n, "", res);
+        return res;
+    }
+
+    private void getParenthesis(int left, int right, String s, List<String> res) {
+        // 记录剩余可用的括号个数
+        if (left == 0 && right == 0) {
+            res.add(s);
+        }
+        if (left > 0) {
+            getParenthesis(left - 1, right, s + "(", res);
+        }
+        // 如果前面加过一个左括号，则也可以加一个右括号
+        if (right > left) {
+            getParenthesis(left, right - 1, s + ")", res);
+        }
+    }
+
 }
