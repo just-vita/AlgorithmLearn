@@ -1,5 +1,7 @@
 package top.vita.graph;
 
+import cn.hutool.core.collection.ListUtil;
+
 import java.util.*;
 
 @SuppressWarnings("all")
@@ -954,5 +956,31 @@ public class GraphQuestion {
 			}
 		}
 		return false;
+	}
+
+	public List<List<Integer>> queensAttacktheKing(int[][] queens, int[] king) {
+		// 八个方向
+		int[] dx = {-1, 1, 1, 0, -1, 0, 1, -1};
+		int[] dy = {-1, 1, 0, 1, 0, -1, -1, 1};
+		boolean[][] isQueen = new boolean[8][8];
+		for (int[] queen : queens) {
+			isQueen[queen[0]][queen[1]] = true;
+		}
+		ArrayList<List<Integer>> res = new ArrayList<>();
+		for (int i = 0; i < dx.length; i++) {
+			int x = dx[i] + king[0];
+			int y = dy[i] + king[1];
+			while (x < 8 && y < 8 && x >= 0 && y >= 0) {
+				if (isQueen[x][y]) {
+					// 找到第一个能够到达的皇后
+					res.add(ListUtil.of(x, y));
+					break;
+				}
+				// 继续往后寻找
+				x += dx[i];
+				y += dy[i];
+			}
+		}
+		return res;
 	}
 }
