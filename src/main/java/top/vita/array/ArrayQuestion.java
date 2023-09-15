@@ -1923,6 +1923,24 @@ public class ArrayQuestion {
         return new int[0];
     }
 
+    public int giveGem(int[] gem, int[][] operations) {
+        for (int i = 0; i < operations.length; i++) {
+            int temp = gem[operations[i][0]] / 2;
+            gem[operations[i][0]] -= temp;
+            gem[operations[i][1]] += temp;
+            System.out.println(Arrays.toString(gem));
+        }
+        int max = 0;
+        int min = 1000;
+        System.out.println("----");
+        for (int i = 0; i < gem.length; i++) {
+            max = Math.max(max, gem[i]);
+            min = Math.min(min, gem[i]);
+            System.out.println(Arrays.toString(gem));
+        }
+        return max - min;
+    }
+
 }
 
 
