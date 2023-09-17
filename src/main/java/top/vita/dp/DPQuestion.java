@@ -978,7 +978,29 @@ public class DPQuestion {
 		return dp[nums.length - 1];
 	}
 
-
+	public int rob3333(int[] nums) {
+		int n = nums.length;
+		if (n == 1) {
+			return nums[0];
+		}
+		// 分为两组
+		int[] dp1 = new int[n];
+		int[] dp2 = new int[n];
+		// 不选最后一个
+		dp1[1] = nums[0];
+		// 不选第一个
+		dp2[1] = nums[1];
+		// 不取nums[i]
+		for (int i = 2; i < dp1.length; i++) {
+			// 不选最后一个，所以始终是 nums[i - 1]
+			dp1[i] = Math.max(dp1[i - 1], dp1[i - 2] + nums[i - 1]);
+		}
+		// 取nums[i]
+		for (int i = 2; i < dp2.length; i++) {
+			dp2[i] = Math.max(dp2[i - 1], dp2[i - 2] + nums[i]);
+		}
+		return Math.max(dp1[n - 1], dp2[n - 1]);
+	}
 
 
 
