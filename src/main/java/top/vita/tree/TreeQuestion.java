@@ -1784,5 +1784,22 @@ public class TreeQuestion {
         return Math.max(leftDepth, rightDepth);
     }
 
+    public int rob(TreeNode root) {
+        int[] res = getRob(root);
+        return Math.max(res[0], res[1]);
+    }
 
+    private int[] getRob(TreeNode cur) {
+        int[] res = new int[2];
+        if (cur == null) {
+            return res;
+        }
+        int[] left = getRob(cur.left);
+        int[] right = getRob(cur.right);
+        // 取当前节点，用子树的子树
+        res[0] = left[1] + right[1] + cur.val;
+        // 不取当前节点，用子树中选或不选的最大的值
+        res[1] = Math.max(left[0], left[1]) + Math.max(right[0], right[1]);
+        return res;
+    }
 }
