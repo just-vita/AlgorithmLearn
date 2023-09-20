@@ -1932,13 +1932,20 @@ public class ArrayQuestion {
         }
         int max = 0;
         int min = 1000;
-        System.out.println("----");
         for (int i = 0; i < gem.length; i++) {
             max = Math.max(max, gem[i]);
             min = Math.min(min, gem[i]);
             System.out.println(Arrays.toString(gem));
         }
         return max - min;
+    }
+
+    public int minCount(int[] coins) {
+        int res = 0;
+        for (int i = 0; i < coins.length; i++) {
+            res += (coins[i] / 2) + (coins[i] % 2);
+        }
+        return res;
     }
 
 }
