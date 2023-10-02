@@ -1016,7 +1016,23 @@ public class DPQuestion {
 		return dp[n - 1][1];
 	}
 
-
+	public int maxProfit1111(int[] prices) {
+		if (prices.length <= 1) {
+			return 0;
+		}
+		int[] dp = new int[2];
+		dp[0] = -prices[0];
+		for (int i = 1; i < prices.length; i++) {
+			// 是昨天买还是今天买
+			// 今天买的话就减去今天的价格，昨天买今天就不减
+			// 剩下的越多越好
+			dp[0] = Math.max(dp[0], dp[1] - prices[i]);
+			// 是昨天卖的多还是今天卖的多
+			// 剩下的越多越好
+			dp[1] = Math.max(dp[1], dp[0] + prices[i]);
+		}
+		return dp[1];
+	}
 
 
 
