@@ -1853,7 +1853,19 @@ public class ArrayDemo {
         return count;
     }
 
-
+    public long pickGifts(int[] gifts, int k) {
+        PriorityQueue<Integer> queue = new PriorityQueue<>((a, b) -> b - a);
+        Arrays.stream(gifts).forEach(queue::offer);
+        while (k-- > 0) {
+            Integer num = queue.poll();
+            queue.offer((int) Math.sqrt(num));
+        }
+        long res = 0;
+        while (!queue.isEmpty()) {
+            res += queue.poll();
+        }
+        return res;
+    }
 
 
 }
