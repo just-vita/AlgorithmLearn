@@ -1099,4 +1099,22 @@ public class StringQuestion {
 		}
 		return res;
 	}
+
+	public int vowelStrings(String[] words, int left, int right) {
+		int count = 0;
+		for (int i = left; i <= right; i++) {
+			char[] chs = words[i].toCharArray();
+			if (test(chs[0]) && test(chs[chs.length - 1])) {
+				count++;
+			}
+		}
+		return count;
+	}
+
+	public boolean test(char word) {
+		if (word == 'a' || word == 'e' || word == 'i' || word == 'o' || word == 'u') {
+			return true;
+		}
+		return false;
+	}
 }
