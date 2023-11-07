@@ -1,5 +1,7 @@
 package top.vita.string;
 
+import cn.hutool.core.collection.CollectionUtil;
+
 import java.util.*;
 
 public class StringQuestion {
@@ -1116,5 +1118,25 @@ public class StringQuestion {
 			return true;
 		}
 		return false;
+	}
+
+	public int[] vowelStrings(String[] words, int[][] queries) {
+		Set<Character> vowels = CollectionUtil.newHashSet('a', 'e', 'i', 'o', 'u');
+		int n = words.length;
+		int[] s = new int[n + 1];
+		for (int i = 0; i < n; ++i) {
+			char a = words[i].charAt(0);
+			char b = words[i].charAt(words[i].length() - 1);
+			s[i + 1] = s[i] + (vowels.contains(a) && vowels.contains(b) ? 1 : 0);
+		}
+		int m = queries.length;
+		int[] res = new int[m];
+		for (int i = 0; i < m; ++i) {
+			int l = queries[i][0];
+			int r = queries[i][1];
+			// 取[l, r]之间符合条件的个数
+			res[i] = s[r + 1] - s[l];
+		}
+		return res;
 	}
 }
