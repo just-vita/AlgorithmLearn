@@ -1867,5 +1867,25 @@ public class ArrayDemo {
         return res;
     }
 
-
+    public int[] successfulPairs(int[] spells, int[] potions, long success) {
+        int[] res = new int[spells.length];
+        Arrays.sort(potions);
+        for (int i = 0; i < spells.length; i++) {
+            int left = 0;
+            int right = potions.length - 1;
+            while (left <= right) {
+                int mid = (left + right) / 2;
+                // 直到找到最小的，能够超过success的那个为止
+                if ((long) potions[mid] * spells[i] >= success) {
+                    // 因为排序过，只要找到了第一个，那么后面的就都能符合条件
+                    res[i] = potions.length - mid;
+                    // 当前的数能够符合条件，继续向内寻找更小的
+                    right = mid - 1;
+                } else {
+                    left = mid + 1;
+                }
+            }
+        }
+        return res;
+    }
 }
